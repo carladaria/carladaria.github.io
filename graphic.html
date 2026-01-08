@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Graphic Design — Carla D'Aria</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Impact', sans-serif;
+      background: #0e0f12;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ===== Background Waves ===== */
+    a-waves {
+      --x: -0.5rem;
+      --y: 50%;
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      will-change: auto;
+    }
+
+    a-waves:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0.5rem;
+      height: 0.5rem;
+      background: #ff103d;
+      border-radius: 50%;
+      transform: translate3d(calc(var(--x) - 50%), calc(var(--y) - 50%), 0);
+      will-change: transform;
+      content: "";
+      pointer-events: none;
+    }
+
+    a-waves svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    a-waves svg path {
+      fill: none;
+      stroke: #ff103d;
+      stroke-width: 0.5px;
+      opacity: 0.25;
+      vector-effect: non-scaling-stroke;
+    }
+
+    /* ===== Page Layout ===== */
+    .page {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== Header ===== */
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .header__logo {
+      font-size: 3em;
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: rgba(255, 255, 255, 1);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .header__logo span {
+      display: inline-block;
+      transform: translateY(4px) rotate(180deg);
+      pointer-events: none;
+    }
+
+    .header__menu {
+      margin-left: auto;
+    }
+
+    .header__menu__list {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header__menu__link {
+      position: relative;
+      margin-left: 50px;
+      color: #808080;
+      text-decoration: none;
+      cursor: pointer;
+      display: block;
+      transition: color 0.3s ease;
+      font-size: 30px;
+    }
+
+    .header__menu__link::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 49%;
+      left: -10%;
+      right: -10%;
+      height: 2px;
+      border-radius: 2px;
+      margin-top: -1px;
+      background: #FF103D;
+      transform: scale(0);
+      transition: transform .8s cubic-bezier(.16,1.08,.38,.98);
+      z-index: 1;
+    }
+
+    .header__menu__link:hover {
+      color: #FF103D;
+    }
+
+    .header__menu__link:hover .Mask,
+    .header__menu__link:active .Mask {
+      color: #FFF;
+      transform: skewX(12deg) translateX(3px);
+    }
+
+    .header__menu__link:hover .Mask + .Mask,
+    .header__menu__link:active .Mask + .Mask {
+      transform: skewX(12deg) translateX(-3px);
+    }
+
+    .header__menu__link:hover::before,
+    .header__menu__link:active::before {
+      transform: scale(1);
+    }
+
+    /* Mask class para efectos hover */
+    .Mask {
+      display: block;
+      position: absolute;
+      overflow: hidden;
+      color: #e0e0e0;
+      top: 0;
+      height: 49%;
+      transition: all .8s cubic-bezier(.16,1.08,.38,.98);
+    }
+
+    .Mask span {
+      display: block;
+    }
+
+    .Mask + .Mask {
+      top: 48.9%;
+      height: 51.1%;
+    }
+
+    .Mask + .Mask span {
+      transform: translateY(-49%);
+    }
+
+    /* ===== Main Content ===== */
+    .center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 40px 80px;
+    }
+
+    /* ===== Hero Section ===== */
+    .hero-section {
+      width: 100%;
+      max-width: 1400px;
+      padding: 60px 0 80px;
+      text-align: center;
+    }
+
+    /* ===== Animación Idle del Título ===== */
+    @keyframes titleGlitch {
+      0%, 100% {
+        transform: translate(0, 0);
+        text-shadow: 0 0 20px rgba(255, 16, 61, 0.5);
+      }
+      10% {
+        transform: translate(-2px, 0);
+        text-shadow: -2px 0 20px rgba(255, 16, 61, 0.7);
+      }
+      20% {
+        transform: translate(2px, 0);
+        text-shadow: 2px 0 20px rgba(255, 16, 61, 0.7);
+      }
+      30%, 70% {
+        transform: translate(0, 0);
+        text-shadow: 0 0 25px rgba(255, 16, 61, 0.6);
+      }
+      40% {
+        transform: translate(1px, -1px);
+        text-shadow: 1px 0 20px rgba(255, 16, 61, 0.8);
+      }
+      50% {
+        transform: translate(-1px, 1px);
+        text-shadow: -1px 0 20px rgba(255, 16, 61, 0.8);
+      }
+      60% {
+        transform: translate(0, 0);
+        text-shadow: 0 0 30px rgba(255, 16, 61, 0.7);
+      }
+    }
+
+    .hero-title {
+      font-size: clamp(40px, 6vw, 80px);
+      line-height: 0.9;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+      color: #ff103d;
+      -webkit-text-stroke: 0.1px rgba(255, 255, 255, 0.4);
+      animation: titleGlitch 4s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 700px;
+      margin: 0 auto 40px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .hero-divider {
+      width: 100px;
+      height: 2px;
+      background: #ff103d;
+      margin: 0 auto;
+    }
+
+    /* ===== Projects Grid ===== */
+    .projects-container {
+      width: 100%;
+      max-width: 1400px;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+      margin-top: 60px;
+    }
+
+    /* ===== Project Card ===== */
+    .project {
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.4));
+      transition: transform 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98), 
+                  border-color 0.4s ease,
+                  box-shadow 0.4s ease;
+      will-change: transform;
+    }
+
+    .project::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255, 16, 61, 0.08), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .project:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 16, 61, 0.4);
+      box-shadow: 0 30px 80px rgba(255, 16, 61, 0.2);
+    }
+
+    .project:hover::before {
+      opacity: 1;
+    }
+
+    /* Featured Project (LEX) */
+    .project--featured {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 0;
+      min-height: 500px;
+    }
+
+    .project__content {
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .project__label {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ff103d;
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+
+    .project__number {
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      font-size: 100px;
+      font-weight: 900;
+      color: rgba(255, 16, 61, 0.08);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .project__title {
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      transition: color 0.3s ease;
+    }
+
+    .project:hover .project__title {
+      color: #ff103d;
+    }
+
+    .project__description {
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 32px;
+      max-width: 500px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 300;
+    }
+
+    .project__tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.75);
+      transition: all 0.3s ease;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .project:hover .tag {
+      border-color: rgba(255, 16, 61, 0.5);
+      color: #ff103d;
+    }
+
+    .project__stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .stat__number {
+      font-size: 32px;
+      line-height: 1;
+      color: #ff103d;
+    }
+
+    .stat__label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 300;
+    }
+
+    .project__visual {
+      position: relative;
+      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .project__visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project:hover .project__visual img {
+      transform: scale(1.05);
+    }
+
+    .project__visual::after {
+      content: 'VIEW PROJECT';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      font-size: 16px;
+      letter-spacing: 3px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .project:hover .project__visual::after {
+      opacity: 1;
+    }
+
+    /* Grid Project (Photobooks) */
+    .project--grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: 600px;
+    }
+
+    .project--grid .project__content {
+      order: 2;
+    }
+
+    .photobooks-showcase {
+      position: relative;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    }
+
+    .photobook-item {
+      position: relative;
+      aspect-ratio: 3/4;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+    }
+
+    .photobook-item:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 16, 61, 0.4);
+      box-shadow: 0 20px 40px rgba(255, 16, 61, 0.2);
+    }
+
+    .photobook-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .photobook-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .photobook-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(255, 16, 61, 0.3) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .photobook-item:hover::after {
+      opacity: 1;
+    }
+
+    /* Botón "Ver más" */
+    .photobook-item--more {
+      background: linear-gradient(135deg, rgba(255, 16, 61, 0.1) 0%, rgba(255, 16, 61, 0.05) 100%);
+      border: 2px dashed rgba(255, 16, 61, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+    }
+
+    .photobook-item--more:hover {
+      background: linear-gradient(135deg, rgba(255, 16, 61, 0.2) 0%, rgba(255, 16, 61, 0.1) 100%);
+      border-color: rgba(255, 16, 61, 0.6);
+      transform: translateY(-8px);
+    }
+
+    .photobook-item--more::after {
+      display: none;
+    }
+
+    .photobook-item--more .icon {
+      font-size: 56px;
+      color: #ff103d;
+      line-height: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .photobook-item--more:hover .icon {
+      transform: scale(1.1);
+    }
+
+    .photobook-item--more .text {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.9);
+      letter-spacing: 1px;
+      font-family: 'Impact', sans-serif;
+    }
+
+    .photobook-item--more .count {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 300;
+    }
+
+    /* ===== Carousel Modal ===== */
+    .carousel-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .carousel-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 90vw;
+      max-width: 1200px;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 4px;
+      cursor: zoom-in;
+      transition: transform 0.2s ease-out;
+      transform-origin: center center;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .carousel-slide img.zoomed {
+      cursor: grab;
+    }
+
+    .carousel-slide img.zoomed.dragging {
+      cursor: grabbing;
+    }
+
+    /* Zoom button */
+    .carousel-zoom-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 16, 61, 0.2);
+      border: 1px solid rgba(255, 16, 61, 0.4);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      font-family: Arial, sans-serif;
+      z-index: 20;
+      font-weight: 300;
+    }
+
+    .carousel-zoom-btn:hover {
+      background: rgba(255, 16, 61, 0.4);
+      transform: scale(1.1);
+    }
+
+    .carousel-zoom-btn.zoomed {
+      background: rgba(255, 16, 61, 0.4);
+    }
+
+    /* Zoom instructions hint */
+    .carousel-zoom-hint {
+      position: absolute;
+      bottom: -60px;
+      right: 0;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 12px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 300;
+      text-align: right;
+      line-height: 1.4;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .carousel-container:hover .carousel-zoom-hint {
+      opacity: 1;
+    }
+
+    .carousel-close {
+      position: absolute;
+      top: -60px;
+      right: 0;
+      background: rgba(255, 16, 61, 0.2);
+      border: 1px solid rgba(255, 16, 61, 0.4);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      font-family: Arial, sans-serif;
+      font-weight: 300;
+    }
+
+    .carousel-close:hover {
+      background: rgba(255, 16, 61, 0.4);
+      transform: rotate(90deg);
+    }
+
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 16, 61, 0.2);
+      border: 1px solid rgba(255, 16, 61, 0.4);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      font-family: Arial, sans-serif;
+      z-index: 10;
+    }
+
+    .carousel-nav:hover {
+      background: rgba(255, 16, 61, 0.4);
+    }
+
+    .carousel-nav--prev {
+      left: -80px;
+    }
+
+    .carousel-nav--next {
+      right: -80px;
+    }
+
+    .carousel-counter {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 300;
+    }
+
+    .carousel-indicators {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .carousel-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-indicator.active {
+      background: #ff103d;
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    /* ===== Responsive ===== */
+    @media(max-width: 1024px) {
+      .header {
+        padding: 24px;
+      }
+
+      .center {
+        padding: 30px 24px 60px;
+      }
+
+      .project--featured,
+      .project--grid {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .project__content {
+        padding: 40px 32px;
+      }
+
+      .project--grid .project__content {
+        order: 1;
+      }
+
+      .photobooks-showcase {
+        order: 2;
+        padding: 32px 24px;
+      }
+
+      .project__stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .carousel-nav--prev {
+        left: 10px;
+      }
+
+      .carousel-nav--next {
+        right: 10px;
+      }
+    }
+
+    @media(max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .header__logo {
+        font-size: 2em;
+      }
+
+      .header__menu {
+        margin-left: 0;
+      }
+
+      .header__menu__list {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .header__menu__link {
+        margin-left: 0;
+        font-size: 24px;
+      }
+
+      .hero-section {
+        padding: 40px 0 60px;
+      }
+
+      .project__content {
+        padding: 32px 24px;
+      }
+
+      .project__number {
+        font-size: 60px;
+        top: 24px;
+        right: 24px;
+      }
+
+      .project__title {
+        font-size: 36px;
+      }
+
+      .project__stats {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .photobooks-showcase {
+        grid-template-columns: 1fr;
+      }
+
+      .carousel-close {
+        top: 10px;
+        right: 10px;
+        width: 44px;
+        height: 44px;
+        font-size: 24px;
+      }
+
+      .carousel-nav {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+      }
+
+      .carousel-counter {
+        bottom: 10px;
+      }
+    }
+
+    /* ===== Scrollbar Styling ===== */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 16, 61, 0.3);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 16, 61, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+<a-waves aria-hidden="true">
+  <svg class="js-svg"></svg>
+</a-waves>
+
+<div class="page">
+  <header class="header">
+    <a href="new_index.html" class="header__logo">CARLA D<span>A'</span>RIA</a>
+    <nav class="header__menu">
+      <ul class="header__menu__list">
+        <li class="header__menu__item">
+          <a href="ux index.html" class="header__menu__link">
+            UX/UI DESIGN
+            <span class="Mask"><span>UX/UI DESIGN</span></span>
+            <span class="Mask"><span>UX/UI DESIGN</span></span>
+          </a>
+        </li>
+        <li class="header__menu__item">
+          <a href="3d.html" class="header__menu__link">
+            3D ART
+            <span class="Mask"><span>3D ART</span></span>
+            <span class="Mask"><span>3D ART</span></span>
+          </a>
+        </li>
+        <li class="header__menu__item">
+          <a href="2d.html" class="header__menu__link">
+            2D ART
+            <span class="Mask"><span>2D ART</span></span>
+            <span class="Mask"><span>2D ART</span></span>
+          </a>
+        </li>
+        <li class="header__menu__item">
+          <a href="visuals.html" class="header__menu__link">
+            VISUALS
+            <span class="Mask"><span>VISUALS</span></span>
+            <span class="Mask"><span>VISUALS</span></span>
+          </a>
+        </li>
+   
+      </ul>
+    </nav>
+  </header>
+
+  <main class="center">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <h1 class="hero-title">GRAPHIC DESIGN</h1>
+      <p class="hero-subtitle">
+        Brand identity systems and editorial design. Creating visual languages 
+        that communicate with impact and sophistication.
+      </p>
+      <div class="hero-divider"></div>
+    </section>
+
+    <!-- Projects -->
+    <div class="projects-container">
+
+      <!-- LEX Natural Cosmetics - Featured Project -->
+      <article class="project project--featured">
+        <div class="project__content">
+          <div class="project__number">01</div>
+          <div class="project__label">Brand Identity · 2025</div>
+          <h2 class="project__title">LEX Natural Cosmetics</h2>
+          <p class="project__description">
+            Complete brand identity system for a natural cosmetics line. Developed visual 
+            language, logo design, packaging system, color palette, typography, and comprehensive 
+            brand guidelines reflecting organic and sustainable values.
+          </p>
+          <div class="project__tags">
+            <span class="tag">Brand Identity</span>
+            <span class="tag">Logo Design</span>
+            <span class="tag">Packaging</span>
+            <span class="tag">Guidelines</span>
+            <span class="tag">Visual System</span>
+          </div>
+          <div class="project__stats">
+            <div class="stat">
+              <div class="stat__number">20+</div>
+              <div class="stat__label">Assets</div>
+            </div>
+            <div class="stat">
+              <div class="stat__number">FULL</div>
+              <div class="stat__label">System</div>
+            </div>
+            <div class="stat">
+              <div class="stat__number">2025</div>
+              <div class="stat__label">Year</div>
+            </div>
+          </div>
+        </div>
+        <div class="project__visual" id="lexVisual">
+          <img src="images/Thumbnail.png" alt="LEX Natural Cosmetics" 
+               onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%)'">
+        </div>
+      </article>
+
+      <!-- Dolce Luna - Rebrand -->
+      <article class="project project--featured">
+        <div class="project__content">
+          <div class="project__number">02</div>
+          <div class="project__label">Rebrand · 2025</div>
+          <h2 class="project__title">Dolce Luna</h2>
+          <p class="project__description">
+            Quick rebrand for a bakery with client-selected aesthetics.
+            A project that combines tradition and modernity in visual brand identity,
+            creating a memorable and authentic presence for this gastronomic venture.
+          </p>
+          <div class="project__tags">
+            <span class="tag">Rebrand</span>
+            <span class="tag">Brand Identity</span>
+            <span class="tag">Bakery</span>
+            <span class="tag">Visual Design</span>
+          </div>
+          <div class="project__stats">
+            <div class="stat">
+              <div class="stat__number">REBRAND</div>
+              <div class="stat__label">Identity</div>
+            </div>
+            <div class="stat">
+              <div class="stat__number">2025</div>
+              <div class="stat__label">Year</div>
+            </div>
+          </div>
+        </div>
+        <div class="project__visual" id="dolcelunaVisual">
+          <img src="images/medialuna.png" alt="Dolce Luna Rebrand"
+               onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%)'">
+        </div>
+      </article>
+
+      <!-- Pendufon - Logo & Brand Assets -->
+      <article class="project project--featured">
+        <div class="project__content">
+          <div class="project__number">03</div>
+          <div class="project__label">Logo Design · 2025</div>
+          <h2 class="project__title">Pendufon</h2>
+          <p class="project__description">
+            Logo design and brand asset development for Pendufon. Created distinctive visual 
+            identity including custom logotype and sticker designs. 
+            Focused on playful aesthetics while maintaining professional consistency across 
+            all touchpoints.
+          </p>
+          <div class="project__tags">
+            <span class="tag">Logo Design</span>
+            <span class="tag">Brand Identity</span>
+            <span class="tag">Stickers</span>
+            <span class="tag">Visual Assets</span>
+            <span class="tag">Typography</span>
+          </div>
+          <div class="project__stats">
+        
+            <div class="stat">
+              <div class="stat__number">LOGO</div>
+              <div class="stat__label">Identity</div>
+            </div>
+            <div class="stat">
+              <div class="stat__number">2025</div>
+              <div class="stat__label">Year</div>
+            </div>
+          </div>
+        </div>
+        <div class="project__visual" id="pendufonVisual">
+          <img src="images/pendufon2.png" alt="Pendufon Logo Design" 
+               onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%)'">
+        </div>
+      </article>
+
+      <!-- Funding Spree - Logo & Brand Assets -->
+      <article class="project project--featured">
+        <div class="project__content">
+          <div class="project__number">04</div>
+          <div class="project__label">Logo Design · 2024</div>
+          <h2 class="project__title">Funding Spree</h2>
+          <p class="project__description">
+            Logo design and brand identity for Funding Spree, a real estate company. Developed 
+            a distinctive visual identity that communicates trust, professionalism, and innovation 
+            in the property sector. Created comprehensive brand assets including custom logotype, 
+            color system, and visual applications.
+          </p>
+          <div class="project__tags">
+            <span class="tag">Logo Design</span>
+            <span class="tag">Brand Identity</span>
+            <span class="tag">Real Estate</span>
+            <span class="tag">Visual Assets</span>
+            <span class="tag">Typography</span>
+          </div>
+          <div class="project__stats">
+            <div class="stat">
+              <div class="stat__number">LOGO</div>
+              <div class="stat__label">Identity</div>
+            </div>
+            <div class="stat">
+              <div class="stat__number">2024</div>
+              <div class="stat__label">Year</div>
+            </div>
+          </div>
+        </div>
+        <div class="project__visual" id="fundingSpreeVisual">
+          <img src="images/fd 4.jpg" alt="Funding Spree Logo Design" 
+               onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%)'">
+        </div>
+      </article>
+
+      <!-- Photobooks - Grid Project con botón "Ver más" -->
+      <article class="project project--grid">
+        <div class="photobooks-showcase">
+          <div class="photobook-item" data-index="0">
+            <img src="images/photo 1.png" alt="Photobook Thumbnail" 
+                 onerror="this.style.display='none'">
+          </div>
+          <div class="photobook-item photobook-item--more" id="viewMoreBtn">
+            <div class="icon">+</div>
+            <div class="text">VER MÁS</div>
+            <div class="count">12 Photobooks</div>
+          </div>
+        </div>
+        <div class="project__content">
+          <div class="project__number">05</div>
+          <div class="project__label">Editorial Design · 2022-2026</div>
+          <h2 class="project__title">Photobooks</h2>
+          <p class="project__description">
+            A collection of editorial photobooks exploring themes of memory, place, and visual 
+            narrative. Each book designed with careful attention to typography, pacing, and the 
+            relationship between image and page.
+          </p>
+          <div class="project__tags">
+            <span class="tag">Editorial Design</span>
+            <span class="tag">Typography</span>
+            <span class="tag">Layout</span>
+            <span class="tag">Print Design</span>
+            <span class="tag">Photography</span>
+          </div>
+          <div class="project__stats">
+            <div class="stat">
+              <div class="stat__number">45+</div>
+              <div class="stat__label">Books</div>
+            </div>
+            <div class="stat">
+              <div class="stat__number">VARIOUS</div>
+              <div class="stat__label">Themes</div>
+            </div>
+            <div class="stat">
+              <div class="stat__number">PRINT</div>
+              <div class="stat__label">Format</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+</div>
+
+<!-- Carousel Modal -->
+<div class="carousel-modal" id="carouselModal">
+  <div class="carousel-container">
+    <button class="carousel-close" id="carouselClose">×</button>
+    <button class="carousel-zoom-btn" id="carouselZoomBtn" title="Zoom">🔍</button>
+    <button class="carousel-nav carousel-nav--prev" id="carouselPrev">‹</button>
+    <button class="carousel-nav carousel-nav--next" id="carouselNext">›</button>
+    
+    <div class="carousel-track" id="carouselTrack">
+      <!-- Las slides se generarán dinámicamente -->
+    </div>
+    
+    <div class="carousel-counter" id="carouselCounter"></div>
+    <div class="carousel-indicators" id="carouselIndicators"></div>
+    <div class="carousel-zoom-hint">
+      Doble click o scroll para zoom<br>
+      Arrastra para moverte
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== Carousel Functionality =====
+  const carouselModal = document.getElementById('carouselModal');
+  const carouselTrack = document.getElementById('carouselTrack');
+  const carouselClose = document.getElementById('carouselClose');
+  const carouselZoomBtn = document.getElementById('carouselZoomBtn');
+  const carouselPrev = document.getElementById('carouselPrev');
+  const carouselNext = document.getElementById('carouselNext');
+  const carouselCounter = document.getElementById('carouselCounter');
+  const carouselIndicators = document.getElementById('carouselIndicators');
+  const viewMoreBtn = document.getElementById('viewMoreBtn');
+  const lexVisual = document.getElementById('lexVisual');
+  const pendufonVisual = document.getElementById('pendufonVisual');
+  const dolcelunaVisual = document.getElementById('dolcelunaVisual');
+  const fundingSpreeVisual = document.getElementById('fundingSpreeVisual');
+
+  let currentSlide = 0;
+  let totalSlides = 0;
+  let currentImageSet = [];
+
+  // Array de imágenes de LEX Brand Guide
+  const lexImages = [
+    'images/Slide 01.png',
+    'images/Slide 02.png',
+    'images/Slide 03.png',
+    'images/Slide 04.png',
+    'images/Slide 05.png',
+    'images/Slide 06.png',
+    'images/Slide 07.png',
+    'images/Slide 08.png',
+    'images/Slide 09.png',
+    'images/Slide 10.png',
+    'images/Slide 11.png',
+    'images/Slide 12.png',
+    'images/Slide 13.png',
+    'images/Slide 14.png',
+    'images/Slide 15.png',
+    'images/Slide 16.png',
+    'images/Slide 17.png',
+    'images/Slide 18.png',
+    'images/Slide 19.png',
+    'images/Slide 20.png',
+    'images/Slide 21.png',
+    'images/Slide 22.png',
+    'images/Slide 23.png',
+    'images/Slide 24.png',
+    'images/Slide 25.png',
+    'images/Slide 26.png',
+    'images/Slide 27.png',
+    'images/Slide 28.png',
+    'images/Slide 29.png',
+    'images/Slide 30.png',
+    'images/Slide 31.png',
+    'images/Slide 32.png',
+    'images/Slide 33.jpg',
+    'images/Slide 34.jpg',
+    'images/Slide 35.png',
+    'images/Slide 36.jpg',
+    'images/Slide 37.jpg',
+    'images/Slide 38.jpg',
+    'images/Slide 39.png',
+    'images/Slide 40.jpg',
+    'images/Slide 41.jpg',
+    'images/Slide 42.jpg',
+    'images/Slide 43.jpg',
+    'images/Slide 44.jpg',
+    'images/Slide 45.png',
+    'images/Slide 46.png'
+  ];
+
+  // Array de imágenes de Pendufon
+  const pendufonImages = [
+    'images/pendufon logo.png',
+    'images/penfufon.png',
+    'images/pendufon1.png',
+    'images/pendufon2.png'
+  ];
+
+  // Array de imágenes de Dolce Luna
+  const dolcelunaImages = [
+    'images/Dolce luna.png',
+    'images/dolce luna1.png',
+    'images/dolce luna2.png',
+    'images/dolce luna3.png'
+  ];
+
+  // Array de imágenes de Funding Spree
+  const fundingSpreeImages = [
+    'images/funding spree logo.png',
+    'images/fd 4.jpg',
+    'images/fd6.jpg',
+    'images/fd5.jpg'
+  ];
+
+  // Array de imágenes del photobook
+  const photobookImages = [
+    'images/photo 1.png',
+    'images/photo 2.png',
+    'images/photo 3.png',
+    'images/photo 4.png',
+    'images/photo 5.png',
+    'images/photo 6.png',
+    'images/photo 7.png',
+    'images/photo 8.png',
+    'images/photo 9.png',
+    'images/photo 10.png',
+    'images/photo 11.png',
+    'images/photo 12.png'
+  ];
+
+  // Inicializar carousel
+  function initCarousel(images) {
+    currentImageSet = images;
+    totalSlides = images.length;
+    
+    // Limpiar track e indicadores
+    carouselTrack.innerHTML = '';
+    carouselIndicators.innerHTML = '';
+    
+    // Crear slides
+    images.forEach((src, index) => {
+      const slide = document.createElement('div');
+      slide.className = 'carousel-slide';
+      if (index === 0) slide.classList.add('active');
+      
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = `Slide ${index + 1}`;
+      img.onerror = function() {
+        this.style.background = 'linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%)';
+        this.style.display = 'block';
+        this.style.width = '100%';
+        this.style.height = '100%';
+        this.src = '';
+      };
+      
+      slide.appendChild(img);
+      carouselTrack.appendChild(slide);
+      
+      // Crear indicador
+      const indicator = document.createElement('div');
+      indicator.className = 'carousel-indicator';
+      if (index === 0) indicator.classList.add('active');
+      indicator.addEventListener('click', () => goToSlide(index));
+      carouselIndicators.appendChild(indicator);
+    });
+    
+    updateCounter();
+  }
+
+  // Ir a un slide específico
+  function goToSlide(index) {
+    const slides = carouselTrack.querySelectorAll('.carousel-slide');
+    const indicators = carouselIndicators.querySelectorAll('.carousel-indicator');
+    
+    slides[currentSlide].classList.remove('active');
+    indicators[currentSlide].classList.remove('active');
+    
+    currentSlide = index;
+    
+    slides[currentSlide].classList.add('active');
+    indicators[currentSlide].classList.add('active');
+    
+    updateCounter();
+  }
+
+  // Actualizar contador
+  function updateCounter() {
+    carouselCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+  }
+
+  // Abrir carousel
+  function openCarousel(images, startIndex = 0) {
+    currentSlide = startIndex;
+    initCarousel(images);
+    goToSlide(startIndex);
+    carouselModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Cerrar carousel
+  function closeCarousel() {
+    carouselModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Event listeners
+  
+  // LEX Visual - abre carousel de LEX
+  lexVisual.addEventListener('click', () => openCarousel(lexImages, 0));
+  
+  // Pendufon Visual - abre carousel de Pendufon
+  pendufonVisual.addEventListener('click', () => openCarousel(pendufonImages, 0));
+  
+  // Dolce Luna Visual - abre carousel de Dolce Luna
+  dolcelunaVisual.addEventListener('click', () => openCarousel(dolcelunaImages, 0));
+  
+  // Funding Spree Visual - abre carousel de Funding Spree
+  fundingSpreeVisual.addEventListener('click', () => openCarousel(fundingSpreeImages, 0));
+
+  
+  // Photobooks - botón "Ver más"
+  viewMoreBtn.addEventListener('click', () => openCarousel(photobookImages, 0));
+  
+  carouselClose.addEventListener('click', closeCarousel);
+  
+  carouselPrev.addEventListener('click', () => {
+    const newIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+    goToSlide(newIndex);
+  });
+  
+  carouselNext.addEventListener('click', () => {
+    const newIndex = (currentSlide + 1) % totalSlides;
+    goToSlide(newIndex);
+  });
+  
+  // Click fuera del carousel para cerrar
+  carouselModal.addEventListener('click', (e) => {
+    if (e.target === carouselModal) closeCarousel();
+  });
+  
+  // Navegación con teclado
+  document.addEventListener('keydown', (e) => {
+    if (!carouselModal.classList.contains('active')) return;
+    
+    if (e.key === 'Escape') closeCarousel();
+    if (e.key === 'ArrowLeft') carouselPrev.click();
+    if (e.key === 'ArrowRight') carouselNext.click();
+  });
+
+  // Click en photobook individual abre el carousel en ese índice
+  document.querySelectorAll('.photobook-item[data-index]').forEach(item => {
+    item.addEventListener('click', () => {
+      const index = parseInt(item.dataset.index);
+      openCarousel(photobookImages, index);
+    });
+  });
+
+  // ===== ZOOM & PAN FUNCTIONALITY (IMPROVED UX) =====
+  let zoomState = {
+    isZoomed: false,
+    isDragging: false,
+    scale: 1,
+    minScale: 1,
+    maxScale: 4,
+    translateX: 0,
+    translateY: 0,
+    startX: 0,
+    startY: 0,
+    currentImg: null,
+    lastTapTime: 0
+  };
+
+  function resetZoom() {
+    if (zoomState.currentImg) {
+      zoomState.currentImg.style.transform = 'scale(1) translate(0, 0)';
+      zoomState.currentImg.classList.remove('zoomed', 'dragging');
+      zoomState.currentImg.style.cursor = 'zoom-in';
+    }
+    zoomState.scale = 1;
+    zoomState.translateX = 0;
+    zoomState.translateY = 0;
+    zoomState.isZoomed = false;
+    zoomState.isDragging = false;
+    zoomState.currentImg = null;
+    
+    // Update zoom button
+    if (carouselZoomBtn) {
+      carouselZoomBtn.classList.remove('zoomed');
+      carouselZoomBtn.textContent = '🔍';
+    }
+  }
+
+  function updateZoomTransform(img) {
+    const scale = Math.max(zoomState.minScale, Math.min(zoomState.maxScale, zoomState.scale));
+    zoomState.scale = scale;
+    img.style.transform = `scale(${scale}) translate(${zoomState.translateX}px, ${zoomState.translateY}px)`;
+  }
+
+  function toggleZoom(img) {
+    if (!zoomState.isZoomed) {
+      // Zoom in
+      zoomState.isZoomed = true;
+      zoomState.currentImg = img;
+      zoomState.scale = 2.5;
+      zoomState.translateX = 0;
+      zoomState.translateY = 0;
+      img.classList.add('zoomed');
+      img.style.cursor = 'grab';
+      updateZoomTransform(img);
+      
+      // Update zoom button
+      if (carouselZoomBtn) {
+        carouselZoomBtn.classList.add('zoomed');
+        carouselZoomBtn.textContent = '✕';
+      }
+    } else {
+      // Zoom out
+      resetZoom();
+    }
+  }
+
+  function initZoomPan() {
+    const carouselImages = document.querySelectorAll('.carousel-slide img');
+    
+    carouselImages.forEach(img => {
+      // Double click to toggle zoom
+      img.addEventListener('dblclick', (e) => {
+        e.preventDefault();
+        toggleZoom(img);
+      });
+
+      // Mouse wheel to zoom
+      img.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        
+        if (!zoomState.currentImg || zoomState.currentImg !== img) {
+          zoomState.currentImg = img;
+          zoomState.isZoomed = true;
+          img.classList.add('zoomed');
+        }
+
+        const delta = e.deltaY > 0 ? -0.2 : 0.2;
+        zoomState.scale += delta;
+        
+        // Clamp scale
+        zoomState.scale = Math.max(zoomState.minScale, Math.min(zoomState.maxScale, zoomState.scale));
+        
+        if (zoomState.scale <= 1) {
+          resetZoom();
+        } else {
+          img.style.cursor = 'grab';
+          updateZoomTransform(img);
+          
+          // Update zoom button
+          if (carouselZoomBtn) {
+            carouselZoomBtn.classList.add('zoomed');
+            carouselZoomBtn.textContent = '✕';
+          }
+        }
+      });
+
+      // Mouse down - start dragging (only when zoomed)
+      img.addEventListener('mousedown', (e) => {
+        if (!zoomState.isZoomed || zoomState.scale <= 1) return;
+        
+        e.preventDefault();
+        zoomState.isDragging = true;
+        zoomState.startX = e.clientX - zoomState.translateX;
+        zoomState.startY = e.clientY - zoomState.translateY;
+        img.classList.add('dragging');
+      });
+
+      // Mouse move - pan while dragging
+      img.addEventListener('mousemove', (e) => {
+        if (!zoomState.isDragging || zoomState.currentImg !== img) return;
+        
+        e.preventDefault();
+        zoomState.translateX = e.clientX - zoomState.startX;
+        zoomState.translateY = e.clientY - zoomState.startY;
+        
+        updateZoomTransform(img);
+      });
+
+      // Mouse up - stop dragging
+      img.addEventListener('mouseup', () => {
+        if (zoomState.isDragging) {
+          zoomState.isDragging = false;
+          img.classList.remove('dragging');
+        }
+      });
+
+      // Mouse leave - stop dragging
+      img.addEventListener('mouseleave', () => {
+        if (zoomState.isDragging) {
+          zoomState.isDragging = false;
+          img.classList.remove('dragging');
+        }
+      });
+
+      // Touch support for mobile - double tap to zoom
+      img.addEventListener('touchend', (e) => {
+        const currentTime = new Date().getTime();
+        const tapGap = currentTime - zoomState.lastTapTime;
+        
+        if (tapGap < 300 && tapGap > 0) {
+          // Double tap detected
+          e.preventDefault();
+          toggleZoom(img);
+        }
+        
+        zoomState.lastTapTime = currentTime;
+      });
+
+      // Touch drag for panning when zoomed
+      let touchStartX = 0, touchStartY = 0;
+      
+      img.addEventListener('touchstart', (e) => {
+        if (!zoomState.isZoomed || zoomState.scale <= 1 || e.touches.length !== 1) return;
+        
+        const touch = e.touches[0];
+        touchStartX = touch.clientX - zoomState.translateX;
+        touchStartY = touch.clientY - zoomState.translateY;
+        zoomState.isDragging = true;
+      });
+
+      img.addEventListener('touchmove', (e) => {
+        if (!zoomState.isDragging || e.touches.length !== 1) return;
+        
+        e.preventDefault();
+        const touch = e.touches[0];
+        zoomState.translateX = touch.clientX - touchStartX;
+        zoomState.translateY = touch.clientY - touchStartY;
+        
+        updateZoomTransform(img);
+      });
+
+      img.addEventListener('touchend', () => {
+        zoomState.isDragging = false;
+      });
+    });
+
+    // Zoom button click handler
+    if (carouselZoomBtn) {
+      carouselZoomBtn.addEventListener('click', () => {
+        const activeSlide = document.querySelector('.carousel-slide.active img');
+        if (activeSlide) {
+          toggleZoom(activeSlide);
+        }
+      });
+    }
+  }
+
+  // Modified initCarousel to include zoom/pan setup
+  const originalInitCarousel = initCarousel;
+  initCarousel = function(images) {
+    originalInitCarousel(images);
+    // Small delay to ensure DOM is ready
+    setTimeout(initZoomPan, 100);
+  };
+
+  // Reset zoom when changing slides
+  const originalGoToSlide = goToSlide;
+  goToSlide = function(index) {
+    resetZoom();
+    originalGoToSlide(index);
+  };
+
+  // Reset zoom when closing carousel
+  const originalCloseCarousel = closeCarousel;
+  closeCarousel = function() {
+    resetZoom();
+    originalCloseCarousel();
+  };
+
+  // ===== Perlin Noise Class =====
+  class Noise {
+    constructor(seed = 1) {
+      this.grad3 = [
+        [1, 1, 0], [-1, 1, 0], [1, -1, 0], [-1, -1, 0],
+        [1, 0, 1], [-1, 0, 1], [1, 0, -1], [-1, 0, -1],
+        [0, 1, 1], [0, -1, 1], [0, 1, -1], [0, -1, -1]
+      ];
+      this.p = [];
+      for (let i = 0; i < 256; i++) {
+        this.p[i] = Math.floor(Math.random() * 256);
+      }
+      this.perm = [];
+      for (let i = 0; i < 512; i++) {
+        this.perm[i] = this.p[i & 255];
+      }
+    }
+
+    dot(g, x, y) {
+      return g[0] * x + g[1] * y;
+    }
+
+    perlin2(x, y) {
+      const X = Math.floor(x) & 255;
+      const Y = Math.floor(y) & 255;
+      x -= Math.floor(x);
+      y -= Math.floor(y);
+      const u = this.fade(x);
+      const v = this.fade(y);
+      const A = this.perm[X] + Y;
+      const AA = this.perm[A];
+      const AB = this.perm[A + 1];
+      const B = this.perm[X + 1] + Y;
+      const BA = this.perm[B];
+      const BB = this.perm[B + 1];
+
+      return this.lerp(
+        v,
+        this.lerp(u, this.grad(this.perm[AA], x, y), this.grad(this.perm[BA], x - 1, y)),
+        this.lerp(u, this.grad(this.perm[AB], x, y - 1), this.grad(this.perm[BB], x - 1, y - 1))
+      );
+    }
+
+    fade(t) {
+      return t * t * t * (t * (t * 6 - 15) + 10);
+    }
+
+    lerp(t, a, b) {
+      return a + t * (b - a);
+    }
+
+    grad(hash, x, y) {
+      const h = hash & 15;
+      const u = h < 8 ? x : y;
+      const v = h < 4 ? y : h === 12 || h === 14 ? x : 0;
+      return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
+    }
+  }
+
+  // ===== AWaves Web Component =====
+  class AWaves extends HTMLElement {
+    connectedCallback() {
+      this.svg = this.querySelector('.js-svg');
+      this.mouse = {
+        x: -10,
+        y: 0,
+        lx: 0,
+        ly: 0,
+        sx: 0,
+        sy: 0,
+        v: 0,
+        vs: 0,
+        a: 0,
+        set: false,
+      };
+      this.lines = [];
+      this.paths = [];
+      this.noise = new Noise(Math.random());
+      this.setSize();
+      this.setLines();
+      this.bindEvents();
+      requestAnimationFrame(this.tick.bind(this));
+    }
+
+    bindEvents() {
+      window.addEventListener('resize', this.onResize.bind(this));
+      window.addEventListener('mousemove', this.onMouseMove.bind(this));
+      this.addEventListener('touchmove', this.onTouchMove.bind(this));
+    }
+
+    onResize() {
+      this.setSize();
+      this.setLines();
+    }
+
+    onMouseMove(e) {
+      this.updateMousePosition(e.pageX, e.pageY);
+    }
+
+    onTouchMove(e) {
+      e.preventDefault();
+      const touch = e.touches[0];
+      this.updateMousePosition(touch.clientX, touch.clientY);
+    }
+
+    updateMousePosition(x, y) {
+      const { mouse } = this;
+      mouse.x = x - this.bounding.left;
+      mouse.y = y - this.bounding.top + window.scrollY;
+      if (!mouse.set) {
+        mouse.sx = mouse.x;
+        mouse.sy = mouse.y;
+        mouse.lx = mouse.x;
+        mouse.ly = mouse.y;
+        mouse.set = true;
+      }
+    }
+
+    setSize() {
+      this.bounding = this.getBoundingClientRect();
+      this.svg.style.width = `${this.bounding.width}px`;
+      this.svg.style.height = `${this.bounding.height}px`;
+    }
+
+    setLines() {
+      const { width, height } = this.bounding;
+      this.lines = [];
+      this.paths.forEach(path => path.remove());
+      this.paths = [];
+
+      const xGap = 20;
+      const yGap = 40;
+      const oWidth = width + 100;
+      const oHeight = height + 20;
+      const totalLines = Math.ceil(oWidth / xGap);
+      const totalPoints = Math.ceil(oHeight / yGap);
+      const xStart = (width - xGap * totalLines) / 2;
+      const yStart = (height - yGap * totalPoints) / 2;
+
+      for (let i = 0; i <= totalLines; i++) {
+        const points = [];
+        for (let j = 0; j <= totalPoints; j++) {
+          const point = {
+            x: xStart + xGap * i,
+            y: yStart + yGap * j,
+            wave: { x: 0, y: 0 },
+            cursor: { x: 0, y: 0, vx: 0, vy: 0 },
+          };
+          points.push(point);
+        }
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        this.svg.appendChild(path);
+        this.paths.push(path);
+        this.lines.push(points);
+      }
+    }
+
+    movePoints(time) {
+      const { lines, mouse, noise } = this;
+      lines.forEach(points => {
+        points.forEach(p => {
+          const move = noise.perlin2(
+            (p.x + time * 0.0125) * 0.002,
+            (p.y + time * 0.005) * 0.0015
+          ) * 12;
+          p.wave.x = Math.cos(move) * 32;
+          p.wave.y = Math.sin(move) * 16;
+
+          const dx = p.x - mouse.sx;
+          const dy = p.y - mouse.sy;
+          const d = Math.hypot(dx, dy);
+          const l = Math.max(175, mouse.vs);
+
+          if (d < l) {
+            const s = 1 - d / l;
+            const f = Math.cos(d * 0.001) * s;
+            p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00065;
+            p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00065;
+          }
+
+          p.cursor.vx += (0 - p.cursor.x) * 0.005;
+          p.cursor.vy += (0 - p.cursor.y) * 0.005;
+          p.cursor.vx *= 0.925;
+          p.cursor.vy *= 0.925;
+          p.cursor.x += p.cursor.vx * 2;
+          p.cursor.y += p.cursor.vy * 2;
+          p.cursor.x = Math.min(100, Math.max(-100, p.cursor.x));
+          p.cursor.y = Math.min(100, Math.max(-100, p.cursor.y));
+        });
+      });
+    }
+
+    moved(point, withCursorForce = true) {
+      const coords = {
+        x: point.x + point.wave.x + (withCursorForce ? point.cursor.x : 0),
+        y: point.y + point.wave.y + (withCursorForce ? point.cursor.y : 0),
+      };
+      coords.x = Math.round(coords.x * 10) / 10;
+      coords.y = Math.round(coords.y * 10) / 10;
+      return coords;
+    }
+
+    drawLines() {
+      const { lines, paths } = this;
+      lines.forEach((points, lIndex) => {
+        let p1 = this.moved(points[0], false);
+        let d = `M ${p1.x} ${p1.y}`;
+        points.forEach((p1, pIndex) => {
+          const isLast = pIndex === points.length - 1;
+          p1 = this.moved(p1, !isLast);
+          d += `L ${p1.x} ${p1.y}`;
+        });
+        paths[lIndex].setAttribute('d', d);
+      });
+    }
+
+    tick(time) {
+      const { mouse } = this;
+      mouse.sx += (mouse.x - mouse.sx) * 0.1;
+      mouse.sy += (mouse.y - mouse.sy) * 0.1;
+
+      const dx = mouse.x - mouse.lx;
+      const dy = mouse.y - mouse.ly;
+      const d = Math.hypot(dx, dy);
+
+      mouse.v = d;
+      mouse.vs += (d - mouse.vs) * 0.1;
+      mouse.vs = Math.min(100, mouse.vs);
+
+      mouse.lx = mouse.x;
+      mouse.ly = mouse.y;
+      mouse.a = Math.atan2(dy, dx);
+
+      this.style.setProperty('--x', `${mouse.sx}px`);
+      this.style.setProperty('--y', `${mouse.sy}px`);
+
+      this.movePoints(time);
+      this.drawLines();
+      
+      this.animationId = requestAnimationFrame(this.tick.bind(this));
+    }
+    
+    disconnectedCallback() {
+      if (this.animationId) {
+        cancelAnimationFrame(this.animationId);
+      }
+    }
+  }
+
+  customElements.define('a-waves', AWaves);
+</script>
+
+</body>
+</html>

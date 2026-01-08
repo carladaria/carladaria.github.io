@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <title>About - CARLA D'ARIA</title>
+  <style>
+    *, *:before, *:after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .bebas-neue-regular {
+      font-family: "Bebas Neue", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    body {
+      background: #111;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Impact', sans-serif;
+    }
+    
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 2.5rem 3rem;
+      clip-path: polygon(
+        1% 3%, 
+        95% 10%, 
+        98% 12%, 
+        97% 95%, 
+        97% 94%, 
+        15% 97%, 
+        1% 94%, 
+        0% 8%
+      );
+    }
+    
+    .wrapper {
+      height: 22rem;
+      width: 22rem;
+      position: relative;
+      border-radius: 100%;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    
+    .wrapper:hover .glitch {
+      transform: translate(0,0);
+      animation: none;
+      filter: grayscale(0.2);
+    }
+    
+    .glitch {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      position: absolute;
+      transition: all .2s cubic-bezier(.41,.12,.75,1.47);
+      background-position: 50% 50%;
+      background-image: url('https://i.postimg.cc/PxQcR9bn/Imagen-de-Whats-App-2025-04-05-a-las-22-00-29-24605260-copia.jpg');
+      mix-blend-mode: screen;
+      background-blend-mode: darken;
+      filter: grayscale(0.5);
+    }
+    
+    .glitch.red {
+      background-color: red;
+      transform: translate(-3px, -10px);
+    }
+    
+    .glitch.blue {
+      background-color: blue;
+      transform: translate(3px, 6px);
+      animation: glitchUp 3s infinite;
+    }
+    
+    .glitch.green {
+      background-color: green;
+      transform: translate(-3px, 0);
+      animation: glitchRight 3s infinite;
+    }
+    
+    @keyframes glitchUp {
+      0%, 10%, 21% {
+        transform: translate(0,0);
+      }
+      20% {
+        transform: translate(0,-25px);
+      }
+    }
+    
+    @keyframes glitchRight {
+      0%, 12%, 14%, 23%, 25%, 100% {
+        transform: translate(0,0);
+      }
+      13% {
+        transform: translate(220px,0);
+      }
+      24% {
+        transform: translate(-69px,0);
+      }
+    }
+    
+    .text-content {
+      color: #fff;
+      max-width: 1000px;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 25px;
+      font-weight: 400;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+    
+    /* Home button styling */
+    .home-button {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      z-index: 100;
+      font-family: Impact, sans-serif;
+      font-size: 52px;
+      color: transparent;
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: block;
+    }
+
+    .home-button::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 49%;
+      left: -10%;
+      right: -10%;
+      height: 4px;
+      border-radius: 4px;
+      margin-top: -2px;
+      background: #FF103D;
+      transform: scale(0);
+      transition: transform .8s cubic-bezier(.16,1.08,.38,.98);
+      z-index: 1;
+    }
+
+    .Mask {
+      display: block;
+      position: absolute;
+      overflow: hidden;
+      color: #000000;
+      top: 0;
+      height: 49%;
+      transition: all .8s cubic-bezier(.16,1.08,.38,.98);
+    }
+
+    .Mask span {
+      display: block;
+    }
+
+    .Mask + .Mask {
+      top: 48.9%;
+      height: 51.1%;
+    }
+
+    .Mask + .Mask span {
+      transform: translateY(-49%);
+    }
+
+    .home-button:hover .Mask,
+    .home-button:active .Mask {
+      color: #FFF;
+      transform: skewX(12deg) translateX(5px);
+    }
+
+    .home-button:hover .Mask + .Mask,
+    .home-button:active .Mask + .Mask {
+      transform: skewX(12deg) translateX(-5px);
+    }
+
+    .home-button:hover::before,
+    .home-button:active::before {
+      transform: scale(1);
+    }
+
+    /* Contact buttons styling */
+    .contact-buttons {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contact-btn {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 24px;
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: 15px 30px;
+      background: rgba(0, 0, 0, 0.8);
+      clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      letter-spacing: 2px;
+    }
+
+    .contact-btn:hover {
+      background: rgba(0, 0, 0, 0.95);
+      transform: translateX(-5px);
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+
+    .contact-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: #fff;
+    }
+
+    /* Responsive Design for Mobile */
+    @media (max-width: 768px) {
+      .profile-section {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+        clip-path: polygon(
+          2% 2%, 
+          98% 3%, 
+          98% 5%, 
+          97% 97%, 
+          95% 97%, 
+          3% 98%, 
+          2% 96%, 
+          1% 5%
+        );
+      }
+      
+      .wrapper {
+        height: 16rem;
+        width: 16rem;
+      }
+      
+      .text-content {
+        font-size: 18px;
+        text-align: center;
+      }
+      
+      .home-button {
+        bottom: 20px;
+        left: 20px;
+        font-size: 36px;
+      }
+      
+      .contact-buttons {
+        bottom: 20px;
+        right: 20px;
+        gap: 15px;
+      }
+      
+      .contact-btn {
+        font-size: 18px;
+        padding: 12px 20px;
+        letter-spacing: 1px;
+      }
+      
+      .contact-btn svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .profile-section {
+        padding: 1.5rem 1rem;
+        gap: 1.5rem;
+      }
+      
+      .wrapper {
+        height: 12rem;
+        width: 12rem;
+      }
+      
+      .text-content {
+        font-size: 16px;
+      }
+      
+      .home-button {
+        bottom: 15px;
+        left: 15px;
+        font-size: 28px;
+      }
+      
+      .contact-buttons {
+        position: fixed;
+        bottom: auto;
+        top: 15px;
+        right: 15px;
+        gap: 10px;
+      }
+      
+      .contact-btn {
+        font-size: 14px;
+        padding: 10px 15px;
+        letter-spacing: 0.5px;
+        gap: 8px;
+      }
+      
+      .contact-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas></canvas>
+  
+  <div class="content-wrapper">
+    <div class="profile-section">
+      <div class="wrapper">
+        <div class="glitch red"></div>
+        <div class="glitch blue"></div>
+        <div class="glitch green"></div>
+      </div>
+      
+      <div class="text-content">
+        <p>I'm a multimedia artist shaped by the worlds I've built digital, painted, coded, and imagined.<br>
+My path began in the least artistic of places: high-school chemistry. While formulas escaped me, technical drawing revealed where my mind truly belonged: in images, structure, and storytelling.<br><br>
+
+That instinct led me from traditional painting to the National University of the Arts, where I studied Multimedia Arts and entered the gaming world professionally. I later expanded into web programming, UX/UI design, and project management through Google's professional programs, blending creativity with structure and intuition with technique.<br>
+
+Today, I work as a 3D artist at Fanny Pack Studios and as an audiovisual developer for independent and freelance projects, bringing together art, technology, and play.<br><br>
+
+Even with years of experience, I consider myself a lifelong learner; always expanding my skills and perspectives to stay connected to an ever-evolving creative world.</p>
+      </div>
+    </div>
+  </div>
+  
+  <a href="new_index.html" class="home-button">
+    HOME
+    <span class="Mask"><span>HOME</span></span>
+    <span class="Mask"><span>HOME</span></span>
+  </a>
+
+  <div class="contact-buttons">
+    <a href="https://wa.me/5491122539753" target="_blank" class="contact-btn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+      </svg>
+      CONTACT ME
+    </a>
+    
+    <a href="mailto:carlamdaria@gmail.com" class="contact-btn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+      </svg>
+      carlamdaria@gmail.com
+    </a>
+  </div>
+
+  <script id="vertexShader" type="x-shader/x-vertex"> 
+    uniform float u_time;
+    uniform vec2 u_mouse;
+    uniform vec2 u_planeRes;
+    uniform float u_isHovering;
+    varying vec2 vUv;
+    
+    void main(){
+      vUv = uv;
+      
+      vec3 transformed = position;
+      
+      vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+      
+      float dist = distance(worldPosition.xy, u_mouse);
+      
+      float inCircle = 1.0 - (clamp(dist, 0.0, 300.0) / 300.0);
+      
+      float waves = sin(worldPosition.x * 0.004 - u_time * 2.3) * 7.0;
+      
+      float elevation = 23.0 * inCircle * u_isHovering;
+      
+      transformed.z += waves + elevation;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
+    }
+  </script>
+  
+  <script id="fragmentShader" type="x-shader/x-fragment">
+    uniform float u_time;
+    varying vec2 vUv;
+    uniform vec2 u_planeRes;
+    uniform vec2 u_windowRes;
+    
+    float makeRect(vec2 dimensions, float blur, vec2 uv, float position){
+      float h = smoothstep(dimensions.x + blur, dimensions.x - blur, length(uv.x - position));
+      float v = smoothstep(dimensions.y + blur, dimensions.y - blur, length(uv.y - position));
+      return h * v;
+    }
+    
+    void main(){
+      vec2 uv = vUv;
+      float minRes = min(u_windowRes.x, u_windowRes.y);
+      uv *= u_windowRes / minRes;
+      uv = fract(uv * 10.0);
+      
+      float gridLineWidth = 1.5 * 0.5 * 10.0 * 0.9/ minRes;
+      float gridBlur = 1.5 * 0.5 * 10.0 * 0.9/ minRes;
+      
+      float gridSpaceSize = 0.5 - gridLineWidth;
+      float gridSpace = makeRect(vec2(gridSpaceSize), gridBlur, uv, 0.5);
+      
+      float plusLineWidth = gridLineWidth;
+      float plusBlur = gridBlur;
+      
+      float plusSize = 0.03;
+      
+      float plusVertical = makeRect(vec2(plusLineWidth, plusSize), plusBlur, uv, 0.87);
+      float plusHorizontal = makeRect(vec2(plusSize, plusLineWidth), plusBlur, uv, 0.87);
+      
+      float plusSign = clamp(plusVertical + plusHorizontal, 0.0, 1.0) * 3.2;
+      
+      float mask = gridSpace - plusSign;
+      
+      vec3 red = vec3(1.0, 16.0/255.0, 61.0/255.0);
+      vec3 darkRed = vec3(220.0/255.0, 14.0/255.0, 56.0/255.0);
+      
+      vec3 color = mix(darkRed, red, mask);
+      gl_FragColor = vec4(color, 1.0);
+    }
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script>
+    const canvas = document.querySelector("canvas");
+    const PR = 1.0;
+    let W = window.innerWidth;
+    let H = window.innerHeight;
+    let isHovering = false;
+    
+    const renderer = new THREE.WebGLRenderer({canvas});
+    renderer.setSize(W * PR, H * PR, false);
+    
+    const perspective = 180;
+    const fov = Math.atan(H / 2 / perspective) * 180 / Math.PI * 2;
+    const camera = new THREE.PerspectiveCamera(fov, W/H, 0.1, 200);
+    camera.position.z = perspective;
+    
+    const scene = new THREE.Scene();
+    
+    const uniforms = {
+      u_time: {value: 0.0},
+      u_mouse: {value: new THREE.Vector2()},
+      u_planeRes: {value: new THREE.Vector2()},
+      u_isHovering: {value: 0.0},
+      u_windowRes: {value: new THREE.Vector2(W, H)}
+    };
+    
+    const geometry = new THREE.PlaneGeometry(1, 1, 20, 20);
+    const material = new THREE.ShaderMaterial({
+      uniforms,
+      vertexShader: document.querySelector("#vertexShader").textContent,
+      fragmentShader: document.querySelector("#fragmentShader").textContent,
+      transparent: true
+    });
+    
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.scale.x = uniforms.u_planeRes.value.x = W + W * 0.1;
+    mesh.scale.y = uniforms.u_planeRes.value.y = H + H * 0.1;
+    scene.add(mesh);
+    
+    render();
+    
+    document.addEventListener("mousemove", e => {
+      if(!isHovering){
+        uniforms.u_mouse.value.x = e.clientX - W / 2;
+        uniforms.u_mouse.value.y = -e.clientY + H / 2;
+        gsap.to(uniforms.u_isHovering, {
+          value: 1.0
+        });
+      }
+      
+      gsap.to(uniforms.u_mouse.value, {
+        x: e.clientX - W / 2,
+        y: -e.clientY + H / 2,
+        duration: 0.7
+      });
+      
+      isHovering = true;
+    });
+    
+    document.addEventListener("mouseleave", e => {
+      gsap.to(uniforms.u_isHovering, {
+        value: 0.0
+      });
+      isHovering = false;
+    });
+    
+    window.addEventListener("resize", e => {
+      W = window.innerWidth;
+      H = window.innerHeight;
+      
+      mesh.scale.x = uniforms.u_planeRes.value.x = W + W * 0.1;
+      mesh.scale.y = uniforms.u_planeRes.value.y = H + H * 0.1;
+      
+      uniforms.u_windowRes.value.x = W;
+      uniforms.u_windowRes.value.y = H;
+      
+      camera.fov = Math.atan(H / 2 / perspective) * 180 / Math.PI * 2;
+      camera.aspect = W/H;
+      camera.updateProjectionMatrix();
+      renderer.setSize(W * PR, H * PR, false);
+    });
+    
+    function render(){
+      uniforms.u_time.value += 0.01;
+      renderer.render(scene, camera);
+      requestAnimationFrame(render);
+    }
+  </script>
+</body>
+</html>

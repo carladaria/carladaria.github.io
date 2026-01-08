@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+    <title>Fanny Pack Studios</title>
+    <meta property="og:title" content="Fanny Pack Studios">
+    <meta property="og:image" content="assets/images/Nefy-Dark.png">
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-lugx-gaming.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+
+
+<!-- jeje me dieron mucho poder -->
+<style>
+        :root {
+    --color1: rgb(0, 231, 255);
+    --color2: rgb(255, 0, 231);
+}
+
+.cards-section {
+    background-color: transparent;
+    min-height: 220vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+    width: 100%;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 30px;
+    padding: 20px;
+    perspective: 2000px;
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: repeat(2, 1fr); /* Changes to 2 columns on mobile */
+        grid-template-rows: repeat(4, auto); /* Adjusts to 4 rows for 8 cards */
+        gap: 15px; /* Reduced gap for mobile */
+        padding: 10px; /* Reduced padding for mobile */
+        width: 95%; /* Slightly wider container on mobile */
+    }
+
+    .card {
+        aspect-ratio: 4859 / 8246; /* Maintain the same proportion on mobile */
+    }
+}
+
+.card {
+    width: 100%;
+    aspect-ratio: 4859 / 8246;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4% / 3.5%;
+    box-shadow: 
+        -5px -5px 5px -5px var(--color1), 
+        5px 5px 5px -5px var(--color2), 
+        0 0 5px 0px rgba(255,255,255,0),
+        0 55px 35px -20px rgba(0, 0, 0, 0.5);
+    transition: 
+        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 0.3s ease;
+    background-color: transparent; /* Changed from #040712 to transparent */
+    background-size: cover;
+    background-position: center;
+    transform-origin: center;
+    cursor: pointer;
+    border: none; /* Remove any default borders */
+}
+
+
+
+/* Individual card backgrounds */
+#card1 { background-image: url("assets/images/1unrooted.png"); }
+#card2 { background-image: url("assets/images/2galaxyno.png"); }
+#card3 { background-image: url("assets/images/3magicalrangers.png"); }
+#card4 { background-image: url("assets/images/4bonsaishop.png"); }
+#card5 { background-image: url("assets/images/5cometsnight.png"); }
+#card6 { background-image: url("assets/images/6radixorbix.png"); }
+#card7 { background-image: url("assets/images/7supercat.png"); }
+#card8 { background-image: url("assets/images/8runa.png"); }
+
+.card:hover {
+    box-shadow: 
+        -20px -20px 30px -25px var(--color1), 
+        20px 20px 30px -25px var(--color2), 
+        -7px -7px 10px -5px var(--color1), 
+        7px 7px 10px -5px var(--color2), 
+        0 0 13px 4px rgba(255,255,255,0.3),
+        0 55px 35px -20px rgba(0, 0, 0, 0.5);
+}
+
+.card:before,
+.card:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-repeat: no-repeat;
+    opacity: .5;
+    mix-blend-mode: color-dodge;
+    transition: all .33s ease;
+    border-radius: 5% / 3.5%; /* Add border radius to pseudo-elements */
+}
+
+.card:before {
+    background-position: 50% 50%;
+    background-size: 300% 300%;
+    background-image: linear-gradient(
+        115deg,
+        transparent 0%,
+        var(--color1) 25%,
+        transparent 47%,
+        transparent 53%,
+        var(--color2) 75%,
+        transparent 100%
+    );
+    opacity: .5;
+    filter: brightness(.5) contrast(1);
+    z-index: 1;
+}
+
+.card:after {
+    opacity: 1;
+    background-image: url("assets/images/sparkles.gif"),
+        url("assets/images/holo.png"),
+        linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
+    background-position: 50% 50%;
+    background-size: 160%;
+    background-blend-mode: overlay;
+    z-index: 2;
+    filter: brightness(1) contrast(1);
+    transition: all .33s ease;
+    mix-blend-mode: color-dodge;
+    opacity: .75;
+}
+
+.card:hover:after {
+    opacity: 1;
+    filter: brightness(1) contrast(1);
+}
+
+.card:hover:before {
+    background-image: linear-gradient(
+        110deg,
+        transparent 25%,
+        var(--color1) 48%,
+        var(--color2) 52%,
+        transparent 75%
+    );
+    background-position: 50% 50%;
+    background-size: 250% 250%;
+    opacity: .88;
+    filter: brightness(.66) contrast(1.33);
+}
+
+.card.animated {
+    animation: holoCard 12s ease 0s 1;
+}
+
+.card.animated:before {
+    animation: holoGradient 12s ease 0s 1;
+}
+
+.card.animated:after {
+    animation: holoSparkle 12s ease 0s 1;
+}
+
+@keyframes holoSparkle {
+    0%, 100% {
+        opacity: .75; background-position: 50% 50%; filter: brightness(1.2) contrast(1.25);
+    }
+    5%, 8% {
+        opacity: 1; background-position: 40% 40%; filter: brightness(.8) contrast(1.2);
+    }
+    13%, 16% {
+        opacity: .5; background-position: 50% 50%; filter: brightness(1.2) contrast(.8);
+    }
+    35%, 38% {
+        opacity: 1; background-position: 60% 60%; filter: brightness(1) contrast(1);
+    }
+    55% {
+        opacity: .33; background-position: 45% 45%; filter: brightness(1.2) contrast(1.25);
+    }
+}
+
+@keyframes holoGradient {
+    0%, 100% {
+        opacity: 0.5;
+        background-position: 50% 50%;
+        filter: brightness(.5) contrast(1);
+    }
+    5%, 9% {
+        background-position: 100% 100%;
+        opacity: 1;
+        filter: brightness(.75) contrast(1.25);
+    }
+    13%, 17% {
+        background-position: 0% 0%;
+        opacity: .88;
+    }
+    35%, 39% {
+        background-position: 100% 100%;
+        opacity: 1;
+        filter: brightness(.5) contrast(1);
+    }
+    55% {
+        background-position: 0% 0%;
+        opacity: 1;
+        filter: brightness(.75) contrast(1.25);
+    }
+}
+
+@keyframes holoCard {
+    0%, 100% {
+        transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+    }
+    5%, 8% {
+        transform: rotateZ(0deg) rotateX(6deg) rotateY(-20deg);
+    }
+    13%, 16% {
+        transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
+    }
+    35%, 38% {
+        transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
+    }
+    55% {
+        transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
+    }
+}
+
+
+/* Main Banner Mobile Responsiveness */
+.main-banner {
+  background-color: #1a1a1a;
+  padding: 150px 0px;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-banner .header-text {
+  text-align: left;
+  margin-top: 20%;
+}
+
+.main-banner .header-text h6 {
+  color: #ffaf19;
+  font-size: 1.2em;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.main-banner .header-text h2 {
+  color: #fff;
+  font-size: 3em;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.main-banner .header-text p {
+  color: #fff;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+/* Mobile Specific Styles */
+@media (max-width: 768px) {
+  .main-banner {
+    padding: 80px 0px;
+    min-height: 100vh; /* Changed to full viewport height */
+    display: flex;
+    align-items: center;
+  }
+
+  .main-banner .header-text {
+    text-align: center;
+    margin-top: 15%;
+    padding: 0 20px;
+  }
+
+  .main-banner .header-text h6 {
+    font-size: 1.4em; /* Increased from 1em */
+    margin-bottom: 20px;
+  }
+
+  .main-banner .header-text h2 {
+    font-size: 2.8em; /* Increased from 2em */
+    margin-bottom: 25px;
+    line-height: 1.2;
+  }
+
+  .main-banner .header-text p {
+    font-size: 1.1em; /* Increased from 0.9em */
+    padding: 0 15px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  .main-banner .col-lg-6 {
+    width: 100%;
+    padding: 0 20px;
+  }
+}
+
+/* Additional Mobile Fixes */
+@media (max-width: 576px) {
+  .main-banner .header-text h2 {
+    font-size: 2.5em; /* Increased from 1.8em */
+  }
+
+  .main-banner {
+    background-position: center;
+  }
+
+  .main-banner .header-text {
+    margin-top: 20%;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 360px) {
+  .main-banner .header-text h2 {
+    font-size: 2.2em;
+  }
+
+  .main-banner .header-text p {
+    font-size: 1em;
+  }
+}
+
+
+
+    </style>
+  </head>
+
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="index.html" class="logo">
+                        <img src="assets/images/logo.png" alt="Fanny Pack Studios" style="width: 200px;">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="aboutus.html">About Us</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                     <li class="social-icons">
+    <a href="https://www.linkedin.com/company/fanny-pack-studios-sa/posts/?feedView=all" class="social-button" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+    <a href="https://github.com/Fanny-Pack-Studios" class="social-button" target="_blank"><i class="fa-brands fa-github"></i></a>
+    <a href="https://www.instagram.com/fannypackstudios/" class="social-button" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://x.com/FannyPackStu/" class="social-button" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+    <a href="https://discord.com/invite/BHg9azZUVw" class="social-button" target="_blank"><i class="fa-brands fa-discord"></i></a>
+</li>
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+  <!-- ***** Header Area End ***** -->
+
+
+
+  
+
+  <div class="section cards-section">
+    <div class="cards-container">
+        <a href="https://store.steampowered.com/app/2283470/Runa__the_Chaikur_Legacy/" target="_blank" class="card" id="card8"></a> 
+
+        <a href="https://maurus.itch.io/la-noche-de-los-cometas" target="_blank" class="card" id="card5"></a> 
+
+         <a href="https://j9794.itch.io/galaxyno" target="_blank" class="card" id="card2"></a>
+        
+          
+
+        <!--   <a href="https://fannypackstudios.itch.io/unrooted" target="_blank" class="card" id="card1"></a>
+
+        <a href="https://fannypackstudios.itch.io/radix-orbis" target="_blank" class="card" id="card6"></a>
+        
+        <a href="https://pablitar.games/categories/supercat/" target="_blank" class="card" id="card7"></a>
+
+        <a href="https://fannypackstudios.itch.io/capybara-bonsai-shop" target="_blank" class="card" id="card4"></a>
+      
+      <a href="portfolio.html" class="card" id="card3"></a>-->
+    </div>
+</div>
+
+ 
+
+  <div class="section categories">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <div class="section-heading">
+            <h2>CLIENTS</h2>
+          </div>
+        </div>
+        <div class="col-lg col-sm-6 col-xs-12">
+          <div class="item">
+            
+            <div class="thumb">
+              <img src="assets/images/GOB-01.jpg" alt=""></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg col-sm-6 col-xs-12">
+          <div class="item">
+            
+            <div class="thumb">
+            <img src="assets/images/endless.jpg" alt=""></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="col-lg-12">
+        <p>Fanny Pack Studios © 2025</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/js/isotope.min.js"></script>
+  <script src="assets/js/owl-carousel.js"></script>
+  <script src="assets/js/counter.js"></script>
+  <script src="assets/js/custom.js"></script>
+
+
+<script>
+const cards = document.querySelectorAll('.card');
+
+cards.forEach(card => {
+    let timeoutId;
+    
+    function handleMouseMove(e) {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Calculate rotation angles with smoother values
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateY = ((x - centerX) / centerX) * 15; // Max 15 degrees rotation
+        const rotateX = -((y - centerY) / centerY) * 10; // Max 10 degrees rotation
+        
+        // Apply smooth transform with easing
+        card.style.transform = `
+            perspective(1000px)
+            rotateX(${rotateX}deg)
+            rotateY(${rotateY}deg)
+            scale3d(1.05, 1.05, 1.05)
+        `;
+        
+        // Update lighting effect positions
+        const px = Math.abs(Math.floor(100 / rect.width * x)-100);
+        const py = Math.abs(Math.floor(100 / rect.height * y)-100);
+        const gradPos = `${px}% ${py}%`;
+        
+        card.style.setProperty('--grad-pos', gradPos);
+    }
+    
+    function handleMouseLeave() {
+        // Smooth return to original position
+        card.style.transform = `
+            perspective(1000px)
+            rotateX(0deg)
+            rotateY(0deg)
+            scale3d(1, 1, 1)
+        `;
+        
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            card.classList.add('animated');
+        }, 2500);
+    }
+
+    card.addEventListener('mousemove', handleMouseMove);
+    card.addEventListener('mouseleave', handleMouseLeave);
+});
+</script>
+
+<script>
+  // Add this script at the end of the body or in your main JS file
+  document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+          // Once animation has started, we can stop observing
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.05 // Trigger when % of the element is visible
+    });
+    
+    // Start observing the services section
+    const servicesSection = document.querySelector('.section.services');
+    if (servicesSection) {
+      observer.observe(servicesSection);
+    }
+  });
+</script>
+
+  </body>
+</html>

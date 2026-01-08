@@ -1,0 +1,237 @@
+:root {
+  --bg: #f7f9fb;
+  --text: #1f2933;
+  --muted: #6b7280;
+  --accent: #4fb3a2;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* =========================
+   HERO
+   ========================= */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 3rem;              /* antes 4rem */
+  gap: 2rem;                  /* antes 3rem */
+  background: linear-gradient(180deg, #ffffff, #eef2f5);
+  align-items: center;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-bottom: .75rem;
+}
+
+.tags span {
+  display: inline-block;
+  background: #e5f4f1;
+  color: #246b60;
+  padding: .35rem .75rem;
+  border-radius: 999px;
+  margin-right: .4rem;
+  margin-top: .4rem;
+  font-size: .85rem;
+}
+
+.hero-media {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-media img {
+  max-width: 420px;
+  width: 100%;
+  border-radius: 28px;
+  box-shadow: 0 24px 48px rgba(0,0,0,.12);
+}
+
+/* =========================
+   CONTENT — COMPACT
+   ========================= */
+
+.content {
+  padding: 1.25rem 4rem;      /* antes ~2.25rem */
+}
+
+.content h2 {
+  margin: 0 0 .5rem;
+}
+
+.content h3 {
+  margin: 1rem 0 .5rem;
+}
+
+p,
+ul {
+  margin: 0 0 .75rem;
+}
+
+ul {
+  padding-left: 1.2rem;
+}
+
+.muted {
+  color: var(--muted);
+  max-width: 720px;
+}
+
+/* =========================
+   GRID
+   ========================= */
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;                /* antes 3rem */
+}
+
+.goal-box {
+  background: white;
+  padding: 1.5rem;            /* antes 2rem */
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.05);
+}
+
+/* =========================
+   IMAGE ROW BASE
+   ========================= */
+
+.image-row {
+  display: flex;
+  gap: 1rem;                  /* antes 1.5rem */
+}
+
+/* =========================
+   KEY SCREENS — COMPACT
+   ========================= */
+
+.key-screens {
+  margin: 1.25rem 0 1.5rem;   /* antes 2–2.5rem */
+  width: 100%;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: .25rem;
+}
+
+.key-screens img {
+  width: 190px;
+  flex-shrink: 0;
+  background: #f1f3f5;
+  padding: 1rem;
+  border-radius: 22px;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.key-screens img:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0,0,0,.14);
+}
+
+/* =========================
+   FINAL UI — COMPACT ROW
+   ========================= */
+
+.content .image-row:not(.key-screens) {
+  margin: 1.25rem 0 1.5rem;
+  width: 100%;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: .25rem;
+  align-items: flex-start;
+}
+
+.content .image-row:not(.key-screens) img {
+  height: 280px;
+  width: auto;
+  flex-shrink: 0;
+  border-radius: 18px;
+  object-fit: cover;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.content .image-row:not(.key-screens) img:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 28px rgba(0,0,0,.14);
+}
+
+/* =========================
+   RESULTS
+   ========================= */
+
+.results {
+  padding: 3rem;              /* antes 4rem */
+  background: linear-gradient(180deg, #eef2f5, #ffffff);
+  display: flex;
+  justify-content: center;
+}
+
+.results-box {
+  max-width: 420px;
+  background: white;
+  padding: 2rem;              /* antes 2.5rem */
+  border-radius: 22px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.08);
+}
+
+.results-box button {
+  width: 100%;
+  padding: .9rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--accent);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.results-box button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(79,179,162,.4);
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 2.25rem 2rem;
+  }
+
+  .content {
+    padding: 1.25rem 2rem;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .key-screens img {
+    width: 170px;
+  }
+
+  .content .image-row:not(.key-screens) img {
+    width: 190px;
+  }
+}

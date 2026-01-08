@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>3D Art Portfolio — Carla D'Aria</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Impact', sans-serif;
+      background: #0d0607;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ===== Background Waves ===== */
+    a-waves {
+      --x: -0.5rem;
+      --y: 50%;
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      will-change: auto;
+    }
+
+    a-waves:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0.5rem;
+      height: 0.5rem;
+      background: #ff103d;
+      border-radius: 50%;
+      transform: translate3d(calc(var(--x) - 50%), calc(var(--y) - 50%), 0);
+      will-change: transform;
+      content: "";
+      pointer-events: none;
+    }
+
+    a-waves svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    a-waves svg path {
+      fill: none;
+      stroke: #ff103d;
+      stroke-width: 0.5px;
+      opacity: 0.3;
+      vector-effect: non-scaling-stroke;
+    }
+
+    /* ===== Page Layout ===== */
+    .page {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== Header ===== */
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .header__logo {
+      font-size: 3em;
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: rgba(255, 255, 255, 1);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .header__logo span {
+      display: inline-block;
+      transform: translateY(4px) rotate(180deg);
+      pointer-events: none;
+    }
+
+    .header__menu {
+      margin-left: auto;
+    }
+
+    .header__menu__list {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header__menu__link {
+      position: relative;
+      margin-left: 50px;
+      color: #808080;
+      text-decoration: none;
+      cursor: pointer;
+      display: block;
+      transition: color 0.3s ease;
+      font-size: 30px;
+    }
+
+    .header__menu__link::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 49%;
+      left: -10%;
+      right: -10%;
+      height: 2px;
+      border-radius: 2px;
+      margin-top: -1px;
+      background: #FF103D;
+      transform: scale(0);
+      transition: transform .8s cubic-bezier(.16,1.08,.38,.98);
+      z-index: 1;
+    }
+
+    .header__menu__link:hover {
+      color: #FF103D;
+    }
+
+    .header__menu__link:hover .Mask,
+    .header__menu__link:active .Mask {
+      color: #FFF;
+      transform: skewX(12deg) translateX(3px);
+    }
+
+    .header__menu__link:hover .Mask + .Mask,
+    .header__menu__link:active .Mask + .Mask {
+      transform: skewX(12deg) translateX(-3px);
+    }
+
+    .header__menu__link:hover::before,
+    .header__menu__link:active::before {
+      transform: scale(1);
+    }
+
+    /* Mask class para efectos hover */
+    .Mask {
+      display: block;
+      position: absolute;
+      overflow: hidden;
+      color: #e0e0e0;
+      top: 0;
+      height: 49%;
+      transition: all .8s cubic-bezier(.16,1.08,.38,.98);
+    }
+
+    .Mask span {
+      display: block;
+    }
+
+    .Mask + .Mask {
+      top: 48.9%;
+      height: 51.1%;
+    }
+
+    .Mask + .Mask span {
+      transform: translateY(-49%);
+    }
+
+    /* ===== Main Content ===== */
+    .center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 40px 80px;
+    }
+
+    /* ===== Hero Section ===== */
+    .hero-section {
+      width: 100%;
+      max-width: 1400px;
+      padding: 60px 0 80px;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: clamp(50px, 7vw, 100px);
+      line-height: 0.9;
+      letter-spacing: 3px;
+      margin-bottom: 24px;
+      color: #ff103d;
+      text-transform: uppercase;
+      text-shadow: 0 0 30px rgba(255, 16, 61, 0.6);
+    }
+
+    .hero-subtitle {
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 800px;
+      margin: 0 auto 50px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-divider {
+      width: 120px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #ff103d, transparent);
+      margin: 0 auto;
+      box-shadow: 0 0 20px rgba(255, 16, 61, 0.5);
+    }
+
+    /* ===== Section Navigation ===== */
+    .section-nav {
+      width: 100%;
+      max-width: 1400px;
+      margin: 60px 0 40px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .section-btn {
+      position: relative;
+      padding: 16px 32px;
+      font-size: 18px;
+      font-family: 'Impact', sans-serif;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 16, 61, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .section-btn:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 16, 61, 0.5);
+      color: #ff103d;
+      box-shadow: 0 10px 30px rgba(255, 16, 61, 0.2);
+    }
+
+    .section-btn:hover::before {
+      opacity: 1;
+    }
+
+    .section-btn.active {
+      background: rgba(255, 16, 61, 0.15);
+      border-color: #ff103d;
+      color: #fff;
+      box-shadow: 0 0 40px rgba(255, 16, 61, 0.4);
+    }
+
+    .section-btn.active::before {
+      opacity: 1;
+    }
+
+    /* ===== Projects Grid ===== */
+    .projects-wrapper {
+      width: 100%;
+      max-width: 1400px;
+    }
+
+    .section-content {
+      display: none;
+    }
+
+    .section-content.active {
+      display: block;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-title {
+      font-size: clamp(32px, 4vw, 48px);
+      margin-bottom: 40px;
+      color: #ff103d;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 20px 0;
+    }
+
+    .project-card {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      border-radius: 12px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.5s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 16, 61, 0.2), transparent);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 1;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(255, 16, 61, 0.3);
+      box-shadow: 0 20px 60px rgba(255, 16, 61, 0.3);
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-card img,
+    .project-card video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) brightness(0.7);
+      transition: all 0.5s ease;
+    }
+
+    .project-card:hover img,
+    .project-card:hover video {
+      filter: grayscale(0%) brightness(1);
+      transform: scale(1.05);
+    }
+
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13, 6, 7, 0.9), transparent);
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 2;
+    }
+
+    .project-card:hover .project-overlay {
+      opacity: 1;
+    }
+
+    .project-title {
+      font-size: 18px;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ===== Carousel Modal ===== */
+    .carousel-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 6, 7, 0.98);
+      z-index: 1000;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .carousel-modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 90%;
+      height: 90%;
+      max-width: 1400px;
+      max-height: 900px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 16, 61, 0.2);
+      border: 2px solid #ff103d;
+      border-radius: 50%;
+      color: #ff103d;
+      font-size: 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 10;
+      line-height: 1;
+    }
+
+    .carousel-close:hover {
+      background: rgba(255, 16, 61, 0.4);
+      transform: rotate(90deg);
+    }
+
+    .carousel-title {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      font-size: clamp(24px, 4vw, 36px);
+      color: #ff103d;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      z-index: 10;
+    }
+
+    .carousel-track-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+      height: 100%;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 80px 80px;
+    }
+
+    .carousel-slide img,
+    .carousel-slide video {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 16, 61, 0.3);
+    }
+
+    .carousel-prev,
+    .carousel-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 16, 61, 0.2);
+      border: 2px solid #ff103d;
+      border-radius: 50%;
+      color: #ff103d;
+      font-size: 28px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .carousel-prev:hover,
+    .carousel-next:hover {
+      background: rgba(255, 16, 61, 0.4);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-prev {
+      left: 20px;
+    }
+
+    .carousel-next {
+      right: 20px;
+    }
+
+    .carousel-counter {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.7);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      z-index: 10;
+    }
+
+    .carousel-counter span {
+      color: #ff103d;
+      font-weight: bold;
+    }
+
+    /* ===== Responsive Design ===== */
+    @media (max-width: 1200px) {
+      .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .header {
+        padding: 20px;
+        flex-wrap: wrap;
+      }
+
+      .header__logo {
+        font-size: 2.2em;
+        margin-bottom: 15px;
+      }
+
+      .header__menu {
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .header__menu__list {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .header__menu__link {
+        margin-left: 0;
+        font-size: 20px;
+      }
+
+      .hero-section {
+        padding: 40px 0 60px;
+      }
+
+      .section-nav {
+        margin: 40px 0 30px;
+        gap: 12px;
+      }
+
+      .section-btn {
+        padding: 12px 24px;
+        font-size: 16px;
+      }
+
+      .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .carousel-slide {
+        padding: 80px 60px 60px;
+      }
+
+      .carousel-title {
+        font-size: 24px;
+        top: 20px;
+        left: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        padding: 15px;
+      }
+
+      .header__logo {
+        font-size: 1.8em;
+        margin-bottom: 12px;
+      }
+
+      .header__menu__link {
+        font-size: 16px;
+        padding: 4px 8px;
+      }
+
+      .center {
+        padding: 20px 20px 60px;
+      }
+
+      .hero-section {
+        padding: 30px 0 40px;
+      }
+
+      .hero-subtitle {
+        font-size: 16px;
+      }
+
+      .section-nav {
+        margin: 30px 0 20px;
+        gap: 10px;
+      }
+
+      .section-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .carousel-slide {
+        padding: 80px 20px 60px;
+      }
+
+      .carousel-close {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+        top: 15px;
+        right: 15px;
+      }
+
+      .carousel-title {
+        font-size: 18px;
+        top: 15px;
+        left: 15px;
+      }
+
+      .carousel-prev,
+      .carousel-next {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+      }
+
+      .carousel-prev {
+        left: 10px;
+      }
+
+      .carousel-next {
+        right: 10px;
+      }
+
+      .carousel-counter {
+        bottom: 20px;
+        right: 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Waves -->
+  <a-waves>
+    <svg class="js-svg"></svg>
+  </a-waves>
+
+  <div class="page">
+    <!-- Header -->
+    <header class="header">
+      <a href="new_index.html" class="header__logo">CARLA D<span>A'</span>RIA</a>
+      <nav class="header__menu">
+        <ul class="header__menu__list">
+          <li class="header__menu__item">
+            <a href="ux index.html" class="header__menu__link">
+              UX/UI DESIGN
+              <span class="Mask"><span>UX/UI DESIGN</span></span>
+              <span class="Mask"><span>UX/UI DESIGN</span></span>
+            </a>
+          </li>
+          <li class="header__menu__item">
+            <a href="graphic.html" class="header__menu__link">
+              GRAPHIC DESIGN
+              <span class="Mask"><span>GRAPHIC DESIGN</span></span>
+              <span class="Mask"><span>GRAPHIC DESIGN</span></span>
+            </a>
+          </li>
+          <li class="header__menu__item">
+            <a href="2d.html" class="header__menu__link">
+              2D ART
+              <span class="Mask"><span>2D ART</span></span>
+              <span class="Mask"><span>2D ART</span></span>
+            </a>
+          </li>
+          <li class="header__menu__item">
+            <a href="visuals.html" class="header__menu__link">
+              VISUALS
+              <span class="Mask"><span>VISUALS</span></span>
+              <span class="Mask"><span>VISUALS</span></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="center">
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <h1 class="hero-title">3D ART</h1>
+     <div class="hero-divider"></div>
+      </section>
+
+      <!-- Section Navigation -->
+      <div class="section-nav">
+        <button class="section-btn active" data-section="character">Character Art</button>
+        <button class="section-btn" data-section="environments">Digital Environments</button>
+        <button class="section-btn" data-section="objects">Objects & Still Life</button>
+        <button class="section-btn" data-section="architectural">Architectural Design</button>
+      </div>
+
+      <!-- Projects Wrapper -->
+      <div class="projects-wrapper">
+        <!-- Character Art Section -->
+        <div class="section-content active" data-section="character">
+     
+          <div class="projects-grid" id="character-grid"></div>
+        </div>
+
+        <!-- Digital Environments Section -->
+        <div class="section-content" data-section="environments">
+         
+          <div class="projects-grid" id="environments-grid"></div>
+        </div>
+
+        <!-- Objects & Still Life Section -->
+        <div class="section-content" data-section="objects">
+    
+          <div class="projects-grid" id="objects-grid"></div>
+        </div>
+
+        <!-- Architectural Design Section -->
+        <div class="section-content" data-section="architectural">
+   
+          <div class="projects-grid" id="architectural-grid"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+
+
+  <!-- Carousel Modal -->
+  <div class="carousel-modal" id="carouselModal">
+    <div class="carousel-container">
+      <button class="carousel-close" id="carouselClose">&times;</button>
+      <h2 class="carousel-title" id="carouselTitle">Category</h2>
+      <button class="carousel-prev" id="carouselPrev">&#8249;</button>
+      <div class="carousel-track-wrapper">
+        <div class="carousel-track" id="carouselTrack"></div>
+      </div>
+      <button class="carousel-next" id="carouselNext">&#8250;</button>
+      <div class="carousel-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">1</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Category Data =====
+    const categoryData = {
+      character: {
+        title: 'Character Art',
+        images: [
+          'D:/website/Asset website/3D/Character3D_Conqueror.png',
+          'D:/website/Asset website/3D/Character3D_Conqueror1.png',
+          'D:/website/Asset website/3D/Video_conqueror.mp4',
+          'D:/website/Asset website/3D/Character3D_Rocky01.png',
+          'D:/website/Asset website/3D/Character3D_Rocky02.png',
+          'D:/website/Asset website/3D/Turntable_Rocky.mp4',
+          'D:/website/Asset website/3D/Ninfa 1.png',
+          'D:/website/Asset website/3D/Ninfa 2.png',
+          'D:/website/Asset website/3D/ninfa.mp4',
+          'D:/website/Asset website/3D/matioli.png',
+          'D:/website/Asset website/3D/matioli.mp4',
+          'D:/website/Asset website/3D/pupotacho.png'
+        ]
+      },
+      environments: {
+        title: 'Digital Environments',
+        images: [
+          'D:/website/Asset website/3D/digital env (2).png',
+          'D:/website/Asset website/3D/digital env (3).png',
+          'D:/website/Asset website/3D/digital env (4).png',
+          'D:/website/Asset website/3D/digital env (5).png',
+          'D:/website/Asset website/3D/digital env (6).png',
+          'D:/website/Asset website/3D/digital env (7).png',
+          'D:/website/Asset website/3D/digital env (1).png',
+          'D:/website/Asset website/3D/digital env (8).png',
+          'D:/website/Asset website/3D/digital env (9).png',
+          'D:/website/Asset website/3D/digital env (10).png',
+          'D:/website/Asset website/3D/redroom1.png',
+          'D:/website/Asset website/3D/redroom.png',
+          'D:/website/Asset website/3D/redroom.mp4'
+        ]
+      },
+      objects: {
+        title: 'Objects & Still Life',
+        images: [
+          'D:/website/Asset website/3D/objects (5).png',
+          'D:/website/Asset website/3D/objects (7).png',
+          'D:/website/Asset website/3D/objects (1).png',
+          'D:/website/Asset website/3D/objects (2).png',
+          'D:/website/Asset website/3D/objects (3).png',
+          'D:/website/Asset website/3D/nave.png',
+          'D:/website/Asset website/3D/nave1.png'
+        ]
+      },
+      architectural: {
+        title: 'Architectural Design',
+        images: [
+          'D:/website/Asset website/3D/render (1).jpg',
+          'D:/website/Asset website/3D/render (2).jpg',
+          'D:/website/Asset website/3D/render (3).jpg',
+          'D:/website/Asset website/3D/render (1).png',
+          'D:/website/Asset website/3D/render (2).png',
+          'D:/website/Asset website/3D/render (3).png',
+          'D:/website/Asset website/3D/render (4).png'
+        ]
+      }
+    };
+
+    // ===== Initialize Grids =====
+    function initializeGrids() {
+      Object.keys(categoryData).forEach(categoryKey => {
+        const grid = document.getElementById(`${categoryKey}-grid`);
+        const data = categoryData[categoryKey];
+        
+        data.images.forEach((src, index) => {
+          const card = document.createElement('div');
+          card.className = 'project-card';
+          card.dataset.category = categoryKey;
+          card.dataset.index = index;
+          
+          const isVideo = src.toLowerCase().endsWith('.mp4') || 
+                         src.toLowerCase().endsWith('.webm') || 
+                         src.toLowerCase().endsWith('.mov');
+          
+          if (isVideo) {
+            card.innerHTML = `
+              <video src="${src}" muted loop></video>
+              <div class="project-overlay">
+                <div class="project-title">${data.title} ${index + 1}</div>
+              </div>
+            `;
+            // Auto-play video on hover
+            const video = card.querySelector('video');
+            card.addEventListener('mouseenter', () => video.play());
+            card.addEventListener('mouseleave', () => video.pause());
+          } else {
+            card.innerHTML = `
+              <img src="${src}" alt="${data.title} ${index + 1}">
+              <div class="project-overlay">
+                <div class="project-title">${data.title} ${index + 1}</div>
+              </div>
+            `;
+          }
+          
+          card.addEventListener('click', () => openCarousel(categoryKey, index));
+          grid.appendChild(card);
+        });
+      });
+    }
+
+    // ===== Section Navigation =====
+    const sectionBtns = document.querySelectorAll('.section-btn');
+    const sectionContents = document.querySelectorAll('.section-content');
+
+    sectionBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetSection = btn.dataset.section;
+        
+        // Update active button
+        sectionBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Update active section
+        sectionContents.forEach(section => {
+          if (section.dataset.section === targetSection) {
+            section.classList.add('active');
+          } else {
+            section.classList.remove('active');
+          }
+        });
+      });
+    });
+
+    // ===== Carousel Functionality =====
+    const carouselModal = document.getElementById('carouselModal');
+    const carouselClose = document.getElementById('carouselClose');
+    const carouselTitle = document.getElementById('carouselTitle');
+    const carouselTrack = document.getElementById('carouselTrack');
+    const carouselPrev = document.getElementById('carouselPrev');
+    const carouselNext = document.getElementById('carouselNext');
+    const currentSlideSpan = document.getElementById('currentSlide');
+    const totalSlidesSpan = document.getElementById('totalSlides');
+
+    let currentCategory = '';
+    let currentIndex = 0;
+    let currentImages = [];
+
+    function openCarousel(category, index) {
+      currentCategory = category;
+      currentIndex = index;
+      currentImages = categoryData[category].images;
+      
+      carouselTitle.textContent = categoryData[category].title;
+      totalSlidesSpan.textContent = currentImages.length;
+      
+      // Clear and populate carousel
+      carouselTrack.innerHTML = '';
+      currentImages.forEach(imgSrc => {
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide';
+        
+        const isVideo = imgSrc.toLowerCase().endsWith('.mp4') || 
+                       imgSrc.toLowerCase().endsWith('.webm') || 
+                       imgSrc.toLowerCase().endsWith('.mov');
+        
+        if (isVideo) {
+          slide.innerHTML = `<video src="${imgSrc}" controls autoplay loop muted></video>`;
+        } else {
+          slide.innerHTML = `<img src="${imgSrc}" alt="Portfolio Image">`;
+        }
+        
+        carouselTrack.appendChild(slide);
+      });
+      
+      updateCarousel();
+      carouselModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCarousel() {
+      carouselModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function updateCarousel() {
+      const offset = -currentIndex * 100;
+      carouselTrack.style.transform = `translateX(${offset}%)`;
+      currentSlideSpan.textContent = currentIndex + 1;
+    }
+
+    function goToSlide(index) {
+      if (index < 0) {
+        currentIndex = currentImages.length - 1;
+      } else if (index >= currentImages.length) {
+        currentIndex = 0;
+      } else {
+        currentIndex = index;
+      }
+      updateCarousel();
+    }
+
+    // Event listeners
+    carouselClose.addEventListener('click', closeCarousel);
+    carouselPrev.addEventListener('click', () => goToSlide(currentIndex - 1));
+    carouselNext.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+    // Close on outside click
+    carouselModal.addEventListener('click', (e) => {
+      if (e.target === carouselModal) {
+        closeCarousel();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!carouselModal.classList.contains('active')) return;
+      
+      if (e.key === 'Escape') {
+        closeCarousel();
+      } else if (e.key === 'ArrowLeft') {
+        goToSlide(currentIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        goToSlide(currentIndex + 1);
+      }
+    });
+
+    // ===== Perlin Noise Class =====
+    class Noise {
+      constructor(seed = 1) {
+        this.grad3 = [
+          [1, 1, 0], [-1, 1, 0], [1, -1, 0], [-1, -1, 0],
+          [1, 0, 1], [-1, 0, 1], [1, 0, -1], [-1, 0, -1],
+          [0, 1, 1], [0, -1, 1], [0, 1, -1], [0, -1, -1]
+        ];
+        this.p = [];
+        for (let i = 0; i < 256; i++) {
+          this.p[i] = Math.floor(Math.random() * 256);
+        }
+        this.perm = [];
+        for (let i = 0; i < 512; i++) {
+          this.perm[i] = this.p[i & 255];
+        }
+      }
+
+      dot(g, x, y) {
+        return g[0] * x + g[1] * y;
+      }
+
+      perlin2(x, y) {
+        const X = Math.floor(x) & 255;
+        const Y = Math.floor(y) & 255;
+        x -= Math.floor(x);
+        y -= Math.floor(y);
+        const u = this.fade(x);
+        const v = this.fade(y);
+        const A = this.perm[X] + Y;
+        const AA = this.perm[A];
+        const AB = this.perm[A + 1];
+        const B = this.perm[X + 1] + Y;
+        const BA = this.perm[B];
+        const BB = this.perm[B + 1];
+
+        return this.lerp(
+          v,
+          this.lerp(u, this.grad(this.perm[AA], x, y), this.grad(this.perm[BA], x - 1, y)),
+          this.lerp(u, this.grad(this.perm[AB], x, y - 1), this.grad(this.perm[BB], x - 1, y - 1))
+        );
+      }
+
+      fade(t) {
+        return t * t * t * (t * (t * 6 - 15) + 10);
+      }
+
+      lerp(t, a, b) {
+        return a + t * (b - a);
+      }
+
+      grad(hash, x, y) {
+        const h = hash & 15;
+        const u = h < 8 ? x : y;
+        const v = h < 4 ? y : h === 12 || h === 14 ? x : 0;
+        return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
+      }
+    }
+
+    // ===== AWaves Web Component =====
+    class AWaves extends HTMLElement {
+      connectedCallback() {
+        this.svg = this.querySelector('.js-svg');
+        this.mouse = {
+          x: -10,
+          y: 0,
+          lx: 0,
+          ly: 0,
+          sx: 0,
+          sy: 0,
+          v: 0,
+          vs: 0,
+          a: 0,
+          set: false,
+        };
+        this.lines = [];
+        this.paths = [];
+        this.noise = new Noise(Math.random());
+        this.setSize();
+        this.setLines();
+        this.bindEvents();
+        requestAnimationFrame(this.tick.bind(this));
+      }
+
+      bindEvents() {
+        window.addEventListener('resize', this.onResize.bind(this));
+        window.addEventListener('mousemove', this.onMouseMove.bind(this));
+        this.addEventListener('touchmove', this.onTouchMove.bind(this));
+      }
+
+      onResize() {
+        this.setSize();
+        this.setLines();
+      }
+
+      onMouseMove(e) {
+        this.updateMousePosition(e.pageX, e.pageY);
+      }
+
+      onTouchMove(e) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        this.updateMousePosition(touch.clientX, touch.clientY);
+      }
+
+      updateMousePosition(x, y) {
+        const { mouse } = this;
+        mouse.x = x - this.bounding.left;
+        mouse.y = y - this.bounding.top + window.scrollY;
+        if (!mouse.set) {
+          mouse.sx = mouse.x;
+          mouse.sy = mouse.y;
+          mouse.lx = mouse.x;
+          mouse.ly = mouse.y;
+          mouse.set = true;
+        }
+      }
+
+      setSize() {
+        this.bounding = this.getBoundingClientRect();
+        this.svg.style.width = `${this.bounding.width}px`;
+        this.svg.style.height = `${this.bounding.height}px`;
+      }
+
+      setLines() {
+        const { width, height } = this.bounding;
+        this.lines = [];
+        this.paths.forEach(path => path.remove());
+        this.paths = [];
+
+        const xGap = 20;
+        const yGap = 40;
+        const oWidth = width + 100;
+        const oHeight = height + 20;
+        const totalLines = Math.ceil(oWidth / xGap);
+        const totalPoints = Math.ceil(oHeight / yGap);
+        const xStart = (width - xGap * totalLines) / 2;
+        const yStart = (height - yGap * totalPoints) / 2;
+
+        for (let i = 0; i <= totalLines; i++) {
+          const points = [];
+          for (let j = 0; j <= totalPoints; j++) {
+            const point = {
+              x: xStart + xGap * i,
+              y: yStart + yGap * j,
+              wave: { x: 0, y: 0 },
+              cursor: { x: 0, y: 0, vx: 0, vy: 0 },
+            };
+            points.push(point);
+          }
+
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          this.svg.appendChild(path);
+          this.paths.push(path);
+          this.lines.push(points);
+        }
+      }
+
+      movePoints(time) {
+        const { lines, mouse, noise } = this;
+        lines.forEach(points => {
+          points.forEach(p => {
+            const move = noise.perlin2(
+              (p.x + time * 0.0125) * 0.002,
+              (p.y + time * 0.005) * 0.0015
+            ) * 12;
+            p.wave.x = Math.cos(move) * 32;
+            p.wave.y = Math.sin(move) * 16;
+
+            const dx = p.x - mouse.sx;
+            const dy = p.y - mouse.sy;
+            const d = Math.hypot(dx, dy);
+            const l = Math.max(175, mouse.vs);
+
+            if (d < l) {
+              const s = 1 - d / l;
+              const f = Math.cos(d * 0.001) * s;
+              p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00065;
+              p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00065;
+            }
+
+            p.cursor.vx += (0 - p.cursor.x) * 0.005;
+            p.cursor.vy += (0 - p.cursor.y) * 0.005;
+            p.cursor.vx *= 0.925;
+            p.cursor.vy *= 0.925;
+            p.cursor.x += p.cursor.vx * 2;
+            p.cursor.y += p.cursor.vy * 2;
+            p.cursor.x = Math.min(100, Math.max(-100, p.cursor.x));
+            p.cursor.y = Math.min(100, Math.max(-100, p.cursor.y));
+          });
+        });
+      }
+
+      moved(point, withCursorForce = true) {
+        const coords = {
+          x: point.x + point.wave.x + (withCursorForce ? point.cursor.x : 0),
+          y: point.y + point.wave.y + (withCursorForce ? point.cursor.y : 0),
+        };
+        coords.x = Math.round(coords.x * 10) / 10;
+        coords.y = Math.round(coords.y * 10) / 10;
+        return coords;
+      }
+
+      drawLines() {
+        const { lines, paths } = this;
+        lines.forEach((points, lIndex) => {
+          let p1 = this.moved(points[0], false);
+          let d = `M ${p1.x} ${p1.y}`;
+          points.forEach((p1, pIndex) => {
+            const isLast = pIndex === points.length - 1;
+            p1 = this.moved(p1, !isLast);
+            d += `L ${p1.x} ${p1.y}`;
+          });
+          paths[lIndex].setAttribute('d', d);
+        });
+      }
+
+      tick(time) {
+        const { mouse } = this;
+        mouse.sx += (mouse.x - mouse.sx) * 0.1;
+        mouse.sy += (mouse.y - mouse.sy) * 0.1;
+
+        const dx = mouse.x - mouse.lx;
+        const dy = mouse.y - mouse.ly;
+        const d = Math.hypot(dx, dy);
+
+        mouse.v = d;
+        mouse.vs += (d - mouse.vs) * 0.1;
+        mouse.vs = Math.min(100, mouse.vs);
+
+        mouse.lx = mouse.x;
+        mouse.ly = mouse.y;
+        mouse.a = Math.atan2(dy, dx);
+
+        this.style.setProperty('--x', `${mouse.sx}px`);
+        this.style.setProperty('--y', `${mouse.sy}px`);
+
+        this.movePoints(time);
+        this.drawLines();
+        
+        this.animationId = requestAnimationFrame(this.tick.bind(this));
+      }
+      
+      disconnectedCallback() {
+        if (this.animationId) {
+          cancelAnimationFrame(this.animationId);
+        }
+      }
+    }
+
+    customElements.define('a-waves', AWaves);
+
+    // ===== Initialize on Load =====
+    window.addEventListener('DOMContentLoaded', initializeGrids);
+  </script>
+</body>
+</html>
