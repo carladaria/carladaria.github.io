@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>3D Art Portfolio — Carla D'Aria</title>
+
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
   <style>
     * {
@@ -58,6 +62,167 @@
       stroke-width: 0.5px;
       opacity: 0.3;
       vector-effect: non-scaling-stroke;
+    }
+
+    /* ===== Modal Styles ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0);
+      transition: background-color 0.3s ease;
+    }
+
+    .modal.show {
+      background-color: rgba(0, 0, 0, 0.95);
+    }
+
+    .modal-content {
+      position: relative;
+      margin: 5% auto;
+      max-width: 90%;
+      width: 1200px;
+      opacity: 0;
+      transform: scale(0.9) translateY(20px);
+      transition: all 0.3s ease;
+    }
+
+    .modal.show .modal-content {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10001;
+      transition: color 0.3s ease;
+      line-height: 1;
+    }
+
+    .modal-close:hover,
+    .modal-close:focus {
+      color: #ff103d;
+    }
+
+    .modal-carousel .item {
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 70vh;
+    }
+
+    .modal-carousel .item img,
+    .modal-carousel .item video {
+      max-width: 100%;
+      max-height: 80vh;
+      width: auto;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 8px;
+      box-shadow: 0 10px 50px rgba(255, 16, 61, 0.3);
+      object-fit: contain;
+    }
+
+    .modal-carousel .item video {
+      background: #000;
+    }
+
+    .modal-carousel .owl-nav button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 16, 61, 0.8) !important;
+      color: #fff !important;
+      border-radius: 50%;
+      font-size: 30px;
+      line-height: 60px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .modal-carousel .owl-nav button:hover {
+      background: #ff103d !important;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .modal-carousel .owl-nav .owl-prev {
+      left: -80px;
+    }
+
+    .modal-carousel .owl-nav .owl-next {
+      right: -80px;
+    }
+
+    .modal-carousel .owl-nav button span {
+      font-size: 40px;
+      line-height: 60px;
+    }
+
+    .modal-carousel .owl-dots {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .modal-carousel .owl-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin: 0 8px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .modal-carousel .owl-dot.active {
+      background: #ff103d;
+      transform: scale(1.3);
+    }
+
+    @media (max-width: 1024px) {
+      .modal-carousel .owl-nav .owl-prev {
+        left: -40px;
+      }
+      .modal-carousel .owl-nav .owl-next {
+        right: -40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .modal-carousel .owl-nav button {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        line-height: 40px;
+      }
+      .modal-carousel .owl-nav button span {
+        font-size: 25px;
+        line-height: 40px;
+      }
+      .modal-carousel .owl-nav .owl-prev {
+        left: 10px;
+      }
+      .modal-carousel .owl-nav .owl-next {
+        right: 10px;
+      }
+      .modal-close {
+        top: -40px;
+        font-size: 30px;
+      }
     }
 
     /* ===== Page Layout ===== */
@@ -149,7 +314,7 @@
       transform: scale(1);
     }
 
-    /* Mask class para efectos hover */
+    /* Mask class for hover effects */
     .Mask {
       display: block;
       position: absolute;
@@ -303,428 +468,275 @@
       }
     }
 
-    .section-title {
-      font-size: clamp(32px, 4vw, 48px);
-      margin-bottom: 40px;
-      color: #ff103d;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      text-align: center;
-    }
-
+    /* ===== Projects Grid ===== */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 30px;
-      padding: 20px 0;
+      width: 100%;
     }
 
+    @media (max-width: 1200px) {
+      .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .projects-grid {
+        gap: 16px;
+      }
+    }
+
+    /* ===== Project Card ===== */
     .project-card {
       position: relative;
-      aspect-ratio: 1;
-      overflow: hidden;
-      border-radius: 12px;
-      cursor: pointer;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
       transition: all 0.5s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+      aspect-ratio: 1;
     }
 
     .project-card::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(255, 16, 61, 0.2), transparent);
+      background: linear-gradient(135deg, rgba(255, 16, 61, 0.1), transparent);
       opacity: 0;
       transition: opacity 0.5s ease;
       z-index: 1;
-    }
-
-    .project-card:hover {
-      transform: translateY(-10px);
-      border-color: rgba(255, 16, 61, 0.3);
-      box-shadow: 0 20px 60px rgba(255, 16, 61, 0.3);
     }
 
     .project-card:hover::before {
       opacity: 1;
     }
 
-    .project-card img,
-    .project-card video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%) brightness(0.7);
-      transition: all 0.5s ease;
+    .project-card:hover {
+      transform: translateY(-12px);
+      border-color: rgba(255, 16, 61, 0.4);
+      box-shadow: 0 20px 60px rgba(255, 16, 61, 0.3);
     }
 
-    .project-card:hover img,
-    .project-card:hover video {
-      filter: grayscale(0%) brightness(1);
-      transform: scale(1.05);
-    }
-
-    .project-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(13, 6, 7, 0.9), transparent);
-      display: flex;
-      align-items: flex-end;
-      padding: 20px;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      z-index: 2;
-    }
-
-    .project-card:hover .project-overlay {
-      opacity: 1;
-    }
-
-    .project-title {
-      font-size: 18px;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* ===== Carousel Modal ===== */
-    .carousel-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(13, 6, 7, 0.98);
-      z-index: 1000;
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .carousel-modal.active {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .carousel-container {
-      position: relative;
-      width: 90%;
-      height: 90%;
-      max-width: 1400px;
-      max-height: 900px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .carousel-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-      background: rgba(255, 16, 61, 0.2);
-      border: 2px solid #ff103d;
-      border-radius: 50%;
-      color: #ff103d;
-      font-size: 32px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      z-index: 10;
-      line-height: 1;
-    }
-
-    .carousel-close:hover {
-      background: rgba(255, 16, 61, 0.4);
-      transform: rotate(90deg);
-    }
-
-    .carousel-title {
-      position: absolute;
-      top: 30px;
-      left: 30px;
-      font-size: clamp(24px, 4vw, 36px);
-      color: #ff103d;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      z-index: 10;
-    }
-
-    .carousel-track-wrapper {
+    .project-image {
       position: relative;
       width: 100%;
       height: 100%;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    .carousel-track {
-      display: flex;
-      transition: transform 0.5s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+    .project-image img {
+      width: 100%;
       height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1.08, 0.38, 0.98);
     }
 
-    .carousel-slide {
-      min-width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 100px 80px 80px;
+    .project-card:hover .project-image img {
+      transform: scale(1.15);
     }
 
-    .carousel-slide img,
-    .carousel-slide video {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      border-radius: 8px;
-      border: 2px solid rgba(255, 16, 61, 0.3);
-    }
-
-    .carousel-prev,
-    .carousel-next {
+    .project-overlay {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 60px;
-      height: 60px;
-      background: rgba(255, 16, 61, 0.2);
-      border: 2px solid #ff103d;
-      border-radius: 50%;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px;
+      background: linear-gradient(to top, rgba(13, 6, 7, 0.95) 0%, transparent 100%);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+      z-index: 2;
+    }
+
+    .project-card:hover .project-overlay {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .project-title {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .project-category {
+      font-size: 14px;
       color: #ff103d;
-      font-size: 28px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      z-index: 10;
-    }
-
-    .carousel-prev:hover,
-    .carousel-next:hover {
-      background: rgba(255, 16, 61, 0.4);
-      transform: translateY(-50%) scale(1.1);
-    }
-
-    .carousel-prev {
-      left: 20px;
-    }
-
-    .carousel-next {
-      right: 20px;
-    }
-
-    .carousel-counter {
-      position: absolute;
-      bottom: 30px;
-      right: 30px;
-      font-size: 18px;
-      color: rgba(255, 255, 255, 0.7);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      z-index: 10;
+      font-weight: 300;
     }
 
-    .carousel-counter span {
-      color: #ff103d;
-      font-weight: bold;
-    }
-
-    /* ===== Responsive Design ===== */
-    @media (max-width: 1200px) {
-      .projects-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 25px;
-      }
-    }
-
-    @media (max-width: 860px) {
+    /* ===== Responsive ===== */
+    @media (max-width: 1024px) {
       .header {
         padding: 20px;
-        flex-wrap: wrap;
       }
-
       .header__logo {
-        font-size: 2.2em;
-        margin-bottom: 15px;
+        font-size: 2.5em;
       }
-
-      .header__menu {
-        width: 100%;
-        margin-left: 0;
-      }
-
-      .header__menu__list {
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 15px;
-      }
-
       .header__menu__link {
-        margin-left: 0;
-        font-size: 20px;
+        font-size: 24px;
+        margin-left: 30px;
       }
+      .center {
+        padding: 30px 20px 60px;
+      }
+    }
 
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 15px;
+      }
+      .header__menu {
+        margin-left: 0;
+      }
+      .header__menu__link {
+        font-size: 20px;
+        margin-left: 20px;
+      }
       .hero-section {
         padding: 40px 0 60px;
       }
-
+      .hero-title {
+        font-size: 40px;
+        letter-spacing: 2px;
+      }
+      .hero-subtitle {
+        font-size: 16px;
+        padding: 0 10px;
+      }
       .section-nav {
         margin: 40px 0 30px;
         gap: 12px;
+        padding: 0 10px;
       }
-
       .section-btn {
-        padding: 12px 24px;
+        padding: 12px 20px;
         font-size: 16px;
       }
-
-      .projects-grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 20px;
+      .project-title {
+        font-size: 18px;
       }
-
-      .carousel-slide {
-        padding: 80px 60px 60px;
+      .project-category {
+        font-size: 13px;
       }
-
-      .carousel-title {
-        font-size: 24px;
-        top: 20px;
-        left: 20px;
+      .modal-content {
+        margin: 10% auto;
+        max-width: 95%;
       }
     }
 
-    @media (max-width: 600px) {
-      .header {
-        padding: 15px;
+    @media (max-width: 480px) {
+      .header__logo {
+        font-size: 2em;
       }
+      .header__menu__link {
+        font-size: 18px;
+        margin-left: 15px;
+      }
+      .hero-title {
+        font-size: 32px;
+        letter-spacing: 1px;
+      }
+      .hero-subtitle {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .section-nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .section-btn {
+        padding: 14px 20px;
+        font-size: 15px;
+        width: 100%;
+        text-align: center;
+      }
+      .center {
+        padding: 20px 15px 40px;
+      }
+      .project-overlay {
+        padding: 16px;
+      }
+      .project-title {
+        font-size: 16px;
+      }
+      .modal-content {
+        margin: 5% auto;
+        max-width: 98%;
+      }
+    }
 
+    /* Adjustments for very small screens */
+    @media (max-width: 360px) {
       .header__logo {
         font-size: 1.8em;
-        margin-bottom: 12px;
       }
-
+      .hero-title {
+        font-size: 28px;
+      }
       .header__menu__link {
+        margin-left: 12px;
         font-size: 16px;
-        padding: 4px 8px;
-      }
-
-      .center {
-        padding: 20px 20px 60px;
-      }
-
-      .hero-section {
-        padding: 30px 0 40px;
-      }
-
-      .hero-subtitle {
-        font-size: 16px;
-      }
-
-      .section-nav {
-        margin: 30px 0 20px;
-        gap: 10px;
-      }
-
-      .section-btn {
-        padding: 10px 20px;
-        font-size: 14px;
-      }
-
-      .projects-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-
-      .carousel-slide {
-        padding: 80px 20px 60px;
-      }
-
-      .carousel-close {
-        width: 40px;
-        height: 40px;
-        font-size: 24px;
-        top: 15px;
-        right: 15px;
-      }
-
-      .carousel-title {
-        font-size: 18px;
-        top: 15px;
-        left: 15px;
-      }
-
-      .carousel-prev,
-      .carousel-next {
-        width: 45px;
-        height: 45px;
-        font-size: 20px;
-      }
-
-      .carousel-prev {
-        left: 10px;
-      }
-
-      .carousel-next {
-        right: 10px;
-      }
-
-      .carousel-counter {
-        bottom: 20px;
-        right: 20px;
-        font-size: 14px;
       }
     }
   </style>
 </head>
 <body>
+  <!-- Modal for carousel -->
+  <div class="modal" id="portfolioModal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <div class="owl-carousel owl-theme modal-carousel"></div>
+    </div>
+  </div>
+
   <!-- Background Waves -->
   <a-waves>
-    <svg class="js-svg"></svg>
+    <svg class="js-svg" xmlns="http://www.w3.org/2000/svg"></svg>
   </a-waves>
 
+  <!-- Main Page -->
   <div class="page">
     <!-- Header -->
     <header class="header">
-      <a href="index.html" class="header__logo">CARLA D<span>A'</span>RIA</a>
+      <a href="#" class="header__logo">
+        CD<span>ʌ</span>
+      </a>
       <nav class="header__menu">
         <ul class="header__menu__list">
-          <li class="header__menu__item">
-            <a href="ux index.html" class="header__menu__link">
-              UX/UI DESIGN
-              <span class="Mask"><span>UX/UI DESIGN</span></span>
-              <span class="Mask"><span>UX/UI DESIGN</span></span>
+          <li>
+            <a href="#" class="header__menu__link">
+              <div class="Mask"><span>HOME</span></div>
+              <div class="Mask"><span>HOME</span></div>
             </a>
           </li>
-          <li class="header__menu__item">
-            <a href="graphic.html" class="header__menu__link">
-              GRAPHIC DESIGN
-              <span class="Mask"><span>GRAPHIC DESIGN</span></span>
-              <span class="Mask"><span>GRAPHIC DESIGN</span></span>
+          <li>
+            <a href="#" class="header__menu__link">
+              <div class="Mask"><span>WORK</span></div>
+              <div class="Mask"><span>WORK</span></div>
             </a>
           </li>
-          <li class="header__menu__item">
-            <a href="2d.html" class="header__menu__link">
-              2D ART
-              <span class="Mask"><span>2D ART</span></span>
-              <span class="Mask"><span>2D ART</span></span>
-            </a>
-          </li>
-          <li class="header__menu__item">
-            <a href="visuals.html" class="header__menu__link">
-              VISUALS
-              <span class="Mask"><span>VISUALS</span></span>
-              <span class="Mask"><span>VISUALS</span></span>
+          <li>
+            <a href="#" class="header__menu__link">
+              <div class="Mask"><span>ABOUT</span></div>
+              <div class="Mask"><span>ABOUT</span></div>
             </a>
           </li>
         </ul>
@@ -735,284 +747,401 @@
     <main class="center">
       <!-- Hero Section -->
       <section class="hero-section">
-        <h1 class="hero-title">3D ART</h1>
-     <div class="hero-divider"></div>
+        <h1 class="hero-title">3D ART PORTFOLIO</h1>
+        <p class="hero-subtitle">
+          Explore my collection of 3D characters, renders, and animations. 
+          Each project reflects my passion for bringing digital worlds to life.
+        </p>
+        <div class="hero-divider"></div>
       </section>
 
       <!-- Section Navigation -->
-      <div class="section-nav">
-        <button class="section-btn active" data-section="character">Character Art</button>
-        <button class="section-btn" data-section="environments">Digital Environments</button>
-        <button class="section-btn" data-section="objects">Objects & Still Life</button>
-        <button class="section-btn" data-section="architectural">Architectural Design</button>
-      </div>
+      <nav class="section-nav">
+        <button class="section-btn active" data-section="characters">Characters</button>
+        <button class="section-btn" data-section="environments">Environments</button>
+        <button class="section-btn" data-section="props">Props</button>
+        <button class="section-btn" data-section="all">View All</button>
+      </nav>
 
       <!-- Projects Wrapper -->
       <div class="projects-wrapper">
-        <!-- Character Art Section -->
-        <div class="section-content active" data-section="character">
-     
-          <div class="projects-grid" id="character-grid"></div>
+        <!-- Section: Characters -->
+        <div id="characters" class="section-content active">
+          <div class="projects-grid">
+            <div class="project-card" data-group="conqueror">
+              <div class="project-image">
+                <img src="images/Character3D_Conqueror_THUMBNAIL.png" alt="Conqueror">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Conqueror</h3>
+                <p class="project-category">3D Character</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-group="rocky">
+              <div class="project-image">
+                <img src="images/Character3D_Rocky_THUMBNAIL.png" alt="Rocky">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Rocky</h3>
+                <p class="project-category">3D Character</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-group="wyllowyn">
+              <div class="project-image">
+                <img src="images/Ninfa 2.png" alt="Wyllowyn">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Wyllowyn</h3>
+                <p class="project-category">3D Character</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-group="fungnook">
+              <div class="project-image">
+                <img src="images/matioli.png" alt="Fungnook">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Fungnook</h3>
+                <p class="project-category">3D Character</p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Digital Environments Section -->
-        <div class="section-content" data-section="environments">
-         
-          <div class="projects-grid" id="environments-grid"></div>
+        <!-- Section: Environments -->
+        <div id="environments" class="section-content">
+          <div class="projects-grid">
+            <div class="project-card" data-group="architectural">
+              <div class="project-image">
+                <img src="images/render (1).jpg" alt="Architectural Design">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Architectural Design</h3>
+                <p class="project-category">3D Architecture</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-group="realistic">
+              <div class="project-image">
+                <img src="images/redroom.png" alt="Realistic Environment">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Realistic</h3>
+                <p class="project-category">3D Environment</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-group="fantasy">
+              <div class="project-image">
+                <img src="images/digital env (9).png" alt="Fantasy Environment">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Fantasy</h3>
+                <p class="project-category">3D Environment</p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Objects & Still Life Section -->
-        <div class="section-content" data-section="objects">
-    
-          <div class="projects-grid" id="objects-grid"></div>
+        <!-- Section: Props -->
+        <div id="props" class="section-content">
+          <div class="projects-grid">
+            <div class="project-card" data-group="props">
+              <div class="project-image">
+                <img src="images/objects (7).png" alt="Props">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">3D Props</h3>
+                <p class="project-category">3D Assets</p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Architectural Design Section -->
-        <div class="section-content" data-section="architectural">
-   
-          <div class="projects-grid" id="architectural-grid"></div>
+        <!-- Section: View All -->
+        <div id="all" class="section-content">
+          <div class="projects-grid">
+            <div class="project-card" data-group="conqueror">
+              <div class="project-image">
+                <img src="images/Character3D_Conqueror_THUMBNAIL.png" alt="Conqueror">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Conqueror</h3>
+                <p class="project-category">3D Character</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-group="rocky">
+              <div class="project-image">
+                <img src="images/Character3D_Rocky_THUMBNAIL.png" alt="Rocky">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Rocky</h3>
+                <p class="project-category">3D Character</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-group="wyllowyn">
+              <div class="project-image">
+                <img src="images/Ninfa 2.png" alt="Wyllowyn">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Wyllowyn</h3>
+                <p class="project-category">3D Character</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-group="fungnook">
+              <div class="project-image">
+                <img src="images/matioli.png" alt="Fungnook">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Fungnook</h3>
+                <p class="project-category">3D Character</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-group="architectural">
+              <div class="project-image">
+                <img src="images/render (1).jpg" alt="Architectural Design">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Architectural Design</h3>
+                <p class="project-category">3D Architecture</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-group="realistic">
+              <div class="project-image">
+                <img src="images/redroom.png" alt="Realistic Environment">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Realistic</h3>
+                <p class="project-category">3D Environment</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-group="fantasy">
+              <div class="project-image">
+                <img src="images/digital env (9).png" alt="Fantasy Environment">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">Fantasy</h3>
+                <p class="project-category">3D Environment</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-group="props">
+              <div class="project-image">
+                <img src="images/objects (7).png" alt="Props">
+              </div>
+              <div class="project-overlay">
+                <h3 class="project-title">3D Props</h3>
+                <p class="project-category">3D Assets</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
   </div>
 
-
-
-  <!-- Carousel Modal -->
-  <div class="carousel-modal" id="carouselModal">
-    <div class="carousel-container">
-      <button class="carousel-close" id="carouselClose">&times;</button>
-      <h2 class="carousel-title" id="carouselTitle">Category</h2>
-      <button class="carousel-prev" id="carouselPrev">&#8249;</button>
-      <div class="carousel-track-wrapper">
-        <div class="carousel-track" id="carouselTrack"></div>
-      </div>
-      <button class="carousel-next" id="carouselNext">&#8250;</button>
-      <div class="carousel-counter">
-        <span id="currentSlide">1</span> / <span id="totalSlides">1</span>
-      </div>
-    </div>
-  </div>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Owl Carousel JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
   <script>
-    // ===== Category Data =====
-    const categoryData = {
-      character: {
-        title: 'Character Art',
-        images: [
-          'D:/website/Asset website/3D/Character3D_Conqueror.png',
-          'D:/website/Asset website/3D/Character3D_Conqueror1.png',
-          'D:/website/Asset website/3D/Video_conqueror.mp4',
-          'D:/website/Asset website/3D/Character3D_Rocky01.png',
-          'D:/website/Asset website/3D/Character3D_Rocky02.png',
-          'D:/website/Asset website/3D/Turntable_Rocky.mp4',
-          'D:/website/Asset website/3D/Ninfa 1.png',
-          'D:/website/Asset website/3D/Ninfa 2.png',
-          'D:/website/Asset website/3D/ninfa.mp4',
-          'D:/website/Asset website/3D/matioli.png',
-          'D:/website/Asset website/3D/matioli.mp4',
-          'D:/website/Asset website/3D/pupotacho.png'
-        ]
-      },
-      environments: {
-        title: 'Digital Environments',
-        images: [
-          'D:/website/Asset website/3D/digital env (2).png',
-          'D:/website/Asset website/3D/digital env (3).png',
-          'D:/website/Asset website/3D/digital env (4).png',
-          'D:/website/Asset website/3D/digital env (5).png',
-          'D:/website/Asset website/3D/digital env (6).png',
-          'D:/website/Asset website/3D/digital env (7).png',
-          'D:/website/Asset website/3D/digital env (1).png',
-          'D:/website/Asset website/3D/digital env (8).png',
-          'D:/website/Asset website/3D/digital env (9).png',
-          'D:/website/Asset website/3D/digital env (10).png',
-          'D:/website/Asset website/3D/redroom1.png',
-          'D:/website/Asset website/3D/redroom.png',
-          'D:/website/Asset website/3D/redroom.mp4'
-        ]
-      },
-      objects: {
-        title: 'Objects & Still Life',
-        images: [
-          'D:/website/Asset website/3D/objects (5).png',
-          'D:/website/Asset website/3D/objects (7).png',
-          'D:/website/Asset website/3D/objects (1).png',
-          'D:/website/Asset website/3D/objects (2).png',
-          'D:/website/Asset website/3D/objects (3).png',
-          'D:/website/Asset website/3D/nave.png',
-          'D:/website/Asset website/3D/nave1.png'
-        ]
-      },
-      architectural: {
-        title: 'Architectural Design',
-        images: [
-          'D:/website/Asset website/3D/render (1).jpg',
-          'D:/website/Asset website/3D/render (2).jpg',
-          'D:/website/Asset website/3D/render (3).jpg',
-          'D:/website/Asset website/3D/render (1).png',
-          'D:/website/Asset website/3D/render (2).png',
-          'D:/website/Asset website/3D/render (3).png',
-          'D:/website/Asset website/3D/render (4).png'
-        ]
-      }
-    };
-
-    // ===== Initialize Grids =====
-    function initializeGrids() {
-      Object.keys(categoryData).forEach(categoryKey => {
-        const grid = document.getElementById(`${categoryKey}-grid`);
-        const data = categoryData[categoryKey];
-        
-        data.images.forEach((src, index) => {
-          const card = document.createElement('div');
-          card.className = 'project-card';
-          card.dataset.category = categoryKey;
-          card.dataset.index = index;
-          
-          const isVideo = src.toLowerCase().endsWith('.mp4') || 
-                         src.toLowerCase().endsWith('.webm') || 
-                         src.toLowerCase().endsWith('.mov');
-          
-          if (isVideo) {
-            card.innerHTML = `
-              <video src="${src}" muted loop></video>
-              <div class="project-overlay">
-                <div class="project-title">${data.title} ${index + 1}</div>
-              </div>
-            `;
-            // Auto-play video on hover
-            const video = card.querySelector('video');
-            card.addEventListener('mouseenter', () => video.play());
-            card.addEventListener('mouseleave', () => video.pause());
-          } else {
-            card.innerHTML = `
-              <img src="${src}" alt="${data.title} ${index + 1}">
-              <div class="project-overlay">
-                <div class="project-title">${data.title} ${index + 1}</div>
-              </div>
-            `;
-          }
-          
-          card.addEventListener('click', () => openCarousel(categoryKey, index));
-          grid.appendChild(card);
-        });
-      });
-    }
-
     // ===== Section Navigation =====
-    const sectionBtns = document.querySelectorAll('.section-btn');
-    const sectionContents = document.querySelectorAll('.section-content');
+    const sectionButtons = document.querySelectorAll('.section-btn');
+    const sections = document.querySelectorAll('.section-content');
 
-    sectionBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetSection = btn.dataset.section;
+    sectionButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetSection = button.dataset.section;
         
-        // Update active button
-        sectionBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        sectionButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
         
-        // Update active section
-        sectionContents.forEach(section => {
-          if (section.dataset.section === targetSection) {
+        sections.forEach(section => {
+          section.classList.remove('active');
+          if (section.id === targetSection) {
             section.classList.add('active');
-          } else {
-            section.classList.remove('active');
           }
         });
       });
     });
 
-    // ===== Carousel Functionality =====
-    const carouselModal = document.getElementById('carouselModal');
-    const carouselClose = document.getElementById('carouselClose');
-    const carouselTitle = document.getElementById('carouselTitle');
-    const carouselTrack = document.getElementById('carouselTrack');
-    const carouselPrev = document.getElementById('carouselPrev');
-    const carouselNext = document.getElementById('carouselNext');
-    const currentSlideSpan = document.getElementById('currentSlide');
-    const totalSlidesSpan = document.getElementById('totalSlides');
+    // ===== Modal and Carousel =====
+    const modal = document.getElementById('portfolioModal');
+    const modalClose = document.querySelector('.modal-close');
+    const modalCarousel = $('.modal-carousel');
 
-    let currentCategory = '';
-    let currentIndex = 0;
-    let currentImages = [];
+    // Image/video groups per project
+    const itemGroups = {
+      'conqueror': [
+        { type: 'image', src: 'images/Character3D_Conqueror.png', title: 'Conqueror' },
+        { type: 'image', src: 'images/Character3D_Conqueror1.png', title: 'Conqueror Detail' },
+        { type: 'image', src: 'images/FannyPack_ArtPortfolio_Plantilla01_3DAsset.png', title: 'Conqueror Asset' },
+        { type: 'video', src: 'images/walking loop.mp4', title: 'Walking Loop' },
+        { type: 'video', src: 'images/deploy.mp4', title: 'Deploy Animation' },
+        { type: 'video', src: 'images/drill.mp4', title: 'Drill Animation' },
+        { type: 'video', src: 'images/Video_conqueror.mp4', title: 'Conqueror Video' }
+      ],
+      'rocky': [
+        { type: 'image', src: 'images/Character3D_Rocky01.png', title: 'Rocky View 1' },
+        { type: 'image', src: 'images/Character3D_Rocky02.png', title: 'Rocky View 2' },
+        { type: 'video', src: 'images/Turntable_Rocky.mp4', title: 'Rocky Turntable' }
+      ],
+      'wyllowyn': [
+        { type: 'image', src: 'images/Ninfa 2.png', title: 'Wyllowyn' },
+        { type: 'image', src: 'images/Ninfa (1).png', title: 'Wyllowyn View 1' },
+        { type: 'image', src: 'images/Ninfa (2).png', title: 'Wyllowyn View 2' },
+        { type: 'image', src: 'images/Ninfa 1.png', title: 'Wyllowyn Detail' },
+        { type: 'video', src: 'images/ninfa.mp4', title: 'Wyllowyn Animation' }
+      ],
+      'fungnook': [
+        { type: 'image', src: 'images/matioli.png', title: 'Fungnook' },
+        { type: 'image', src: 'images/matioli (1).png', title: 'Fungnook Detail' },
+        { type: 'video', src: 'images/matioli.mp4', title: 'Fungnook Animation' }
+      ],
+      'architectural': [
+        { type: 'image', src: 'images/render (1).jpg', title: 'Architectural Render 1' },
+        { type: 'image', src: 'images/render (1).png', title: 'Architectural Render 1 Alt' },
+        { type: 'image', src: 'images/render (2).jpg', title: 'Architectural Render 2' },
+        { type: 'image', src: 'images/render (2).png', title: 'Architectural Render 2 Alt' },
+        { type: 'image', src: 'images/render (3).jpg', title: 'Architectural Render 3' },
+        { type: 'image', src: 'images/render (3).png', title: 'Architectural Render 3 Alt' },
+        { type: 'image', src: 'images/render (4).png', title: 'Architectural Render 4' },
+        { type: 'image', src: 'images/render 4.jpg', title: 'Architectural Render 4 Alt' },
+        { type: 'image', src: 'images/renderrrr.png', title: 'Architectural Detail' }
+      ],
+      'realistic': [
+        { type: 'image', src: 'images/redroom.png', title: 'Red Room' },
+        { type: 'image', src: 'images/redroom1.png', title: 'Red Room Detail' },
+        { type: 'video', src: 'images/redroom.mp4', title: 'Red Room Video' }
+      ],
+      'fantasy': [
+        { type: 'image', src: 'images/digital env (9).png', title: 'Fantasy Environment 1' },
+        { type: 'image', src: 'images/digital env (10).png', title: 'Fantasy Environment 2' },
+        { type: 'image', src: 'images/3d.jpg', title: '3D Scene' },
+        { type: 'image', src: 'images/digital env (1).png', title: 'Digital Env 1' },
+        { type: 'image', src: 'images/digital env (2).png', title: 'Digital Env 2' },
+        { type: 'image', src: 'images/digital env (3).png', title: 'Digital Env 3' },
+        { type: 'image', src: 'images/digital env (4).png', title: 'Digital Env 4' },
+        { type: 'image', src: 'images/digital env (5).png', title: 'Digital Env 5' },
+        { type: 'image', src: 'images/digital env (6).png', title: 'Digital Env 6' },
+        { type: 'image', src: 'images/digital env (7).png', title: 'Digital Env 7' },
+        { type: 'image', src: 'images/digital env (8).png', title: 'Digital Env 8' }
+      ],
+      'props': [
+        { type: 'image', src: 'images/objects (7).png', title: 'Objects' },
+        { type: 'image', src: 'images/pupotacho.png', title: 'Pupotacho' },
+        { type: 'image', src: 'images/UCHUGUAY.png', title: 'Uchuguay' },
+        { type: 'image', src: 'images/nave.jpg', title: 'Spaceship' },
+        { type: 'image', src: 'images/nave.png', title: 'Spaceship Alt' },
+        { type: 'image', src: 'images/nave1.png', title: 'Spaceship Detail' },
+        { type: 'image', src: 'images/objects (2).png', title: 'Objects 2' },
+        { type: 'image', src: 'images/objects (3).png', title: 'Objects 3' },
+        { type: 'image', src: 'images/objects (4).png', title: 'Objects 4' },
+        { type: 'image', src: 'images/objects (5).png', title: 'Objects 5' },
+        { type: 'image', src: 'images/objects (6).png', title: 'Objects 6' }
+      ]
+    };
 
-    function openCarousel(category, index) {
-      currentCategory = category;
-      currentIndex = index;
-      currentImages = categoryData[category].images;
+    function openModal(items) {
+      modalCarousel.trigger('destroy.owl.carousel');
+      modalCarousel.html('');
       
-      carouselTitle.textContent = categoryData[category].title;
-      totalSlidesSpan.textContent = currentImages.length;
-      
-      // Clear and populate carousel
-      carouselTrack.innerHTML = '';
-      currentImages.forEach(imgSrc => {
-        const slide = document.createElement('div');
-        slide.className = 'carousel-slide';
-        
-        const isVideo = imgSrc.toLowerCase().endsWith('.mp4') || 
-                       imgSrc.toLowerCase().endsWith('.webm') || 
-                       imgSrc.toLowerCase().endsWith('.mov');
-        
-        if (isVideo) {
-          slide.innerHTML = `<video src="${imgSrc}" controls autoplay loop muted></video>`;
-        } else {
-          slide.innerHTML = `<img src="${imgSrc}" alt="Portfolio Image">`;
+      items.forEach(item => {
+        let itemHtml = '<div class="item">';
+        if (item.type === 'image') {
+          itemHtml += `<img src="${item.src}" alt="${item.title}">`;
+        } else if (item.type === 'video') {
+          itemHtml += `
+            <video controls autoplay muted loop>
+              <source src="${item.src}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>`;
         }
-        
-        carouselTrack.appendChild(slide);
+        itemHtml += '</div>';
+        modalCarousel.append(itemHtml);
       });
       
-      updateCarousel();
-      carouselModal.classList.add('active');
+      modal.style.display = 'block';
+      
+      modalCarousel.owlCarousel({
+        items: 1,
+        loop: true,
+        margin: 0,
+        nav: true,
+        dots: true,
+        autoplay: false,
+        navText: ['<span>&lt;</span>', '<span>&gt;</span>'],
+        responsive: {
+          0: { nav: false },
+          768: { nav: true }
+        },
+        onInitialized: function() {
+          setTimeout(() => {
+            modal.classList.add('show');
+          }, 50);
+        },
+        onChanged: function(event) {
+          // Pausar todos los videos
+          modalCarousel.find('video').each(function() {
+            this.pause();
+          });
+          // Reproducir el video del slide actual
+          const currentItem = $(event.target).find('.owl-item').eq(event.item.index).find('video');
+          if (currentItem.length) {
+            currentItem[0].play();
+          }
+        }
+      });
+      
+      // Reproducir el primer video si existe
+      const firstVideo = modalCarousel.find('.owl-item.active video');
+      if (firstVideo.length) {
+        firstVideo[0].play();
+      }
+      
       document.body.style.overflow = 'hidden';
     }
 
-    function closeCarousel() {
-      carouselModal.classList.remove('active');
-      document.body.style.overflow = '';
+    function closeModal() {
+      modal.classList.remove('show');
+      
+      setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        modalCarousel.trigger('destroy.owl.carousel').html('');
+      }, 300);
     }
 
-    function updateCarousel() {
-      const offset = -currentIndex * 100;
-      carouselTrack.style.transform = `translateX(${offset}%)`;
-      currentSlideSpan.textContent = currentIndex + 1;
-    }
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
 
-    function goToSlide(index) {
-      if (index < 0) {
-        currentIndex = currentImages.length - 1;
-      } else if (index >= currentImages.length) {
-        currentIndex = 0;
-      } else {
-        currentIndex = index;
-      }
-      updateCarousel();
-    }
-
-    // Event listeners
-    carouselClose.addEventListener('click', closeCarousel);
-    carouselPrev.addEventListener('click', () => goToSlide(currentIndex - 1));
-    carouselNext.addEventListener('click', () => goToSlide(currentIndex + 1));
-
-    // Close on outside click
-    carouselModal.addEventListener('click', (e) => {
-      if (e.target === carouselModal) {
-        closeCarousel();
-      }
+    // Add listeners to cards
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('click', function() {
+        const groupKey = this.getAttribute('data-group');
+        if (groupKey && itemGroups[groupKey]) {
+          openModal(itemGroups[groupKey]);
+        }
+      });
     });
 
     // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (!carouselModal.classList.contains('active')) return;
-      
-      if (e.key === 'Escape') {
-        closeCarousel();
-      } else if (e.key === 'ArrowLeft') {
-        goToSlide(currentIndex - 1);
-      } else if (e.key === 'ArrowRight') {
-        goToSlide(currentIndex + 1);
+    document.addEventListener('keydown', function(e) {
+      if (modal.style.display === 'block') {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft') modalCarousel.trigger('prev.owl.carousel');
+        if (e.key === 'ArrowRight') modalCarousel.trigger('next.owl.carousel');
       }
     });
 
@@ -1267,9 +1396,6 @@
     }
 
     customElements.define('a-waves', AWaves);
-
-    // ===== Initialize on Load =====
-    window.addEventListener('DOMContentLoaded', initializeGrids);
   </script>
 </body>
 </html>
