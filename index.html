@@ -162,7 +162,8 @@
       min-height: 780px;
       padding: 0 0 0 30px;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
+      padding-top: 80px;
       justify-content: flex-end;
       position: relative;
       z-index: 1;
@@ -186,7 +187,7 @@
 
     /* Left Content */
     .left-content {
-      padding: 20px 0 0 30px;
+      padding: 10px 0 0 30px;
       overflow: hidden;
       max-width: 50%;
     }
@@ -195,7 +196,7 @@
       margin: 0;
       color: #fff;
       font-family: "Extenda Trial 30 Deca";
-      font-size: clamp(80px, 16vw, 220px);
+      font-size: clamp(70px, 14vw, 200px);
       line-height: 0.85;
       font-weight: normal;
       font-style: normal;
@@ -217,10 +218,10 @@
     .left-content h1 .highlight {
       color: #f40c3f;
       display: block;
-      height: clamp(80px, 16vw, 220px);
+      height: clamp(70px, 14vw, 200px);
       overflow: hidden;
       margin-top: 10px;
-      min-height: clamp(80px, 16vw, 220px);
+      min-height: clamp(70px, 14vw, 200px);
     }
 
     .left-content h1 .char {
@@ -757,6 +758,19 @@
     @media screen and (min-width: 1400px) {
       .hero-section {
         padding-left: 100px;
+      }
+    }
+
+    /* Fix para prevenir solapamiento del menú con el título */
+    @media screen and (max-width: 1400px) {
+      .Menu-list {
+        font-size: 3rem;
+      }
+    }
+
+    @media screen and (max-width: 1280px) {
+      .Menu-list {
+        font-size: 2.8rem;
       }
     }
 
