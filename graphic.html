@@ -961,10 +961,44 @@
     <!-- Projects -->
     <div class="projects-container">
 
+       <article class="project project--featured">
+        <div class="project__content">
+          <div class="project__number">01</div>
+          <div class="project__label">Brand Identity · 2026</div>
+          <h2 class="project__title">Los Alebrijes</h2>
+          <p class="project__description">
+          Developed a bold and expressive visual language inspired by Mexican folk art and alebrije symbolism. The project includes logo design, logotype and symbol system, color palette, typography, illustration style, and comprehensive brand guidelines. Applications span menu design, signage, and mockups, creating a cohesive, vibrant, and recognizable identity that reflects the brand's energetic, playful, and authentic character.
+          </p>
+          <div class="project__tags">
+            <span class="tag">Brand Identity</span>
+            <span class="tag">Logo Design</span>
+            <span class="tag">Menu</span>
+          </div>
+          <div class="project__stats">
+            <div class="stat">
+              <div class="stat__number">10+</div>
+              <div class="stat__label">Assets</div>
+            </div>
+            <div class="stat">
+              <div class="stat__number">FULL</div>
+              <div class="stat__label">System</div>
+            </div>
+            <div class="stat">
+              <div class="stat__number">2026</div>
+              <div class="stat__label">Year</div>
+            </div>
+          </div>
+        </div>
+        <div class="project__visual" id="alebrijesVisual">
+          <img src="images/Thumbnail1.png" alt="Los Alebrijes" 
+               onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%)'">
+        </div>
+      </article>
+
       <!-- LEX Natural Cosmetics - Featured Project -->
       <article class="project project--featured">
         <div class="project__content">
-          <div class="project__number">01</div>
+          <div class="project__number">02</div>
           <div class="project__label">Brand Identity · 2025</div>
           <h2 class="project__title">LEX Natural Cosmetics</h2>
           <p class="project__description">
@@ -1003,7 +1037,7 @@
       <!-- Dolce Luna - Rebrand -->
       <article class="project project--featured">
         <div class="project__content">
-          <div class="project__number">02</div>
+          <div class="project__number">03</div>
           <div class="project__label">Rebrand · 2025</div>
           <h2 class="project__title">Dolce Luna</h2>
           <p class="project__description">
@@ -1037,7 +1071,7 @@
       <!-- Pendufon - Logo & Brand Assets -->
       <article class="project project--featured">
         <div class="project__content">
-          <div class="project__number">03</div>
+          <div class="project__number">04</div>
           <div class="project__label">Logo Design · 2025</div>
           <h2 class="project__title">Pendufon</h2>
           <p class="project__description">
@@ -1074,7 +1108,7 @@
       <!-- Funding Spree - Logo & Brand Assets -->
       <article class="project project--featured">
         <div class="project__content">
-          <div class="project__number">04</div>
+          <div class="project__number">05</div>
           <div class="project__label">Logo Design · 2024</div>
           <h2 class="project__title">Funding Spree</h2>
           <p class="project__description">
@@ -1121,7 +1155,7 @@
           </div>
         </div>
         <div class="project__content">
-          <div class="project__number">05</div>
+          <div class="project__number">06</div>
           <div class="project__label">Editorial Design · 2022-2026</div>
           <h2 class="project__title">Photobooks</h2>
           <p class="project__description">
@@ -1189,6 +1223,7 @@
   const carouselCounter = document.getElementById('carouselCounter');
   const carouselIndicators = document.getElementById('carouselIndicators');
   const viewMoreBtn = document.getElementById('viewMoreBtn');
+  const alebrijesVisual = document.getElementById('alebrijesVisual');
   const lexVisual = document.getElementById('lexVisual');
   const pendufonVisual = document.getElementById('pendufonVisual');
   const dolcelunaVisual = document.getElementById('dolcelunaVisual');
@@ -1197,6 +1232,15 @@
   let currentSlide = 0;
   let totalSlides = 0;
   let currentImageSet = [];
+
+  // Array de imágenes de Los Alebrijes
+  const alebrijesImages = [
+    'images/los alebrijes mockup 1.png',
+    'images/los alebrijes mockup.png',
+    'images/Thumbnail1.png',
+    'images/los alebrijes  menu.png',
+    'images/los alebrijes  logo.png'
+  ];
 
   // Array de imágenes de LEX Brand Guide
   const lexImages = [
@@ -1365,6 +1409,9 @@
   }
 
   // Event listeners
+  
+  // Los Alebrijes Visual - abre carousel de Los Alebrijes
+  alebrijesVisual.addEventListener('click', () => openCarousel(alebrijesImages, 0));
   
   // LEX Visual - abre carousel de LEX
   lexVisual.addEventListener('click', () => openCarousel(lexImages, 0));
