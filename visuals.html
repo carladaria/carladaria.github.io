@@ -1,1251 +1,482 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Visuals — Carla D'Aria</title>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      height: 100%;
-      font-family: 'Impact', sans-serif;
-      background: #0d0607;
-      color: #fff;
-      overflow-x: hidden;
-    }
-
-    /* ===== Background Waves ===== */
-    a-waves {
-      --x: -0.5rem;
-      --y: 50%;
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-      will-change: auto;
-    }
-
-    a-waves:before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0.5rem;
-      height: 0.5rem;
-      background: #ff103d;
-      border-radius: 50%;
-      transform: translate3d(calc(var(--x) - 50%), calc(var(--y) - 50%), 0);
-      will-change: transform;
-      content: "";
-      pointer-events: none;
-    }
-
-    a-waves svg {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-
-    a-waves svg path {
-      fill: none;
-      stroke: #ff103d;
-      stroke-width: 0.5px;
-      opacity: 0.3;
-      vector-effect: non-scaling-stroke;
-    }
-
-    /* ===== Page Layout ===== */
-    .page {
-      position: relative;
-      z-index: 2;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* ===== Header ===== */
-    .header {
-      display: flex;
-      align-items: center;
-      padding: 30px;
-    }
-
-    .header__logo {
-      font-size: 3em;
-      font-weight: 900;
-      letter-spacing: -1px;
-      color: rgba(255, 255, 255, 1);
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .header__logo span {
-      display: inline-block;
-      transform: translateY(4px) rotate(180deg);
-      pointer-events: none;
-    }
-
-    .header__menu {
-      margin-left: auto;
-    }
-
-    .header__menu__list {
-      display: flex;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .header__menu__link {
-      position: relative;
-      margin-left: 50px;
-      color: #808080;
-      text-decoration: none;
-      cursor: pointer;
-      display: block;
-      transition: color 0.3s ease;
-      font-size: 30px;
-    }
-
-    .header__menu__link::before {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 49%;
-      left: -10%;
-      right: -10%;
-      height: 2px;
-      border-radius: 2px;
-      margin-top: -1px;
-      background: #FF103D;
-      transform: scale(0);
-      transition: transform .8s cubic-bezier(.16,1.08,.38,.98);
-      z-index: 1;
-    }
-
-    .header__menu__link:hover {
-      color: #FF103D;
-    }
-
-    .header__menu__link:hover .Mask,
-    .header__menu__link:active .Mask {
-      color: #FFF;
-      transform: skewX(12deg) translateX(3px);
-    }
-
-    .header__menu__link:hover .Mask + .Mask,
-    .header__menu__link:active .Mask + .Mask {
-      transform: skewX(12deg) translateX(-3px);
-    }
-
-    .header__menu__link:hover::before,
-    .header__menu__link:active::before {
-      transform: scale(1);
-    }
-
-    /* Mask class para efectos hover */
-    .Mask {
-      display: block;
-      position: absolute;
-      overflow: hidden;
-      color: #e0e0e0;
-      top: 0;
-      height: 49%;
-      transition: all .8s cubic-bezier(.16,1.08,.38,.98);
-    }
-
-    .Mask span {
-      display: block;
-    }
-
-    .Mask + .Mask {
-      top: 48.9%;
-      height: 51.1%;
-    }
-
-    .Mask + .Mask span {
-      transform: translateY(-49%);
-    }
-
-    /* ===== Main Content ===== */
-    .center {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 40px 80px;
-    }
-
-    /* ===== Hero Section ===== */
-    .hero-section {
-      width: 100%;
-      max-width: 1600px;
-      padding: 60px 0 80px;
-      text-align: center;
-    }
-
-    .hero-title {
-      font-size: clamp(50px, 7vw, 100px);
-      line-height: 0.9;
-      letter-spacing: 3px;
-      margin-bottom: 24px;
-      color: #ff103d;
-      text-transform: uppercase;
-      text-shadow: 0 0 30px rgba(255, 16, 61, 0.6);
-    }
-
-    .hero-subtitle {
-      font-size: 20px;
-      color: rgba(255, 255, 255, 0.7);
-      max-width: 800px;
-      margin: 0 auto 50px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-weight: 300;
-      line-height: 1.7;
-      letter-spacing: 0.5px;
-    }
-
-    .hero-divider {
-      width: 120px;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, #ff103d, transparent);
-      margin: 0 auto;
-      box-shadow: 0 0 20px rgba(255, 16, 61, 0.5);
-    }
-
-    /* ===== Video Grid Creativo ===== */
-    .videos-grid {
-      width: 100%;
-      max-width: 1600px;
-      margin: 60px 0;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-auto-rows: 220px;
-      gap: 20px;
-      padding: 0 20px;
-    }
-
-    /* Grid Layout Asimétrico - 15 videos */
-    .video-item:nth-child(1) {
-      grid-column: span 5;
-      grid-row: span 2;
-    }
-
-    .video-item:nth-child(2) {
-      grid-column: span 4;
-      grid-row: span 1;
-    }
-
-    .video-item:nth-child(3) {
-      grid-column: span 3;
-      grid-row: span 1;
-    }
-
-    .video-item:nth-child(4) {
-      grid-column: span 3;
-      grid-row: span 2;
-    }
-
-    .video-item:nth-child(5) {
-      grid-column: span 4;
-      grid-row: span 2;
-    }
-
-    .video-item:nth-child(6) {
-      grid-column: span 5;
-      grid-row: span 1;
-    }
-
-    .video-item:nth-child(7) {
-      grid-column: span 4;
-      grid-row: span 1;
-    }
-
-    .video-item:nth-child(8) {
-      grid-column: span 5;
-      grid-row: span 2;
-    }
-
-    .video-item:nth-child(9) {
-      grid-column: span 3;
-      grid-row: span 1;
-    }
-
-    .video-item:nth-child(10) {
-      grid-column: span 7;
-      grid-row: span 2;
-    }
-
-    .video-item:nth-child(11) {
-      grid-column: span 5;
-      grid-row: span 1;
-    }
-
-    .video-item:nth-child(12) {
-      grid-column: span 3;
-      grid-row: span 2;
-    }
-
-    .video-item:nth-child(13) {
-      grid-column: span 4;
-      grid-row: span 1;
-    }
-
-    .video-item:nth-child(14) {
-      grid-column: span 5;
-      grid-row: span 2;
-    }
-
-    .video-item:nth-child(15) {
-      grid-column: span 7;
-      grid-row: span 1;
-    }
-
-    /* Video Item Styles */
-    .video-item {
-      position: relative;
-      border-radius: 12px;
-      overflow: hidden;
-      cursor: pointer;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: all 0.5s cubic-bezier(0.16, 1.08, 0.38, 0.98);
-    }
-
-    .video-item::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255, 16, 61, 0), rgba(255, 16, 61, 0.15));
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      z-index: 1;
-    }
-
-    .video-item:hover {
-      transform: translateY(-8px);
-      border-color: rgba(255, 16, 61, 0.5);
-      box-shadow: 0 20px 60px rgba(255, 16, 61, 0.3);
-    }
-
-    .video-item:hover::before {
-      opacity: 1;
-    }
-
-    .video-thumbnail {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease, filter 0.5s ease;
-      filter: grayscale(50%) brightness(0.8);
-    }
-
-    .video-item:hover .video-thumbnail {
-      transform: scale(1.1);
-      filter: grayscale(0%) brightness(1);
-    }
-
-    .video-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 24px;
-      z-index: 2;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    .video-item:hover .video-overlay {
-      opacity: 1;
-    }
-
-    .video-title {
-      font-size: clamp(16px, 1.5vw, 22px);
-      font-weight: 700;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-    }
-
-    .video-description {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.8);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      line-height: 1.4;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .play-icon {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 70px;
-      height: 70px;
-      background: rgba(255, 16, 61, 0.9);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 3;
-      transition: all 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98);
-      box-shadow: 0 10px 30px rgba(255, 16, 61, 0.4);
-    }
-
-    .play-icon::after {
-      content: '';
-      width: 0;
-      height: 0;
-      border-left: 20px solid #fff;
-      border-top: 12px solid transparent;
-      border-bottom: 12px solid transparent;
-      margin-left: 4px;
-    }
-
-    .video-item:hover .play-icon {
-      transform: translate(-50%, -50%) scale(1.2);
-      background: rgba(255, 16, 61, 1);
-      box-shadow: 0 15px 40px rgba(255, 16, 61, 0.6);
-    }
-
-    /* Video Modal */
-    .video-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.95);
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(10px);
-      animation: fadeIn 0.3s ease;
-    }
-
-    .video-modal.active {
-      display: flex;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    .video-modal-content {
-      position: relative;
-      width: 90%;
-      max-width: 1200px;
-      aspect-ratio: 16/9;
-      background: #000;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 25px 100px rgba(255, 16, 61, 0.4);
-      animation: slideUp 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98);
-    }
-
-    @keyframes slideUp {
-      from {
-        transform: translateY(50px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .video-modal video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: -50px;
-      right: 0;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 16, 61, 0.9);
-      border: none;
-      border-radius: 50%;
-      color: #fff;
-      font-size: 24px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      z-index: 10;
-    }
-
-    .modal-close:hover {
-      background: rgba(255, 16, 61, 1);
-      transform: rotate(90deg) scale(1.1);
-    }
-
-    /* Responsive Design */
-    @media screen and (max-width: 1200px) {
-      .videos-grid {
-        grid-template-columns: repeat(8, 1fr);
-        grid-auto-rows: 200px;
-      }
-
-      .video-item:nth-child(1) {
-        grid-column: span 5;
-      }
-
-      .video-item:nth-child(2) {
-        grid-column: span 3;
-      }
-
-      .video-item:nth-child(3) {
-        grid-column: span 3;
-      }
-
-      .video-item:nth-child(4) {
-        grid-column: span 5;
-      }
-
-      .video-item:nth-child(5) {
-        grid-column: span 4;
-      }
-
-      .video-item:nth-child(6) {
-        grid-column: span 4;
-      }
-
-      .video-item:nth-child(7) {
-        grid-column: span 8;
-      }
-
-      .video-item:nth-child(8) {
-        grid-column: span 4;
-      }
-
-      .video-item:nth-child(9) {
-        grid-column: span 4;
-      }
-
-      .video-item:nth-child(10) {
-        grid-column: span 8;
-      }
-
-      .video-item:nth-child(11) {
-        grid-column: span 5;
-      }
-
-      .video-item:nth-child(12) {
-        grid-column: span 3;
-      }
-
-      .video-item:nth-child(13) {
-        grid-column: span 4;
-      }
-
-      .video-item:nth-child(14) {
-        grid-column: span 4;
-      }
-
-      .video-item:nth-child(15) {
-        grid-column: span 8;
-      }
-    }
-
-    @media screen and (max-width: 768px) {
-      .header {
-        flex-wrap: wrap;
-      }
-
-      .header__menu {
-        width: 100%;
-        margin-left: 0;
-        margin-top: 20px;
-      }
-
-      .header__menu__list {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-      }
-
-      .header__menu__link {
-        font-size: 18px;
-        margin-left: 0;
-      }
-
-      .videos-grid {
-        grid-template-columns: 1fr;
-        grid-auto-rows: 250px;
-        gap: 16px;
-      }
-
-      .video-item:nth-child(n) {
-        grid-column: span 1;
-        grid-row: span 1;
-      }
-
-      .video-item:nth-child(1),
-      .video-item:nth-child(7),
-      .video-item:nth-child(10),
-      .video-item:nth-child(14) {
-        grid-row: span 2;
-      }
-
-      .play-icon {
-        width: 60px;
-        height: 60px;
-      }
-
-      .play-icon::after {
-        border-left: 16px solid #fff;
-        border-top: 10px solid transparent;
-        border-bottom: 10px solid transparent;
-      }
-
-      .video-modal-content {
-        width: 95%;
-      }
-
-      .modal-close {
-        top: -45px;
-        width: 35px;
-        height: 35px;
-      }
-    }
-
-    @media screen and (max-width: 480px) {
-      .header {
-        padding: 20px;
-      }
-
-      .header__logo {
-        font-size: 2em;
-      }
-
-      .header__menu__link {
-        font-size: 16px;
-        margin-left: 20px;
-      }
-
-      .center {
-        padding: 20px 20px 60px;
-      }
-
-      .hero-section {
-        padding: 40px 0 60px;
-      }
-
-      .videos-grid {
-        grid-auto-rows: 200px;
-        gap: 12px;
-      }
-
-      .video-overlay {
-        padding: 16px;
-      }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --red:#f40c3f;--rd:rgba(244,12,63,.1);--rm:rgba(244,12,63,.2);
+      --bg:#0d0d0f;--s1:rgba(255,255,255,.03);--s2:rgba(255,255,255,.06);
+      --bd:rgba(255,255,255,.07);--br:rgba(244,12,63,.32);
+      --tx:#efefef;--mu:rgba(255,255,255,.42);
+      --fd:'Syne',sans-serif;--fm:'Space Mono',monospace;
+    }
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--tx);font-family:var(--fd);overflow-x:hidden;cursor:none;}
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.28;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");}
+
+    a-waves{--x:-0.5rem;--y:50%;position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+    a-waves svg{display:block;width:100%;height:100%;}
+    a-waves svg path{fill:none;stroke:var(--red);stroke-width:.5px;opacity:.12;vector-effect:non-scaling-stroke;}
+
+    /* cursor */
+    #cur{position:fixed;width:8px;height:8px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;}
+    #cur-r{position:fixed;width:30px;height:30px;border:1px solid rgba(244,12,63,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .18s,height .18s,opacity .18s;}
+    body.hov #cur-r{width:60px;height:60px;opacity:.25;}
+    .sprog{position:fixed;top:0;left:0;height:2px;background:var(--red);z-index:500;width:0;transition:width .08s linear;}
+
+    /* ── HEADER ── */
+    header{position:fixed;top:0;left:0;right:0;z-index:300;padding:20px 52px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(13,13,15,.97) 60%,transparent);backdrop-filter:blur(3px);}
+    .logo{font-family:var(--fd);font-weight:800;font-size:1rem;letter-spacing:.15em;text-transform:uppercase;color:var(--tx);text-decoration:none;transition:color .3s;}
+    .logo:hover{color:var(--red);}
+    .logo span{color:var(--red);}
+    nav{display:flex;gap:26px;align-items:center;}
+    nav a{font-family:var(--fm);font-size:.68rem;color:var(--mu);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s;position:relative;}
+    nav a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.16,1.08,.38,.98);}
+    nav a:hover{color:var(--tx);}
+    nav a:hover::after,nav a.active::after{transform:scaleX(1);}
+    nav a.active{color:var(--tx);}
+    .npill{color:var(--red)!important;border:1px solid var(--br);padding:5px 14px;border-radius:999px;}
+    .npill::after{display:none;}
+    .npill:hover{background:var(--rd);}
+
+    /* ── HERO ── */
+    .hero{padding:120px 56px 64px;position:relative;overflow:hidden;border-bottom:1px solid var(--bd);z-index:2;}
+    .hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(244,12,63,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(244,12,63,.025) 1px,transparent 1px);background-size:60px 60px;animation:gd 28s linear infinite;pointer-events:none;}
+    @keyframes gd{to{background-position:60px 60px;}}
+    .hero::after{content:'';position:absolute;bottom:-20%;left:-10%;width:60vw;height:80vh;background:radial-gradient(ellipse at bottom left,rgba(244,12,63,.07) 0%,transparent 65%);pointer-events:none;}
+    .eyebrow{font-family:var(--fm);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:10px;margin-bottom:20px;position:relative;z-index:2;}
+    .eyebrow::before{content:'';width:28px;height:1px;background:var(--red);}
+    h1{font-size:clamp(4.5rem,10vw,9.5rem);font-weight:800;line-height:.88;letter-spacing:-.035em;text-transform:uppercase;position:relative;z-index:2;}
+    h1 em{color:var(--red);font-style:normal;}
+    .hero-desc{font-family:var(--fm);font-size:.82rem;color:var(--mu);line-height:1.9;max-width:520px;margin-top:24px;position:relative;z-index:2;}
+
+    /* ── BENTO GRID ── */
+    .grid-wrap{padding:40px 56px 80px;position:relative;z-index:2;}
+
+    .bento{
+      display:grid;
+      /* 3 equal columns */
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      /* row height base — cells can span */
+      grid-auto-rows:280px;
+    }
+
+    /* span rules — create rhythm */
+    .v-item:nth-child(1){grid-column:span 2;grid-row:span 2;} /* big */
+    .v-item:nth-child(2){grid-column:span 1;grid-row:span 1;}
+    .v-item:nth-child(3){grid-column:span 1;grid-row:span 1;}
+    .v-item:nth-child(4){grid-column:span 1;grid-row:span 2;} /* tall */
+    .v-item:nth-child(5){grid-column:span 2;grid-row:span 1;}
+    .v-item:nth-child(6){grid-column:span 1;grid-row:span 1;}
+    .v-item:nth-child(7){grid-column:span 1;grid-row:span 1;}
+    .v-item:nth-child(8){grid-column:span 2;grid-row:span 2;} /* big */
+    .v-item:nth-child(9){grid-column:span 1;grid-row:span 1;}
+    .v-item:nth-child(10){grid-column:span 1;grid-row:span 1;}
+    .v-item:nth-child(11){grid-column:span 1;grid-row:span 1;}
+    .v-item:nth-child(12){grid-column:span 1;grid-row:span 2;} /* tall */
+    .v-item:nth-child(13){grid-column:span 2;grid-row:span 1;}
+    .v-item:nth-child(14){grid-column:span 1;grid-row:span 1;}
+    .v-item:nth-child(15){grid-column:span 2;grid-row:span 1;}
+
+    /* ── VIDEO CARD ── */
+    .v-item{
+      position:relative;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid var(--bd);
+      background:var(--s2);
+      cursor:none;
+      transition:border-color .4s, transform .45s cubic-bezier(.16,1.08,.38,.98), box-shadow .45s;
+    }
+    .v-item:hover{
+      border-color:var(--br);
+      transform:scale(1.012);
+      box-shadow:0 20px 60px var(--rm);
+      z-index:2;
+    }
+    /* red top line */
+    .v-item::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,transparent,var(--red),transparent);
+      transform:scaleX(0);transform-origin:left;
+      transition:transform .55s cubic-bezier(.16,1.08,.38,.98);
+      z-index:4;
+    }
+    .v-item:hover::before{transform:scaleX(1);}
+
+    /* video element fills cell */
+    .v-item video{
+      position:absolute;inset:0;
+      width:100%;height:100%;
+      object-fit:cover;
+      display:block;
+      filter:brightness(.75) saturate(.6);
+      transition:filter .5s ease, transform .55s cubic-bezier(.16,1.08,.38,.98);
+    }
+    .v-item:hover video{
+      filter:brightness(1) saturate(1);
+      transform:scale(1.04);
+    }
+
+    /* play button */
+    .v-play{
+      position:absolute;
+      top:50%;left:50%;
+      transform:translate(-50%,-50%) scale(.85);
+      width:56px;height:56px;
+      border-radius:50%;
+      background:rgba(244,12,63,.85);
+      display:flex;align-items:center;justify-content:center;
+      z-index:3;
+      transition:transform .35s cubic-bezier(.16,1.08,.38,.98), opacity .35s, box-shadow .35s;
+      opacity:.7;
+      box-shadow:0 8px 28px rgba(244,12,63,.35);
+    }
+    .v-play svg{width:18px;height:18px;fill:#fff;margin-left:3px;}
+    .v-item:hover .v-play{
+      transform:translate(-50%,-50%) scale(1);
+      opacity:1;
+      box-shadow:0 12px 40px rgba(244,12,63,.55);
+    }
+
+    /* info overlay — slides up on hover */
+    .v-info{
+      position:absolute;bottom:0;left:0;right:0;
+      padding:36px 20px 18px;
+      background:linear-gradient(to top,rgba(13,13,15,.92) 0%,transparent 100%);
+      transform:translateY(12px);opacity:0;
+      transition:all .38s cubic-bezier(.16,1.08,.38,.98);
+      z-index:3;
+    }
+    .v-item:hover .v-info{transform:translateY(0);opacity:1;}
+    .v-title{font-size:.92rem;font-weight:800;text-transform:uppercase;letter-spacing:.02em;margin-bottom:4px;}
+    .v-sub{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--red);}
+
+    /* ── VIDEO MODAL ── */
+    .vmodal{
+      display:none;position:fixed;inset:0;z-index:900;
+      background:transparent;
+      transition:background .3s;
+      align-items:center;justify-content:center;
+    }
+    .vmodal.open{display:flex;background:rgba(0,0,0,.96);}
+    .vmodal-inner{
+      position:relative;
+      width:min(1300px,92vw);
+      animation:vmi .3s cubic-bezier(.16,1.08,.38,.98);
+    }
+    @keyframes vmi{from{opacity:0;transform:scale(.96) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+    .vmodal-inner video{
+      width:100%;
+      border-radius:14px;
+      display:block;
+      background:#000;
+      box-shadow:0 20px 80px rgba(244,12,63,.22);
+      max-height:88vh;
+      object-fit:contain;
+    }
+    .vmodal-title{
+      font-family:var(--fm);font-size:.72rem;letter-spacing:.15em;
+      text-transform:uppercase;color:var(--mu);
+      margin-top:14px;text-align:center;
+    }
+    .vmodal-close{
+      position:fixed;top:22px;right:24px;
+      width:42px;height:42px;border-radius:50%;
+      background:rgba(244,12,63,.1);border:1px solid rgba(244,12,63,.28);
+      color:#fff;font-size:20px;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      transition:all .3s;z-index:901;font-family:sans-serif;line-height:1;
+    }
+    .vmodal-close:hover{background:rgba(244,12,63,.28);transform:rotate(90deg);}
+    /* prev/next in modal */
+    .vmodal-prev,.vmodal-next{
+      position:fixed;top:50%;transform:translateY(-50%);
+      width:50px;height:50px;border-radius:50%;
+      background:rgba(244,12,63,.1);border:1px solid rgba(244,12,63,.28);
+      color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;
+      transition:all .25s;z-index:901;
+    }
+    .vmodal-prev{left:20px;}.vmodal-next{right:20px;}
+    .vmodal-prev:hover,.vmodal-next:hover{background:rgba(244,12,63,.28);border-color:var(--red);}
+    .vmodal-prev svg,.vmodal-next svg{width:16px;height:16px;stroke:#fff;stroke-width:2;}
+    .vmodal-counter{
+      position:fixed;top:28px;left:50%;transform:translateX(-50%);
+      font-family:var(--fm);font-size:.68rem;letter-spacing:.12em;color:var(--mu);
+      z-index:901;background:rgba(13,13,15,.65);padding:5px 14px;
+      border-radius:999px;backdrop-filter:blur(8px);
+    }
+
+    /* ── FOOTER ── */
+    footer{position:relative;z-index:2;border-top:1px solid var(--bd);padding:26px 56px;display:flex;align-items:center;justify-content:space-between;}
+    .fc{font-family:var(--fm);font-size:.68rem;color:var(--mu);letter-spacing:.1em;}
+    .fl{display:flex;gap:26px;}
+    .fl a{font-family:var(--fm);font-size:.68rem;color:var(--mu);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s;}
+    .fl a:hover{color:var(--red);}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1024px){
+      .bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:240px;}
+      .v-item:nth-child(1){grid-column:span 2;grid-row:span 2;}
+      .v-item:nth-child(n+2){grid-column:span 1;grid-row:span 1;}
+      .v-item:nth-child(4),.v-item:nth-child(8),.v-item:nth-child(12){grid-row:span 2;}
+    }
+    @media(max-width:900px){
+      header{padding:16px 20px;}nav{gap:14px;}nav a{font-size:.6rem;}
+      .hero{padding:100px 24px 48px;}
+      .grid-wrap{padding:28px 16px 60px;}
+      .bento{grid-template-columns:1fr 1fr;grid-auto-rows:200px;gap:8px;}
+      footer{flex-direction:column;gap:14px;padding:18px 24px;}
+      body{cursor:auto;}#cur,#cur-r{display:none;}
+    }
+    @media(max-width:560px){
+      h1{font-size:4rem;}
+      .bento{grid-template-columns:1fr;grid-auto-rows:220px;}
+      .v-item:nth-child(n){grid-column:span 1;grid-row:span 1;}
+      .v-play{width:48px;height:48px;}
     }
   </style>
 </head>
 <body>
-  <!-- Waves Background -->
-  <a-waves>
-    <svg class="js-svg">
-      <defs></defs>
-    </svg>
-  </a-waves>
 
-  <!-- Page Content -->
-  <div class="page">
-    <!-- Header -->
-    <header class="header">
-      <a href="index.html" class="header__logo">CARLA D<span>A'</span>RIA</a>
-      <nav class="header__menu">
-        <ul class="header__menu__list">
-          <li class="header__menu__item">
-            <a href="ux index.html" class="header__menu__link">
-              UX/UI DESIGN
-              <span class="Mask"><span>UX/UI DESIGN</span></span>
-              <span class="Mask"><span>UX/UI DESIGN</span></span>
-            </a>
-          </li>
-          <li class="header__menu__item">
-            <a href="graphic.html" class="header__menu__link">
-              GRAPHIC DESIGN
-              <span class="Mask"><span>GRAPHIC DESIGN</span></span>
-              <span class="Mask"><span>GRAPHIC DESIGN</span></span>
-            </a>
-          </li>
-          <li class="header__menu__item">
-            <a href="2d.html" class="header__menu__link">
-              2D ART
-              <span class="Mask"><span>2D ART</span></span>
-              <span class="Mask"><span>2D ART</span></span>
-            </a>
-          </li>
-          <li class="header__menu__item">
-            <a href="3d.html" class="header__menu__link">
-              3D ART
-              <span class="Mask"><span>3D ART</span></span>
-              <span class="Mask"><span>3D ART</span></span>
-            </a>
-          </li>
-    
-        </ul>
-      </nav>
-    </header>
+<div id="cur"></div>
+<div id="cur-r"></div>
+<div class="sprog" id="sp"></div>
+<a-waves aria-hidden="true"><svg class="js-svg"></svg></a-waves>
 
-    <!-- Main Content -->
-    <div class="center">
-      <!-- Hero Section -->
-      <section class="hero-section">
-        <h1 class="hero-title">VISUALS</h1>
-        <p class="hero-subtitle">
-          A collection of visual experiments, motion graphics, and creative video productions that push the boundaries of storytelling through dynamic imagery and innovative techniques.
-        </p>
-        <div class="hero-divider"></div>
-      </section>
+<!-- VIDEO MODAL -->
+<div class="vmodal" id="vmodal">
+  <button class="vmodal-close" id="vmc">×</button>
+  <button class="vmodal-prev" id="vmp"><svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5"/></svg></button>
+  <div class="vmodal-inner">
+    <video id="vmv" controls playsinline></video>
+    <div class="vmodal-title" id="vmt"></div>
+  </div>
+  <button class="vmodal-next" id="vmn"><svg viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5"/></svg></button>
+  <div class="vmodal-counter" id="vmco"></div>
+</div>
 
-      <!-- Videos Grid -->
-      <div class="videos-grid">
-        <!-- Video 1 - Scorpion -->
-        <div class="video-item" data-video="images/xxxcorpion.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/xxxcorpion.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">XXX Scorpion</h3>
-            <p class="video-description">Visual experiment featuring scorpion motion and dynamics</p>
-          </div>
-        </div>
+<div style="position:relative;z-index:2;">
 
-        <!-- Video 2 - Jaulas -->
-        <div class="video-item" data-video="images/2- Jaulas.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/2- Jaulas.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Jaulas</h3>
-            <p class="video-description">Cage structures and confinement concepts</p>
-          </div>
-        </div>
+  <header>
+    <a href="index.html" class="logo">Carla <span>D'</span>Aria</a>
+    <nav>
+      <a href="3d.html">3D Art</a>
+      <a href="ux_index.html">UX/UI</a>
+      <a href="graphic.html">Graphic</a>
+      <a href="2d.html">2D Art</a>
+      <a href="visuals.html" class="active">Visuals</a>
+      <a href="about.html">About</a>
+      <a href="index.html" class="npill">Home</a>
+    </nav>
+  </header>
 
-        <!-- Video 3 - Arañas -->
-        <div class="video-item" data-video="images/2-Arañas caminando.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/2-Arañas caminando.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Arañas Caminando</h3>
-            <p class="video-description">Spider walking animation</p>
-          </div>
-        </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">Portfolio · Motion & Visuals</div>
+    <h1>Visual<br><em>Works</em></h1>
+    <p class="hero-desc">Motion graphics, visual experiments, and short-form pieces exploring movement, texture, and the unexpected.</p>
+  </section>
 
-        <!-- Video 4 - Comp 1 -->
-        <div class="video-item" data-video="images/Comp_1.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/Comp_1.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Composition 1</h3>
-            <p class="video-description">Abstract visual composition and motion graphics</p>
-          </div>
-        </div>
+  <!-- BENTO GRID -->
+  <div class="grid-wrap">
+    <div class="bento" id="bento">
 
-        <!-- Video 5 - Hands -->
-        <div class="video-item" data-video="images/hands final 3.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/hands final 3.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Hands</h3>
-            <p class="video-description">Hand movements and gestural animation</p>
-          </div>
-        </div>
-
-        <!-- Video 6 - Heladera -->
-        <div class="video-item" data-video="images/heladera.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/heladera.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Heladera</h3>
-            <p class="video-description">Refrigerator visual concept</p>
-          </div>
-        </div>
-
-        <!-- Video 7 - Hongo -->
-        <div class="video-item" data-video="images/hongo nuevo final final.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/hongo nuevo final final.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Hongo</h3>
-            <p class="video-description">Mushroom growth and organic forms</p>
-          </div>
-        </div>
-
-        <!-- Video 8 - Ninfa -->
-        <div class="video-item" data-video="images/ninfa.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/ninfa.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Ninfa</h3>
-            <p class="video-description">Nymph-inspired ethereal visuals</p>
-          </div>
-        </div>
-
-        <!-- Video 9 - Ouija -->
-        <div class="video-item" data-video="images/ouija.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/ouija.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Ouija</h3>
-            <p class="video-description">Mystical ouija board experience</p>
-          </div>
-        </div>
-
-        <!-- Video 10 - Radar -->
-        <div class="video-item" data-video="images/radar.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/radar.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Radar</h3>
-            <p class="video-description">Radar scanning and detection visualization</p>
-          </div>
-        </div>
-
-        <!-- Video 11 - Scorpiones Bailando -->
-        <div class="video-item" data-video="images/scorpiones bailando.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/scorpiones bailando.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Scorpiones Bailando</h3>
-            <p class="video-description">Dancing scorpions choreography</p>
-          </div>
-        </div>
-
-        <!-- Video 12 - Sign -->
-        <div class="video-item" data-video="images/Sign.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/Sign.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Sign</h3>
-            <p class="video-description">Signage and symbolic representation</p>
-          </div>
-        </div>
-
-        <!-- Video 13 - Tarot Sun -->
-        <div class="video-item" data-video="images/Tarot sun Sound.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/Tarot sun Sound.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Tarot Sun</h3>
-            <p class="video-description">Tarot sun card with sound design</p>
-          </div>
-        </div>
-
-        <!-- Video 14 - Test 2 -->
-        <div class="video-item" data-video="images/tes2.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/tes2.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Test 2</h3>
-            <p class="video-description">Experimental visual test</p>
-          </div>
-        </div>
-
-        <!-- Video 15 - Test -->
-        <div class="video-item" data-video="images/Test.mp4">
-          <video class="video-thumbnail" muted loop playsinline preload="metadata">
-            <source src="images/Test.mp4#t=0.1" type="video/mp4">
-          </video>
-          <div class="play-icon"></div>
-          <div class="video-overlay">
-            <h3 class="video-title">Test</h3>
-            <p class="video-description">Visual experimentation and technique testing</p>
-          </div>
-        </div>
+      <div class="v-item" data-src="images/xxxcorpion.mp4" data-title="XXX Scorpion">
+        <video muted loop playsinline preload="metadata"><source src="images/xxxcorpion.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">XXX Scorpion</div><div class="v-sub">Motion</div></div>
       </div>
+
+      <div class="v-item" data-src="images/2- Jaulas.mp4" data-title="Jaulas">
+        <video muted loop playsinline preload="metadata"><source src="images/2- Jaulas.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Jaulas</div><div class="v-sub">Visual Experiment</div></div>
+      </div>
+
+      <div class="v-item" data-src="images/2-Arañas caminando.mp4" data-title="Arañas Caminando">
+        <video muted loop playsinline preload="metadata"><source src="images/2-Arañas caminando.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Arañas Caminando</div><div class="v-sub">Animation</div></div>
+      </div>
+
+      <div class="v-item" data-src="images/Comp_1.mp4" data-title="Composition 1">
+        <video muted loop playsinline preload="metadata"><source src="images/Comp_1.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Composition 1</div><div class="v-sub">Motion Graphics</div></div>
+      </div>
+
+      <div class="v-item" data-src="images/hands final 3.mp4" data-title="Hands">
+        <video muted loop playsinline preload="metadata"><source src="images/hands final 3.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Hands</div><div class="v-sub">Animation</div></div>
+      </div>
+
+      <div class="v-item" data-src="images/heladera.mp4" data-title="Heladera">
+        <video muted loop playsinline preload="metadata"><source src="images/heladera.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Heladera</div><div class="v-sub">Visual Experiment</div></div>
+      </div>
+
+      <div class="v-item" data-src="images/hongo nuevo final final.mp4" data-title="Hongo">
+        <video muted loop playsinline preload="metadata"><source src="images/hongo nuevo final final.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Hongo</div><div class="v-sub">Organic Forms</div></div>
+      </div>
+
+      <div class="v-item" data-src="images/ninfa.mp4" data-title="Ninfa">
+        <video muted loop playsinline preload="metadata"><source src="images/ninfa.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Ninfa</div><div class="v-sub">Character Animation</div></div>
+      </div>
+
+      <div class="v-item" data-src="images/ouija.mp4" data-title="Ouija">
+        <video muted loop playsinline preload="metadata"><source src="images/ouija.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Ouija</div><div class="v-sub">Motion Graphics</div></div>
+      </div>
+
+      <div class="v-item" data-src="images/radar.mp4" data-title="Radar">
+        <video muted loop playsinline preload="metadata"><source src="images/radar.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Radar</div><div class="v-sub">Visual Experiment</div></div>
+      </div>
+
+      <div class="v-item" data-src="images/scorpiones bailando.mp4" data-title="Scorpiones Bailando">
+        <video muted loop playsinline preload="metadata"><source src="images/scorpiones bailando.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Scorpiones Bailando</div><div class="v-sub">Animation</div></div>
+      </div>
+
+      <div class="v-item" data-src="images/Sign.mp4" data-title="Sign">
+        <video muted loop playsinline preload="metadata"><source src="images/Sign.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Sign</div><div class="v-sub">Motion Graphics</div></div>
+      </div>
+
+      <div class="v-item" data-src="images/Tarot sun Sound.mp4" data-title="Tarot Sun">
+        <video muted loop playsinline preload="metadata"><source src="images/Tarot sun Sound.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Tarot Sun</div><div class="v-sub">Motion + Sound</div></div>
+      </div>
+
+      <div class="v-item" data-src="images/tes2.mp4" data-title="Test 2">
+        <video muted loop playsinline preload="metadata"><source src="images/tes2.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Test 2</div><div class="v-sub">Visual Experiment</div></div>
+      </div>
+
+      <div class="v-item" data-src="images/Test.mp4" data-title="Test">
+        <video muted loop playsinline preload="metadata"><source src="images/Test.mp4#t=0.1" type="video/mp4"></video>
+        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
+        <div class="v-info"><div class="v-title">Test</div><div class="v-sub">Visual Experiment</div></div>
+      </div>
+
     </div>
   </div>
 
-  <!-- Video Modal -->
-  <div class="video-modal" id="videoModal">
-    <div class="video-modal-content">
-      <button class="modal-close" id="modalClose">&times;</button>
-      <video id="modalVideo" controls></video>
+  <footer>
+    <span class="fc">© 2025 Carla D'Aria · Creative Producer</span>
+    <div class="fl">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="https://wa.me/5491122539753" target="_blank">WhatsApp</a>
     </div>
-  </div>
+  </footer>
 
-  <script>
-    // ===== Video Modal Functionality =====
-    const videoItems = document.querySelectorAll('.video-item');
-    const videoModal = document.getElementById('videoModal');
-    const modalVideo = document.getElementById('modalVideo');
-    const modalClose = document.getElementById('modalClose');
+</div>
 
-    // ===== Video Thumbnail Hover Play =====
-    videoItems.forEach(item => {
-      const thumbnail = item.querySelector('.video-thumbnail');
-      
-      // Play video on hover
-      item.addEventListener('mouseenter', () => {
-        if (thumbnail && thumbnail.tagName === 'VIDEO') {
-          thumbnail.play().catch(err => {
-            console.log('Video autoplay prevented:', err);
-          });
-        }
-      });
+<script>
+// cursor
+const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function a(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(a);})();
 
-      // Pause video on mouse leave
-      item.addEventListener('mouseleave', () => {
-        if (thumbnail && thumbnail.tagName === 'VIDEO') {
-          thumbnail.pause();
-          thumbnail.currentTime = 0;
-        }
-      });
+// scroll progress
+window.addEventListener('scroll',()=>{document.getElementById('sp').style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%';});
 
-      // Open modal on click
-      item.addEventListener('click', () => {
-        const videoSrc = item.getAttribute('data-video');
-        modalVideo.src = videoSrc;
-        videoModal.classList.add('active');
-        modalVideo.play();
-      });
-    });
+// collect all video items
+const items=[...document.querySelectorAll('.v-item')];
+items.forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
 
-    modalClose.addEventListener('click', closeModal);
-    
-    videoModal.addEventListener('click', (e) => {
-      if (e.target === videoModal) {
-        closeModal();
-      }
-    });
+// hover → play/pause preview
+items.forEach(item=>{
+  const vid=item.querySelector('video');
+  item.addEventListener('mouseenter',()=>{if(vid)vid.play().catch(()=>{});});
+  item.addEventListener('mouseleave',()=>{if(vid){vid.pause();vid.currentTime=0;}});
+});
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && videoModal.classList.contains('active')) {
-        closeModal();
-      }
-    });
+// modal
+const modal=document.getElementById('vmodal');
+const mv=document.getElementById('vmv');
+const mt=document.getElementById('vmt');
+const mco=document.getElementById('vmco');
+let curIdx=0;
 
-    function closeModal() {
-      videoModal.classList.remove('active');
-      modalVideo.pause();
-      modalVideo.src = '';
-    }
+function openModal(idx){
+  curIdx=idx;
+  const item=items[idx];
+  mv.src=item.dataset.src;
+  mt.textContent=item.dataset.title||'';
+  mco.textContent=`${idx+1} / ${items.length}`;
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+  mv.play().catch(()=>{});
+}
+function closeModal(){
+  modal.classList.remove('open');
+  mv.pause();mv.src='';
+  document.body.style.overflow='';
+}
+function goModal(dir){
+  mv.pause();
+  curIdx=(curIdx+dir+items.length)%items.length;
+  const item=items[curIdx];
+  mv.src=item.dataset.src;
+  mt.textContent=item.dataset.title||'';
+  mco.textContent=`${curIdx+1} / ${items.length}`;
+  mv.play().catch(()=>{});
+}
 
-    // ===== Perlin Noise Class =====
-    class Noise {
-      constructor(seed = 1) {
-        this.grad3 = [
-          [1, 1, 0], [-1, 1, 0], [1, -1, 0], [-1, -1, 0],
-          [1, 0, 1], [-1, 0, 1], [1, 0, -1], [-1, 0, -1],
-          [0, 1, 1], [0, -1, 1], [0, 1, -1], [0, -1, -1]
-        ];
-        this.p = [];
-        for (let i = 0; i < 256; i++) {
-          this.p[i] = Math.floor(Math.random() * 256);
-        }
-        this.perm = [];
-        for (let i = 0; i < 512; i++) {
-          this.perm[i] = this.p[i & 255];
-        }
-      }
+items.forEach((item,i)=>item.addEventListener('click',()=>openModal(i)));
+document.getElementById('vmc').addEventListener('click',closeModal);
+document.getElementById('vmp').addEventListener('click',()=>goModal(-1));
+document.getElementById('vmn').addEventListener('click',()=>goModal(1));
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
+document.addEventListener('keydown',e=>{
+  if(!modal.classList.contains('open'))return;
+  if(e.key==='Escape')closeModal();
+  if(e.key==='ArrowLeft')goModal(-1);
+  if(e.key==='ArrowRight')goModal(1);
+});
 
-      dot(g, x, y) {
-        return g[0] * x + g[1] * y;
-      }
+// scroll reveal
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0) scale(1)';}
+}),{threshold:.06});
+items.forEach((el,i)=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(20px) scale(.98)';
+  el.style.transition=`opacity .7s ease ${i*.04}s, transform .7s cubic-bezier(.16,1.08,.38,.98) ${i*.04}s, border-color .4s, box-shadow .45s`;
+  io.observe(el);
+});
 
-      perlin2(x, y) {
-        const X = Math.floor(x) & 255;
-        const Y = Math.floor(y) & 255;
-        x -= Math.floor(x);
-        y -= Math.floor(y);
-        const u = this.fade(x);
-        const v = this.fade(y);
-        const A = this.perm[X] + Y;
-        const AA = this.perm[A];
-        const AB = this.perm[A + 1];
-        const B = this.perm[X + 1] + Y;
-        const BA = this.perm[B];
-        const BB = this.perm[B + 1];
-
-        return this.lerp(
-          v,
-          this.lerp(u, this.grad(this.perm[AA], x, y), this.grad(this.perm[BA], x - 1, y)),
-          this.lerp(u, this.grad(this.perm[AB], x, y - 1), this.grad(this.perm[BB], x - 1, y - 1))
-        );
-      }
-
-      fade(t) {
-        return t * t * t * (t * (t * 6 - 15) + 10);
-      }
-
-      lerp(t, a, b) {
-        return a + t * (b - a);
-      }
-
-      grad(hash, x, y) {
-        const h = hash & 15;
-        const u = h < 8 ? x : y;
-        const v = h < 4 ? y : h === 12 || h === 14 ? x : 0;
-        return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
-      }
-    }
-
-    // ===== AWaves Web Component =====
-    class AWaves extends HTMLElement {
-      connectedCallback() {
-        this.svg = this.querySelector('.js-svg');
-        this.mouse = {
-          x: -10,
-          y: 0,
-          lx: 0,
-          ly: 0,
-          sx: 0,
-          sy: 0,
-          v: 0,
-          vs: 0,
-          a: 0,
-          set: false,
-        };
-        this.lines = [];
-        this.paths = [];
-        this.noise = new Noise(Math.random());
-        this.setSize();
-        this.setLines();
-        this.bindEvents();
-        requestAnimationFrame(this.tick.bind(this));
-      }
-
-      bindEvents() {
-        window.addEventListener('resize', this.onResize.bind(this));
-        window.addEventListener('mousemove', this.onMouseMove.bind(this));
-        this.addEventListener('touchmove', this.onTouchMove.bind(this));
-      }
-
-      onResize() {
-        this.setSize();
-        this.setLines();
-      }
-
-      onMouseMove(e) {
-        this.updateMousePosition(e.pageX, e.pageY);
-      }
-
-      onTouchMove(e) {
-        e.preventDefault();
-        const touch = e.touches[0];
-        this.updateMousePosition(touch.clientX, touch.clientY);
-      }
-
-      updateMousePosition(x, y) {
-        const { mouse } = this;
-        mouse.x = x - this.bounding.left;
-        mouse.y = y - this.bounding.top + window.scrollY;
-        if (!mouse.set) {
-          mouse.sx = mouse.x;
-          mouse.sy = mouse.y;
-          mouse.lx = mouse.x;
-          mouse.ly = mouse.y;
-          mouse.set = true;
-        }
-      }
-
-      setSize() {
-        this.bounding = this.getBoundingClientRect();
-        this.svg.style.width = `${this.bounding.width}px`;
-        this.svg.style.height = `${this.bounding.height}px`;
-      }
-
-      setLines() {
-        const { width, height } = this.bounding;
-        this.lines = [];
-        this.paths.forEach(path => path.remove());
-        this.paths = [];
-
-        const xGap = 20;
-        const yGap = 40;
-        const oWidth = width + 100;
-        const oHeight = height + 20;
-        const totalLines = Math.ceil(oWidth / xGap);
-        const totalPoints = Math.ceil(oHeight / yGap);
-        const xStart = (width - xGap * totalLines) / 2;
-        const yStart = (height - yGap * totalPoints) / 2;
-
-        for (let i = 0; i <= totalLines; i++) {
-          const points = [];
-          for (let j = 0; j <= totalPoints; j++) {
-            const point = {
-              x: xStart + xGap * i,
-              y: yStart + yGap * j,
-              wave: { x: 0, y: 0 },
-              cursor: { x: 0, y: 0, vx: 0, vy: 0 },
-            };
-            points.push(point);
-          }
-
-          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          this.svg.appendChild(path);
-          this.paths.push(path);
-          this.lines.push(points);
-        }
-      }
-
-      movePoints(time) {
-        const { lines, mouse, noise } = this;
-        lines.forEach(points => {
-          points.forEach(p => {
-            const move = noise.perlin2(
-              (p.x + time * 0.0125) * 0.002,
-              (p.y + time * 0.005) * 0.0015
-            ) * 12;
-            p.wave.x = Math.cos(move) * 32;
-            p.wave.y = Math.sin(move) * 16;
-
-            const dx = p.x - mouse.sx;
-            const dy = p.y - mouse.sy;
-            const d = Math.hypot(dx, dy);
-            const l = Math.max(175, mouse.vs);
-
-            if (d < l) {
-              const s = 1 - d / l;
-              const f = Math.cos(d * 0.001) * s;
-              p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00065;
-              p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00065;
-            }
-
-            p.cursor.vx += (0 - p.cursor.x) * 0.005;
-            p.cursor.vy += (0 - p.cursor.y) * 0.005;
-            p.cursor.vx *= 0.925;
-            p.cursor.vy *= 0.925;
-            p.cursor.x += p.cursor.vx * 2;
-            p.cursor.y += p.cursor.vy * 2;
-            p.cursor.x = Math.min(100, Math.max(-100, p.cursor.x));
-            p.cursor.y = Math.min(100, Math.max(-100, p.cursor.y));
-          });
-        });
-      }
-
-      moved(point, withCursorForce = true) {
-        const coords = {
-          x: point.x + point.wave.x + (withCursorForce ? point.cursor.x : 0),
-          y: point.y + point.wave.y + (withCursorForce ? point.cursor.y : 0),
-        };
-        coords.x = Math.round(coords.x * 10) / 10;
-        coords.y = Math.round(coords.y * 10) / 10;
-        return coords;
-      }
-
-      drawLines() {
-        const { lines, paths } = this;
-        lines.forEach((points, lIndex) => {
-          let p1 = this.moved(points[0], false);
-          let d = `M ${p1.x} ${p1.y}`;
-          points.forEach((p1, pIndex) => {
-            const isLast = pIndex === points.length - 1;
-            p1 = this.moved(p1, !isLast);
-            d += `L ${p1.x} ${p1.y}`;
-          });
-          paths[lIndex].setAttribute('d', d);
-        });
-      }
-
-      tick(time) {
-        const { mouse } = this;
-        mouse.sx += (mouse.x - mouse.sx) * 0.1;
-        mouse.sy += (mouse.y - mouse.sy) * 0.1;
-
-        const dx = mouse.x - mouse.lx;
-        const dy = mouse.y - mouse.ly;
-        const d = Math.hypot(dx, dy);
-
-        mouse.v = d;
-        mouse.vs += (d - mouse.vs) * 0.1;
-        mouse.vs = Math.min(100, mouse.vs);
-
-        mouse.lx = mouse.x;
-        mouse.ly = mouse.y;
-        mouse.a = Math.atan2(dy, dx);
-
-        this.style.setProperty('--x', `${mouse.sx}px`);
-        this.style.setProperty('--y', `${mouse.sy}px`);
-
-        this.movePoints(time);
-        this.drawLines();
-        
-        this.animationId = requestAnimationFrame(this.tick.bind(this));
-      }
-      
-      disconnectedCallback() {
-        if (this.animationId) {
-          cancelAnimationFrame(this.animationId);
-        }
-      }
-    }
-
-    customElements.define('a-waves', AWaves);
-
-    // ===== Scroll Reveal Animation =====
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '0';
-          entry.target.style.transform = 'translateY(30px)';
-          setTimeout(() => {
-            entry.target.style.transition = 'all 0.6s cubic-bezier(0.16, 1.08, 0.38, 0.98)';
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }, 100);
-        }
-      });
-    }, observerOptions);
-
-    videoItems.forEach(item => observer.observe(item));
-  </script>
+// AWaves
+class Noise{constructor(){this.p=Array.from({length:256},()=>Math.floor(Math.random()*256));this.perm=Array.from({length:512},(_,i)=>this.p[i&255]);}fade(t){return t*t*t*(t*(t*6-15)+10);}lerp(t,a,b){return a+t*(b-a);}grad(h,x,y){const u=h<8?x:y,v=h<4?y:h===12||h===14?x:0;return((h&1)?-u:u)+((h&2)?-v:v);}perlin2(x,y){const X=Math.floor(x)&255,Y=Math.floor(y)&255;x-=Math.floor(x);y-=Math.floor(y);const u=this.fade(x),v=this.fade(y),A=this.perm[X]+Y,B=this.perm[X+1]+Y;return this.lerp(v,this.lerp(u,this.grad(this.perm[A]&15,x,y),this.grad(this.perm[B]&15,x-1,y)),this.lerp(u,this.grad(this.perm[A+1]&15,x,y-1),this.grad(this.perm[B+1]&15,x-1,y-1)));}}
+class AWaves extends HTMLElement{connectedCallback(){this.svg=this.querySelector('.js-svg');this.mouse={x:-10,y:0,lx:0,ly:0,sx:0,sy:0,v:0,vs:0,a:0,set:false};this.lines=[];this.paths=[];this.noise=new Noise();this.setSize();this.setLines();window.addEventListener('resize',()=>{this.setSize();this.setLines();});window.addEventListener('mousemove',e=>this.sm(e.pageX,e.pageY));this.addEventListener('touchmove',e=>{e.preventDefault();const t=e.touches[0];this.sm(t.clientX,t.clientY);});requestAnimationFrame(this.tick.bind(this));}sm(x,y){const m=this.mouse;m.x=x-this.bounding.left;m.y=y-this.bounding.top+window.scrollY;if(!m.set){m.sx=m.x;m.sy=m.y;m.lx=m.x;m.ly=m.y;m.set=true;}}setSize(){this.bounding=this.getBoundingClientRect();this.svg.style.width=`${this.bounding.width}px`;this.svg.style.height=`${this.bounding.height}px`;}setLines(){const{width:w,height:h}=this.bounding;this.lines=[];this.paths.forEach(p=>p.remove());this.paths=[];const xG=20,yG=40,tL=Math.ceil((w+100)/xG),tP=Math.ceil((h+20)/yG),xS=(w-xG*tL)/2,yS=(h-yG*tP)/2;for(let i=0;i<=tL;i++){const pts=[];for(let j=0;j<=tP;j++)pts.push({x:xS+xG*i,y:yS+yG*j,wave:{x:0,y:0},cursor:{x:0,y:0,vx:0,vy:0}});const p=document.createElementNS('http://www.w3.org/2000/svg','path');this.svg.appendChild(p);this.paths.push(p);this.lines.push(pts);}}move(t){const{lines:L,mouse:m,noise:n}=this;L.forEach(pts=>pts.forEach(p=>{const mv=n.perlin2((p.x+t*.0125)*.002,(p.y+t*.005)*.0015)*12;p.wave.x=Math.cos(mv)*32;p.wave.y=Math.sin(mv)*16;const dx=p.x-m.sx,dy=p.y-m.sy,d=Math.hypot(dx,dy),l=Math.max(175,m.vs);if(d<l){const s=1-d/l,f=Math.cos(d*.001)*s;p.cursor.vx+=Math.cos(m.a)*f*l*m.vs*.00065;p.cursor.vy+=Math.sin(m.a)*f*l*m.vs*.00065;}p.cursor.vx+=(0-p.cursor.x)*.005;p.cursor.vy+=(0-p.cursor.y)*.005;p.cursor.vx*=.925;p.cursor.vy*=.925;p.cursor.x=Math.min(100,Math.max(-100,p.cursor.x+=p.cursor.vx*2));p.cursor.y=Math.min(100,Math.max(-100,p.cursor.y+=p.cursor.vy*2));}));}draw(){this.lines.forEach((pts,i)=>{let d=`M ${pts[0].x+pts[0].wave.x} ${pts[0].y+pts[0].wave.y}`;pts.forEach((p,j)=>{const f=j!==pts.length-1;d+=` L ${Math.round((p.x+p.wave.x+(f?p.cursor.x:0))*10)/10} ${Math.round((p.y+p.wave.y+(f?p.cursor.y:0))*10)/10}`;});this.paths[i].setAttribute('d',d);});}tick(t){const m=this.mouse;m.sx+=(m.x-m.sx)*.1;m.sy+=(m.y-m.sy)*.1;const dx=m.x-m.lx,dy=m.y-m.ly;m.vs+=(Math.hypot(dx,dy)-m.vs)*.1;m.vs=Math.min(100,m.vs);m.lx=m.x;m.ly=m.y;m.a=Math.atan2(dy,dx);this.style.setProperty('--x',`${m.sx}px`);this.style.setProperty('--y',`${m.sy}px`);this.move(t);this.draw();requestAnimationFrame(this.tick.bind(this));}}
+customElements.define('a-waves',AWaves);
+</script>
 </body>
 </html>
