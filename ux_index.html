@@ -204,7 +204,7 @@
     /* ── Projects grid ── */
     .projects-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
 
@@ -245,7 +245,7 @@
     .project-card:hover::after { transform: scaleX(1); }
 
     .card-inner {
-      padding: 40px 44px 36px;
+      padding: 32px 32px 30px;
     }
 
     .featured .card-inner {
@@ -253,6 +253,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 48px;
       align-items: center;
+      padding: 40px 44px 36px;
     }
 
     /* Card number */
@@ -268,13 +269,16 @@
 
     /* Card title */
     .card-title {
-      font-size: clamp(2.4rem, 4vw, 4rem);
+      font-size: clamp(1.9rem, 3vw, 2.6rem);
       font-weight: 800;
       line-height: .95;
       letter-spacing: -.02em;
       text-transform: uppercase;
       margin-bottom: 16px;
       transition: color .3s;
+    }
+    .featured .card-title {
+      font-size: clamp(2.4rem, 4vw, 4rem);
     }
     .project-card:hover .card-title { color: var(--red); }
 
@@ -465,6 +469,10 @@
     .delay-5 { animation-delay: .58s; }
 
     /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+    }
+
     @media (max-width: 900px) {
       header { padding: 20px 24px; }
       main { padding: 120px 24px 60px; }
@@ -479,7 +487,7 @@
       .featured .card-inner { grid-template-columns: 1fr; gap: 28px; }
 
       .card-inner { padding: 28px; }
-      .card-title { font-size: 2.4rem; }
+      .card-title, .featured .card-title { font-size: 2.4rem; }
 
       .stats-row { grid-template-columns: 1fr; }
 
@@ -538,25 +546,23 @@
   <!-- Projects grid -->
   <div class="projects-grid">
 
-    <!-- Card 1 — Cinematic (featured) -->
-    <article class="project-card featured animate-in delay-3" data-src="ux - copia.html">
+    <!-- Card 1 — Runa and the Chaikuru Legacy (featured) -->
+    <article class="project-card featured animate-in delay-3" data-src="ux_runa.html">
       <div class="card-inner">
         <div>
           <div class="card-number">01 / Case Study</div>
-          <h2 class="card-title">Cinematic</h2>
-          <p class="card-subtitle">Web & Mobile Platform · E-commerce · 2024</p>
+          <h2 class="card-title">Runa &amp; Chaikuru</h2>
+          <p class="card-subtitle">Game UI / UX · Action-Adventure · 2025</p>
           <p class="card-desc">
-            A centralized cinema platform that unifies every theater brand under
-            one ecosystem — ticket purchasing, seat selection, and candy ordering
-            in a single, frictionless flow. Reduced checkout abandonment from 65%
-            to under 20%.
+            A full game UI/UX system rooted in Andean mythology — main menu,
+            in-game HUD, merchant interface, artifact codex, and monument
+            tracking unified under one carved-stone visual language.
           </p>
           <div class="card-tags">
-            <span class="tag">UX Research</span>
-            <span class="tag">User Flows</span>
-            <span class="tag">UI Design</span>
-            <span class="tag">Prototyping</span>
-            <span class="tag">E-commerce</span>
+            <span class="tag">Game UI Design</span>
+            <span class="tag">UX Flows</span>
+            <span class="tag">Iconography</span>
+            <span class="tag">Motion / FX</span>
           </div>
           <div class="card-arrow">
             View case study
@@ -566,20 +572,46 @@
           </div>
         </div>
         <div class="card-visual">
-          <span class="visual-placeholder">CIN</span>
+          <span class="visual-placeholder">RUNA</span>
         </div>
       </div>
     </article>
 
-    <!-- Card 2 — Bloopy -->
-    <article class="project-card animate-in delay-4" data-src="ux.html">
+    <!-- Card 2 — Cinematic -->
+    <article class="project-card animate-in delay-4" data-src="ux - copia.html">
       <div class="card-inner">
         <div class="card-number">02 / Case Study</div>
+        <h2 class="card-title">Cinematic</h2>
+        <p class="card-subtitle">Web & Mobile Platform · E-commerce · 2024</p>
+        <p class="card-desc">
+          A centralized cinema platform unifying every theater brand —
+          tickets, seats, and candy in a single flow. Checkout abandonment
+          cut from 65% to under 20%.
+        </p>
+        <div class="card-tags">
+          <span class="tag">UX Research</span>
+          <span class="tag">User Flows</span>
+          <span class="tag">UI Design</span>
+          <span class="tag">E-commerce</span>
+        </div>
+        <div class="card-arrow">
+          View case study
+          <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5">
+            <path d="M2 8h12M9 3l5 5-5 5"/>
+          </svg>
+        </div>
+      </div>
+    </article>
+
+    <!-- Card 3 — Bloopy -->
+    <article class="project-card animate-in delay-5" data-src="ux.html">
+      <div class="card-inner">
+        <div class="card-number">03 / Case Study</div>
         <h2 class="card-title">Bloopy</h2>
         <p class="card-subtitle">Mobile App · Pet Care · 2023</p>
         <p class="card-desc">
-          An all-in-one pet care platform with walk booking, grooming, vet
-          appointments, and gamified retention through a virtual Snowflake
+          An all-in-one pet care platform with walk booking, grooming, and
+          vet visits — gamified retention through a virtual Snowflake
           currency system.
         </p>
         <div class="card-tags">
@@ -597,16 +629,16 @@
       </div>
     </article>
 
-    <!-- Card 3 — TeamHub -->
+    <!-- Card 4 — TeamHub -->
     <article class="project-card animate-in delay-5" data-src="ux teamhub.html">
       <div class="card-inner">
-        <div class="card-number">03 / Case Study</div>
+        <div class="card-number">04 / Case Study</div>
         <h2 class="card-title">TeamHub</h2>
         <p class="card-subtitle">Virtual Space · Decentraland · Web3 · 2025</p>
         <p class="card-desc">
-          A spatial collaboration platform built inside Decentraland. Designed to
-          replace static video calls with immersive rooms, interactive polls, and
-          a persistent team identity.
+          A spatial collaboration platform inside Decentraland, replacing
+          static video calls with immersive rooms, polls, and a persistent
+          team identity.
         </p>
         <div class="card-tags">
           <span class="tag">UX Strategy</span>
@@ -628,7 +660,7 @@
   <!-- Stats row -->
   <div class="stats-row animate-in delay-4">
     <div class="stat-item">
-      <div class="stat-number">3</div>
+      <div class="stat-number">4</div>
       <div class="stat-label">Case Studies</div>
     </div>
     <div class="stat-item">
@@ -636,7 +668,7 @@
       <div class="stat-label">Drop-off Reduced</div>
     </div>
     <div class="stat-item">
-      <div class="stat-number">2023–25</div>
+      <div class="stat-number">2023–2026</div>
       <div class="stat-label">Active Years</div>
     </div>
   </div>
