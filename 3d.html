@@ -167,6 +167,33 @@
       .env-cell{height:220px;}
       .props-grid{columns:1;}
     }
+
+    /* ── PRODUCT VIZ PLACEHOLDERS ── */
+    .prop-ph{
+      break-inside:avoid;margin-bottom:12px;border-radius:12px;
+      border:1px dashed rgba(244,12,63,.22);
+      background:rgba(244,12,63,.03);
+      position:relative;
+      aspect-ratio:1/1;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:8px;
+    }
+    .prop-ph.wide{aspect-ratio:16/9;}
+    .prop-ph-icon{
+      width:36px;height:36px;border-radius:50%;
+      border:1px solid rgba(244,12,63,.3);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--red);font-size:18px;line-height:1;
+    }
+    .prop-ph-lbl{
+      font-family:var(--fm);font-size:.58rem;letter-spacing:.12em;
+      text-transform:uppercase;color:rgba(244,12,63,.45);
+    }
+    .prop-ph-num{
+      position:absolute;bottom:10px;right:12px;
+      font-family:var(--fm);font-size:.52rem;letter-spacing:.1em;
+      color:rgba(244,12,63,.25);
+    }
   </style>
 </head>
 <body>
@@ -219,6 +246,7 @@
     <a href="#characters">01 — Characters</a>
     <a href="#environments">02 — Environments</a>
     <a href="#props">03 — Props & Animations</a>
+    <a href="#productviz">04 — Product Viz</a>
   </nav>
 
   <!-- CHARACTERS -->
@@ -291,6 +319,68 @@
       <div class="prop" data-single="images/objects (4).png" data-type="image"><img src="images/objects (4).png" alt="Objects"><div class="prop-lbl"><div class="pl-t">Objects 4</div><div class="pl-s">3D Assets</div></div></div>
       <div class="prop" data-single="images/objects (6).png" data-type="image"><img src="images/objects (6).png" alt="Objects"><div class="prop-lbl"><div class="pl-t">Objects 6</div><div class="pl-s">3D Assets</div></div></div>
       <div class="prop is-vid" data-single="images/newtonheads.mp4" data-type="video" data-thumb="images/newtonhead.png"><img src="images/newtonhead.png" alt="Newton Heads"><div class="prop-lbl"><div class="pl-t">Newton Heads</div><div class="pl-s">3D Animation</div></div></div>
+    </div>
+  </section>
+
+
+  <!-- PRODUCT VIZ -->
+  <section class="cat sr" id="productviz">
+    <div class="cat-hd">
+      <div class="cat-lbl">04 — Product Visualization</div>
+      <h2 class="cat-title">Production<br>Renders</h2>
+    </div>
+    <p style="font-family:var(--fm);font-size:.78rem;color:var(--mu);line-height:1.9;max-width:560px;margin-bottom:36px;">Photorealistic 3D renders oriented to product visualization and commercial productions. High-quality assets built for external projects and clients.</p>
+    <div class="props-grid" id="pvGrid">
+
+      <!-- 6 IMAGE SLOTS -->
+      <div class="prop-ph">
+        <div class="prop-ph-icon">+</div>
+        <div class="prop-ph-lbl">Image</div>
+        <div class="prop-ph-num">01</div>
+      </div>
+      <div class="prop-ph">
+        <div class="prop-ph-icon">+</div>
+        <div class="prop-ph-lbl">Image</div>
+        <div class="prop-ph-num">02</div>
+      </div>
+      <div class="prop-ph">
+        <div class="prop-ph-icon">+</div>
+        <div class="prop-ph-lbl">Image</div>
+        <div class="prop-ph-num">03</div>
+      </div>
+      <div class="prop-ph">
+        <div class="prop-ph-icon">+</div>
+        <div class="prop-ph-lbl">Image</div>
+        <div class="prop-ph-num">04</div>
+      </div>
+      <div class="prop-ph">
+        <div class="prop-ph-icon">+</div>
+        <div class="prop-ph-lbl">Image</div>
+        <div class="prop-ph-num">05</div>
+      </div>
+      <div class="prop-ph">
+        <div class="prop-ph-icon">+</div>
+        <div class="prop-ph-lbl">Image</div>
+        <div class="prop-ph-num">06</div>
+      </div>
+
+      <!-- 3 VIDEO SLOTS -->
+      <div class="prop-ph wide">
+        <div class="prop-ph-icon">▶</div>
+        <div class="prop-ph-lbl">Video</div>
+        <div class="prop-ph-num">V01</div>
+      </div>
+      <div class="prop-ph wide">
+        <div class="prop-ph-icon">▶</div>
+        <div class="prop-ph-lbl">Video</div>
+        <div class="prop-ph-num">V02</div>
+      </div>
+      <div class="prop-ph wide">
+        <div class="prop-ph-icon">▶</div>
+        <div class="prop-ph-lbl">Video</div>
+        <div class="prop-ph-num">V03</div>
+      </div>
+
     </div>
   </section>
 
