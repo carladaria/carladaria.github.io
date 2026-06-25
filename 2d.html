@@ -7,469 +7,224 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="_base.css">
   <style>
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-    :root{
-      --red:#f40c3f;--rd:rgba(244,12,63,.1);--rm:rgba(244,12,63,.2);
-      --bg:#0d0d0f;--s1:rgba(255,255,255,.03);--s2:rgba(255,255,255,.06);
-      --bd:rgba(255,255,255,.07);--br:rgba(244,12,63,.32);
-      --tx:#efefef;--mu:rgba(255,255,255,.42);
-      --fd:'Syne',sans-serif;--fm:'Space Mono',monospace;
-    }
-    html{scroll-behavior:smooth;}
-    body{background:var(--bg);color:var(--tx);font-family:var(--fd);overflow-x:hidden;cursor:none;}
-    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.28;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");}
-    a-waves{--x:-0.5rem;--y:50%;position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-    a-waves svg{display:block;width:100%;height:100%;}
-    a-waves svg path{fill:none;stroke:var(--red);stroke-width:.5px;opacity:.12;vector-effect:non-scaling-stroke;}
-
-    /* cursor */
-    #cur{position:fixed;width:8px;height:8px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;}
-    #cur-r{position:fixed;width:30px;height:30px;border:1px solid rgba(244,12,63,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .18s,height .18s,opacity .18s;}
-    body.hov #cur-r{width:56px;height:56px;opacity:.25;}
-    .sprog{position:fixed;top:0;left:0;height:2px;background:var(--red);z-index:500;width:0;transition:width .08s linear;}
-
-    /* ── HEADER ── */
-    header{position:fixed;top:0;left:0;right:0;z-index:300;padding:20px 52px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(13,13,15,.97) 60%,transparent);backdrop-filter:blur(3px);}
-    .logo{font-family:var(--fd);font-weight:800;font-size:1rem;letter-spacing:.15em;text-transform:uppercase;color:var(--tx);text-decoration:none;transition:color .3s;}
-    .logo:hover{color:var(--red);}
-    .logo span{color:var(--red);}
-    nav{display:flex;gap:26px;align-items:center;}
-    nav a{font-family:var(--fm);font-size:.68rem;color:var(--mu);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s;position:relative;}
-    nav a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.16,1.08,.38,.98);}
-    nav a:hover{color:var(--tx);}
-    nav a:hover::after,nav a.active::after{transform:scaleX(1);}
-    nav a.active{color:var(--tx);}
-    .npill{color:var(--red)!important;border:1px solid var(--br);padding:5px 14px;border-radius:999px;}
-    .npill::after{display:none;}
-    .npill:hover{background:var(--rd);}
-
-    /* ── HERO ── */
-    .hero{padding:120px 56px 64px;position:relative;overflow:hidden;border-bottom:1px solid var(--bd);z-index:2;}
-    .hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(244,12,63,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(244,12,63,.025) 1px,transparent 1px);background-size:60px 60px;animation:gd 28s linear infinite;pointer-events:none;}
-    @keyframes gd{to{background-position:60px 60px;}}
-    .hero::after{content:'';position:absolute;top:-20%;right:-10%;width:55vw;height:80vh;background:radial-gradient(ellipse at top right,rgba(244,12,63,.07) 0%,transparent 65%);pointer-events:none;}
-    .eyebrow{font-family:var(--fm);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:10px;margin-bottom:20px;position:relative;z-index:2;}
-    .eyebrow::before{content:'';width:28px;height:1px;background:var(--red);}
-    h1{font-size:clamp(4.5rem,10vw,9.5rem);font-weight:800;line-height:.88;letter-spacing:-.035em;text-transform:uppercase;position:relative;z-index:2;}
-    h1 em{color:var(--red);font-style:normal;}
-    .hero-desc{font-family:var(--fm);font-size:.82rem;color:var(--mu);line-height:1.9;max-width:520px;margin-top:24px;position:relative;z-index:2;}
-
     /* ── MASONRY GALLERY ── */
-    .gallery-wrap{padding:48px 56px 80px;position:relative;z-index:2;}
+    .gallery-wrap { padding: 48px 48px 80px; position: relative; z-index: 2; }
 
-    /* CSS columns masonry — lets images breathe at their natural ratio */
-    .masonry{
-      columns:4;
-      column-gap:12px;
+    .masonry {
+      columns: 4; column-gap: 10px;
     }
 
-    .art-item{
-      break-inside:avoid;
-      margin-bottom:12px;
-      border-radius:14px;
-      overflow:hidden;
-      border:1px solid var(--bd);
-      background:var(--s2);
-      position:relative;
-      cursor:none;
-      transition:border-color .4s, transform .4s cubic-bezier(.16,1.08,.38,.98), box-shadow .4s;
+    .art-item {
+      break-inside: avoid;
+      margin-bottom: 10px;
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--bd);
+      background: var(--b2);
+      position: relative; cursor: pointer;
+      transition: border-color .4s, transform .45s var(--ease), box-shadow .4s;
     }
-    .art-item:hover{
-      border-color:var(--br);
-      transform:translateY(-5px);
-      box-shadow:0 18px 50px var(--rm);
-      z-index:2;
+    .art-item:hover {
+      border-color: var(--rb);
+      transform: translateY(-5px);
+      box-shadow: 0 18px 50px var(--rm);
+      z-index: 2;
     }
-    /* red line top */
-    .art-item::before{
-      content:'';position:absolute;top:0;left:0;right:0;height:2px;
-      background:linear-gradient(90deg,transparent,var(--red),transparent);
-      transform:scaleX(0);transform-origin:left;
-      transition:transform .5s cubic-bezier(.16,1.08,.38,.98);z-index:3;
+    .art-item::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--red), transparent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .5s var(--ease); z-index: 3;
     }
-    .art-item:hover::before{transform:scaleX(1);}
+    .art-item:hover::before { transform: scaleX(1); }
+    .art-item img {
+      width: 100%; display: block;
+      transition: transform .55s var(--ease), filter .4s;
+      filter: brightness(.88);
+    }
+    .art-item:hover img { transform: scale(1.04); filter: brightness(1); }
 
-    .art-item img{
-      width:100%;display:block;
-      transition:transform .55s cubic-bezier(.16,1.08,.38,.98),filter .4s;
-      filter:brightness(.88);
+    /* index badge */
+    .art-index {
+      position: absolute; bottom: 10px; left: 12px;
+      font-family: var(--fm); font-size: .52rem;
+      letter-spacing: .12em; color: rgba(255,255,255,.30);
+      z-index: 2; transition: color .3s;
     }
-    .art-item:hover img{transform:scale(1.04);filter:brightness(1);}
+    .art-item:hover .art-index { color: var(--red); }
 
-    /* index badge — always visible, subtle */
-    .art-index{
-      position:absolute;bottom:10px;left:12px;
-      font-family:var(--fm);font-size:.55rem;letter-spacing:.12em;
-      color:rgba(255,255,255,.35);
-      z-index:2;
-      transition:color .3s;
+    /* expand icon */
+    .art-expand {
+      position: absolute; top: 10px; right: 10px;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(13,13,15,.65); backdrop-filter: blur(6px);
+      border: 1px solid rgba(244,12,63,.28);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(.8);
+      transition: opacity .3s, transform .3s; z-index: 3;
     }
-    .art-item:hover .art-index{color:var(--red);}
+    .art-expand svg { width: 11px; height: 11px; stroke: var(--red); stroke-width: 2; }
+    .art-item:hover .art-expand { opacity: 1; transform: scale(1); }
 
-    /* expand icon on hover */
-    .art-expand{
-      position:absolute;top:12px;right:12px;
-      width:30px;height:30px;border-radius:50%;
-      background:rgba(13,13,15,.65);backdrop-filter:blur(6px);
-      border:1px solid rgba(244,12,63,.28);
-      display:flex;align-items:center;justify-content:center;
-      opacity:0;transform:scale(.8);
-      transition:opacity .3s,transform .3s;z-index:3;
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      padding: 0 48px 32px;
+      display: flex; gap: 8px; flex-wrap: wrap;
+      position: relative; z-index: 2;
     }
-    .art-expand svg{width:12px;height:12px;stroke:var(--red);stroke-width:2;}
-    .art-item:hover .art-expand{opacity:1;transform:scale(1);}
-
-    /* ── LIGHTBOX ── */
-    .lb{display:none;position:fixed;inset:0;z-index:900;background:transparent;transition:background .3s;align-items:center;justify-content:center;}
-    .lb.open{display:flex;background:rgba(0,0,0,.97);}
-    .lb-wrap{
-      position:relative;
-      max-width:min(1100px,90vw);
-      max-height:90vh;
-      display:flex;align-items:center;justify-content:center;
-      animation:lbi .3s cubic-bezier(.16,1.08,.38,.98);
+    .fbtn {
+      font-family: var(--fm); font-size: .65rem;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 7px 16px; border: 1px solid var(--bd);
+      border-radius: 999px; background: transparent;
+      color: var(--mu); cursor: pointer; transition: all .3s;
     }
-    @keyframes lbi{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
-    .lb-wrap img{
-      max-width:100%;max-height:88vh;
-      border-radius:12px;
-      box-shadow:0 20px 80px rgba(244,12,63,.16);
-      object-fit:contain;display:block;
-    }
-    .lb-close{position:fixed;top:22px;right:24px;width:42px;height:42px;border-radius:50%;background:rgba(244,12,63,.1);border:1px solid rgba(244,12,63,.28);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;z-index:901;font-family:sans-serif;line-height:1;}
-    .lb-close:hover{background:rgba(244,12,63,.28);transform:rotate(90deg);}
-    .lb-prev,.lb-next{position:fixed;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:50%;background:rgba(244,12,63,.1);border:1px solid rgba(244,12,63,.28);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;z-index:901;}
-    .lb-prev{left:20px;}.lb-next{right:20px;}
-    .lb-prev:hover,.lb-next:hover{background:rgba(244,12,63,.28);border-color:var(--red);}
-    .lb-prev svg,.lb-next svg{width:16px;height:16px;stroke:#fff;stroke-width:2;}
-    .lb-counter{position:fixed;top:28px;left:50%;transform:translateX(-50%);font-family:var(--fm);font-size:.68rem;letter-spacing:.12em;color:var(--mu);z-index:901;background:rgba(13,13,15,.65);padding:5px 14px;border-radius:999px;backdrop-filter:blur(8px);}
-
-    /* thumbnail strip */
-    .lb-thumbs{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:901;background:rgba(13,13,15,.65);padding:6px;border-radius:12px;backdrop-filter:blur(8px);max-width:88vw;overflow-x:auto;scrollbar-width:none;}
-    .lb-thumbs::-webkit-scrollbar{display:none;}
-    .lb-th{width:48px;height:48px;border-radius:7px;overflow:hidden;border:2px solid transparent;cursor:pointer;flex-shrink:0;transition:border-color .22s,transform .22s;background:var(--s2);}
-    .lb-th img{width:100%;height:100%;object-fit:cover;display:block;}
-    .lb-th.on{border-color:var(--red);transform:scale(1.1);}
-
-    /* ── FOOTER ── */
-    footer{position:relative;z-index:2;border-top:1px solid var(--bd);padding:26px 56px;display:flex;align-items:center;justify-content:space-between;}
-    .fc{font-family:var(--fm);font-size:.68rem;color:var(--mu);letter-spacing:.1em;}
-    .fl{display:flex;gap:26px;}
-    .fl a{font-family:var(--fm);font-size:.68rem;color:var(--mu);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s;}
-    .fl a:hover{color:var(--red);}
+    .fbtn:hover, .fbtn.on { border-color: var(--red); color: var(--red); background: var(--rd); }
 
     /* ── RESPONSIVE ── */
-    @media(max-width:1200px){.masonry{columns:3;}}
-    @media(max-width:900px){
-      header{padding:16px 20px;}nav{gap:14px;}nav a{font-size:.6rem;}
-      .hero{padding:100px 24px 48px;}
-      .gallery-wrap{padding:32px 16px 60px;}
-      .masonry{columns:2;column-gap:8px;}
-      .art-item{margin-bottom:8px;}
-      footer{flex-direction:column;gap:14px;padding:18px 24px;}
-      body{cursor:auto;}#cur,#cur-r{display:none;}
-      .lb-thumbs{display:none;}
+    @media (max-width: 1100px) { .masonry { columns: 3; } }
+    @media (max-width: 900px) {
+      .gallery-wrap { padding: 28px 16px 60px; }
+      .filter-bar { padding: 0 16px 24px; }
+      .masonry { columns: 2; column-gap: 8px; }
+      .art-item { margin-bottom: 8px; }
     }
-    @media(max-width:480px){
-      h1{font-size:4rem;}
-      .masonry{columns:1;}
-    }
+    @media (max-width: 480px) { .masonry { columns: 2; } }
   </style>
 </head>
 <body>
-
-<div id="cur"></div>
-<div id="cur-r"></div>
-<div class="sprog" id="sp"></div>
-<a-waves aria-hidden="true"><svg class="js-svg"></svg></a-waves>
+<div id="cur"></div><div id="cur-r"></div>
+<div class="sp" id="sp"></div>
 
 <!-- LIGHTBOX -->
 <div class="lb" id="lb">
   <button class="lb-close" id="lbc">×</button>
   <button class="lb-prev" id="lbp"><svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5"/></svg></button>
-  <div class="lb-wrap"><img id="lbimg" src="" alt=""></div>
+  <div class="lb-inner"><img id="lbimg" src="" alt=""></div>
   <button class="lb-next" id="lbn"><svg viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5"/></svg></button>
   <div class="lb-counter" id="lbco"></div>
   <div class="lb-thumbs" id="lbt"></div>
 </div>
 
-<div style="position:relative;z-index:2;">
+<!-- HEADER -->
+<header class="hdr">
+  <a href="index.html" class="logo">Carla <em>D'</em>Aria</a>
+  <nav class="nav-d">
+    <a href="3d.html">3D Art</a>
+    <a href="ux_index.html">UX/UI</a>
+    <a href="graphic.html">Graphic</a>
+    <a href="2d.html" class="act">2D Art</a>
+    <a href="visuals.html">Visuals</a>
+    <a href="about.html">About</a>
+  </nav>
+  <button class="nav-tog" id="navTog"><span></span><span></span><span></span></button>
+</header>
+<div class="nav-mob" id="navMob">
+  <a href="3d.html">3D Art</a><a href="ux_index.html">UX/UI</a>
+  <a href="graphic.html">Graphic</a><a href="2d.html" class="act">2D Art</a>
+  <a href="visuals.html">Visuals</a><a href="about.html">About</a>
+</div>
 
-  <header>
-    <a href="index.html" class="logo">Carla <span>D'</span>Aria</a>
-    <nav>
-      <a href="3d.html">3D Art</a>
-      <a href="ux_index.html">UX/UI</a>
-      <a href="graphic.html">Graphic</a>
-      <a href="2d.html" class="active">2D Art</a>
-      <a href="visuals.html">Visuals</a>
-      <a href="about.html">About</a>
-      <a href="index.html" class="npill">Home</a>
-    </nav>
-  </header>
-
+<div class="page">
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-glow"></div>
     <div class="eyebrow">Portfolio · 2D Art</div>
-    <h1>2D<br><em>Art</em></h1>
-    <p class="hero-desc">Illustrations, concept art, and character design — exploring form, colour, and narrative across different styles and techniques.</p>
+    <h1 class="page-title">2D<br><em>Art</em></h1>
+    <p class="hero-desc">Illustrations, concept art, and character design — exploring form, colour, and narrative across styles and techniques. 25 works.</p>
   </section>
 
-  <!-- MASONRY GALLERY -->
+  <!-- FILTER -->
+  <div class="filter-bar">
+    <button class="fbtn on" data-filter="all">All</button>
+    <button class="fbtn" data-filter="digital">Digital</button>
+    <button class="fbtn" data-filter="traditional">Traditional</button>
+    <button class="fbtn" data-filter="character">Character</button>
+  </div>
+
+  <!-- MASONRY -->
   <div class="gallery-wrap">
     <div class="masonry" id="masonry">
-
-      <div class="art-item" data-idx="0">
-        <img src="images/2d (1).jpg" alt="Artwork 01">
-        <div class="art-index">01</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="1">
-        <img src="images/2d (2).jpg" alt="Artwork 02">
-        <div class="art-index">02</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="2">
-        <img src="images/2d (3).jpg" alt="Artwork 03">
-        <div class="art-index">03</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="3">
-        <img src="images/2d (4).jpg" alt="Artwork 04">
-        <div class="art-index">04</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="4">
-        <img src="images/2d (5).png" alt="Artwork 05">
-        <div class="art-index">05</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="5">
-        <img src="images/2d (6).jpg" alt="Artwork 06">
-        <div class="art-index">06</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="6">
-        <img src="images/2d (7).jpg" alt="Artwork 07">
-        <div class="art-index">07</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="7">
-        <img src="images/2d (8).jpg" alt="Artwork 08">
-        <div class="art-index">08</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="8">
-        <img src="images/2d (9).jpg" alt="Artwork 09">
-        <div class="art-index">09</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="9">
-        <img src="images/2d (10).png" alt="Artwork 10">
-        <div class="art-index">10</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="10">
-        <img src="images/2d (11).jpg" alt="Artwork 11">
-        <div class="art-index">11</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="11">
-        <img src="images/2d (12).jpg" alt="Artwork 12">
-        <div class="art-index">12</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="12">
-        <img src="images/2d (13).png" alt="Artwork 13">
-        <div class="art-index">13</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="13">
-        <img src="images/Dibujo3.jpg" alt="Artwork 14">
-        <div class="art-index">14</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="14">
-        <img src="images/Dibujo1.png" alt="Artwork 15">
-        <div class="art-index">15</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="15">
-        <img src="images/Dibujo2.png" alt="Artwork 16">
-        <div class="art-index">16</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="16">
-        <img src="images/2d (1).png" alt="Artwork 17">
-        <div class="art-index">17</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="17">
-        <img src="images/2d (2).png" alt="Artwork 18">
-        <div class="art-index">18</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="18">
-        <img src="images/2d (3).png" alt="Artwork 19">
-        <div class="art-index">19</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="19">
-        <img src="images/2d (4).png" alt="Artwork 20">
-        <div class="art-index">20</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="20">
-        <img src="images/2d (6).png" alt="Artwork 21">
-        <div class="art-index">21</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="21">
-        <img src="images/2d (7).png" alt="Artwork 22">
-        <div class="art-index">22</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="22">
-        <img src="images/2d (9).png" alt="Artwork 23">
-        <div class="art-index">23</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="23">
-        <img src="images/2d (11).png" alt="Artwork 24">
-        <div class="art-index">24</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
-      <div class="art-item" data-idx="24">
-        <img src="images/2d (12).png" alt="Artwork 25">
-        <div class="art-index">25</div>
-        <div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div>
-      </div>
-
+      <div class="art-item sr" data-idx="0"><img src="images/2d (1).jpg" alt="Artwork 01" loading="lazy"><div class="art-index">01</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="1"><img src="images/2d (2).jpg" alt="Artwork 02" loading="lazy"><div class="art-index">02</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="2"><img src="images/2d (3).jpg" alt="Artwork 03" loading="lazy"><div class="art-index">03</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="3"><img src="images/2d (4).jpg" alt="Artwork 04" loading="lazy"><div class="art-index">04</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="4"><img src="images/2d (5).png" alt="Artwork 05" loading="lazy"><div class="art-index">05</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="5"><img src="images/2d (6).jpg" alt="Artwork 06" loading="lazy"><div class="art-index">06</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="6"><img src="images/2d (7).jpg" alt="Artwork 07" loading="lazy"><div class="art-index">07</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="7"><img src="images/2d (8).jpg" alt="Artwork 08" loading="lazy"><div class="art-index">08</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="8"><img src="images/2d (9).jpg" alt="Artwork 09" loading="lazy"><div class="art-index">09</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="9"><img src="images/2d (10).png" alt="Artwork 10" loading="lazy"><div class="art-index">10</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="10"><img src="images/2d (11).jpg" alt="Artwork 11" loading="lazy"><div class="art-index">11</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="11"><img src="images/2d (12).jpg" alt="Artwork 12" loading="lazy"><div class="art-index">12</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="12"><img src="images/2d (13).png" alt="Artwork 13" loading="lazy"><div class="art-index">13</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="13"><img src="images/Dibujo3.jpg" alt="Artwork 14" loading="lazy"><div class="art-index">14</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="14"><img src="images/Dibujo1.png" alt="Artwork 15" loading="lazy"><div class="art-index">15</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="15"><img src="images/Dibujo2.png" alt="Artwork 16" loading="lazy"><div class="art-index">16</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="16"><img src="images/2d (1).png" alt="Artwork 17" loading="lazy"><div class="art-index">17</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="17"><img src="images/2d (2).png" alt="Artwork 18" loading="lazy"><div class="art-index">18</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="18"><img src="images/2d (3).png" alt="Artwork 19" loading="lazy"><div class="art-index">19</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="19"><img src="images/2d (4).png" alt="Artwork 20" loading="lazy"><div class="art-index">20</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="20"><img src="images/2d (6).png" alt="Artwork 21" loading="lazy"><div class="art-index">21</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="21"><img src="images/2d (7).png" alt="Artwork 22" loading="lazy"><div class="art-index">22</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="22"><img src="images/2d (9).png" alt="Artwork 23" loading="lazy"><div class="art-index">23</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="23"><img src="images/2d (11).png" alt="Artwork 24" loading="lazy"><div class="art-index">24</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
+      <div class="art-item sr" data-idx="24"><img src="images/2d (12).png" alt="Artwork 25" loading="lazy"><div class="art-index">25</div><div class="art-expand"><svg viewBox="0 0 16 16" fill="none"><path d="M2 2h5M2 2v5M14 14h-5M14 14v-5M2 14h5M2 14v-5M14 2h-5M14 2v5"/></svg></div></div>
     </div>
   </div>
 
-  <footer>
-    <span class="fc">© 2025 Carla D'Aria · Creative Producer</span>
-    <div class="fl">
+  <footer class="ftr">
+    <span class="ftr-c">© 2025 Carla D'Aria · Creative Producer</span>
+    <div class="ftr-l">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="https://wa.me/5491122539753" target="_blank">WhatsApp</a>
     </div>
   </footer>
-
 </div>
 
 <script>
-// cursor
-const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-(function a(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(a);})();
+  // Cursor
+  const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+  if(cur){let mx=0,my=0,rx=0,ry=0;document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});(function l(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(l);})();}
+  // Scroll progress
+  window.addEventListener('scroll',()=>document.getElementById('sp').style.width=(scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%');
+  // Hamburger
+  const tog=document.getElementById('navTog'),mob=document.getElementById('navMob');
+  tog.addEventListener('click',()=>{const o=tog.classList.toggle('open');mob.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';});
+  mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{tog.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}));
+  // Hover state
+  document.querySelectorAll('.art-item').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));});
 
-// scroll progress
-window.addEventListener('scroll',()=>{document.getElementById('sp').style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%';});
+  // Lightbox
+  const items=[...document.querySelectorAll('.art-item')];
+  const srcs=items.map(el=>el.querySelector('img').src);
+  let idx=0;
+  const lbEl=document.getElementById('lb'),lbImg=document.getElementById('lbimg'),lbCo=document.getElementById('lbco'),lbt=document.getElementById('lbt');
 
-// collect items and their image srcs
-const items=[...document.querySelectorAll('.art-item')];
-const srcs=items.map(el=>el.querySelector('img').src);
-
-items.forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
-});
-
-// lightbox
-let idx=0;
-const lb=document.getElementById('lb');
-const lbimg=document.getElementById('lbimg');
-const lbco=document.getElementById('lbco');
-const lbt=document.getElementById('lbt');
-
-function lbRender(){
-  lbimg.src=srcs[idx];
-  lbco.textContent=`${idx+1} / ${srcs.length}`;
-  lbt.querySelectorAll('.lb-th').forEach((t,i)=>{
-    t.classList.toggle('on',i===idx);
-    if(i===idx)t.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
-  });
-}
-
-function lbOpen(i){
-  idx=i;
-  // build thumbs once
-  if(!lbt.children.length){
-    srcs.forEach((src,n)=>{
-      const t=document.createElement('div');
-      t.className='lb-th';
-      t.innerHTML=`<img src="${src}" alt="">`;
-      t.addEventListener('click',()=>{idx=n;lbRender();});
-      lbt.appendChild(t);
-    });
+  function render(){
+    lbImg.src=srcs[idx];
+    lbCo.textContent=`${idx+1} / ${srcs.length}`;
+    lbt.querySelectorAll('.lb-th').forEach((t,i)=>{t.classList.toggle('on',i===idx);if(i===idx)t.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});});
   }
-  lb.classList.add('open');
-  document.body.style.overflow='hidden';
-  lbRender();
-}
+  function open(i){
+    idx=i;
+    if(!lbt.children.length){srcs.forEach((s,n)=>{const t=document.createElement('div');t.className='lb-th';t.innerHTML=`<img src="${s}" alt="">`;t.addEventListener('click',()=>{idx=n;render();});lbt.appendChild(t);});}
+    lbEl.classList.add('open');document.body.style.overflow='hidden';render();
+  }
+  function close(){lbEl.classList.remove('open');document.body.style.overflow='';}
+  document.getElementById('lbc').addEventListener('click',close);
+  document.getElementById('lbp').addEventListener('click',()=>{idx=(idx-1+srcs.length)%srcs.length;render();});
+  document.getElementById('lbn').addEventListener('click',()=>{idx=(idx+1)%srcs.length;render();});
+  lbEl.addEventListener('click',e=>{if(e.target===lbEl)close();});
+  document.addEventListener('keydown',e=>{if(!lbEl.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft'){idx=(idx-1+srcs.length)%srcs.length;render();}if(e.key==='ArrowRight'){idx=(idx+1)%srcs.length;render();}});
+  items.forEach((el,i)=>el.addEventListener('click',()=>open(i)));
 
-function lbClose(){
-  lb.classList.remove('open');
-  document.body.style.overflow='';
-}
-
-document.getElementById('lbc').addEventListener('click',lbClose);
-document.getElementById('lbp').addEventListener('click',()=>{idx=(idx-1+srcs.length)%srcs.length;lbRender();});
-document.getElementById('lbn').addEventListener('click',()=>{idx=(idx+1)%srcs.length;lbRender();});
-lb.addEventListener('click',e=>{if(e.target===lb||e.target===document.querySelector('.lb-wrap'))lbClose();});
-document.addEventListener('keydown',e=>{
-  if(!lb.classList.contains('open'))return;
-  if(e.key==='Escape')lbClose();
-  if(e.key==='ArrowLeft'){idx=(idx-1+srcs.length)%srcs.length;lbRender();}
-  if(e.key==='ArrowRight'){idx=(idx+1)%srcs.length;lbRender();}
-});
-
-items.forEach((el,i)=>el.addEventListener('click',()=>lbOpen(i)));
-
-// scroll reveal — staggered
-const io=new IntersectionObserver(entries=>entries.forEach(e=>{
-  if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}
-}),{threshold:.06});
-items.forEach((el,i)=>{
-  el.style.opacity='0';
-  el.style.transform='translateY(18px)';
-  el.style.transition=`opacity .65s ease ${i*.035}s, transform .65s cubic-bezier(.16,1.08,.38,.98) ${i*.035}s, border-color .4s, box-shadow .4s`;
-  io.observe(el);
-});
-
-// AWaves
-class Noise{constructor(){this.p=Array.from({length:256},()=>Math.floor(Math.random()*256));this.perm=Array.from({length:512},(_,i)=>this.p[i&255]);}fade(t){return t*t*t*(t*(t*6-15)+10);}lerp(t,a,b){return a+t*(b-a);}grad(h,x,y){const u=h<8?x:y,v=h<4?y:h===12||h===14?x:0;return((h&1)?-u:u)+((h&2)?-v:v);}perlin2(x,y){const X=Math.floor(x)&255,Y=Math.floor(y)&255;x-=Math.floor(x);y-=Math.floor(y);const u=this.fade(x),v=this.fade(y),A=this.perm[X]+Y,B=this.perm[X+1]+Y;return this.lerp(v,this.lerp(u,this.grad(this.perm[A]&15,x,y),this.grad(this.perm[B]&15,x-1,y)),this.lerp(u,this.grad(this.perm[A+1]&15,x,y-1),this.grad(this.perm[B+1]&15,x-1,y-1)));}}
-class AWaves extends HTMLElement{connectedCallback(){this.svg=this.querySelector('.js-svg');this.mouse={x:-10,y:0,lx:0,ly:0,sx:0,sy:0,v:0,vs:0,a:0,set:false};this.lines=[];this.paths=[];this.noise=new Noise();this.setSize();this.setLines();window.addEventListener('resize',()=>{this.setSize();this.setLines();});window.addEventListener('mousemove',e=>this.sm(e.pageX,e.pageY));this.addEventListener('touchmove',e=>{e.preventDefault();const t=e.touches[0];this.sm(t.clientX,t.clientY);});requestAnimationFrame(this.tick.bind(this));}sm(x,y){const m=this.mouse;m.x=x-this.bounding.left;m.y=y-this.bounding.top+window.scrollY;if(!m.set){m.sx=m.x;m.sy=m.y;m.lx=m.x;m.ly=m.y;m.set=true;}}setSize(){this.bounding=this.getBoundingClientRect();this.svg.style.width=`${this.bounding.width}px`;this.svg.style.height=`${this.bounding.height}px`;}setLines(){const{width:w,height:h}=this.bounding;this.lines=[];this.paths.forEach(p=>p.remove());this.paths=[];const xG=20,yG=40,tL=Math.ceil((w+100)/xG),tP=Math.ceil((h+20)/yG),xS=(w-xG*tL)/2,yS=(h-yG*tP)/2;for(let i=0;i<=tL;i++){const pts=[];for(let j=0;j<=tP;j++)pts.push({x:xS+xG*i,y:yS+yG*j,wave:{x:0,y:0},cursor:{x:0,y:0,vx:0,vy:0}});const p=document.createElementNS('http://www.w3.org/2000/svg','path');this.svg.appendChild(p);this.paths.push(p);this.lines.push(pts);}}move(t){const{lines:L,mouse:m,noise:n}=this;L.forEach(pts=>pts.forEach(p=>{const mv=n.perlin2((p.x+t*.0125)*.002,(p.y+t*.005)*.0015)*12;p.wave.x=Math.cos(mv)*32;p.wave.y=Math.sin(mv)*16;const dx=p.x-m.sx,dy=p.y-m.sy,d=Math.hypot(dx,dy),l=Math.max(175,m.vs);if(d<l){const s=1-d/l,f=Math.cos(d*.001)*s;p.cursor.vx+=Math.cos(m.a)*f*l*m.vs*.00065;p.cursor.vy+=Math.sin(m.a)*f*l*m.vs*.00065;}p.cursor.vx+=(0-p.cursor.x)*.005;p.cursor.vy+=(0-p.cursor.y)*.005;p.cursor.vx*=.925;p.cursor.vy*=.925;p.cursor.x=Math.min(100,Math.max(-100,p.cursor.x+=p.cursor.vx*2));p.cursor.y=Math.min(100,Math.max(-100,p.cursor.y+=p.cursor.vy*2));}));}draw(){this.lines.forEach((pts,i)=>{let d=`M ${pts[0].x+pts[0].wave.x} ${pts[0].y+pts[0].wave.y}`;pts.forEach((p,j)=>{const f=j!==pts.length-1;d+=` L ${Math.round((p.x+p.wave.x+(f?p.cursor.x:0))*10)/10} ${Math.round((p.y+p.wave.y+(f?p.cursor.y:0))*10)/10}`;});this.paths[i].setAttribute('d',d);});}tick(t){const m=this.mouse;m.sx+=(m.x-m.sx)*.1;m.sy+=(m.y-m.sy)*.1;const dx=m.x-m.lx,dy=m.y-m.ly;m.vs+=(Math.hypot(dx,dy)-m.vs)*.1;m.vs=Math.min(100,m.vs);m.lx=m.x;m.ly=m.y;m.a=Math.atan2(dy,dx);this.style.setProperty('--x',`${m.sx}px`);this.style.setProperty('--y',`${m.sy}px`);this.move(t);this.draw();requestAnimationFrame(this.tick.bind(this));}}
-customElements.define('a-waves',AWaves);
+  // Scroll reveal
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.05});
+  document.querySelectorAll('.sr').forEach((el,i)=>{el.style.transitionDelay=`${i*.03}s`;io.observe(el);});
 </script>
 </body>
 </html>

@@ -1,807 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>UX/UI Design — Carla D'Aria</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="_base.css">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --red: #f40c3f;
-      --red-dim: rgba(244,12,63,.12);
-      --red-glow: rgba(244,12,63,.25);
-      --bg: #0d0d0f;
-      --surface: rgba(255,255,255,.03);
-      --border: rgba(255,255,255,.07);
-      --border-hover: rgba(244,12,63,.45);
-      --text: #f0f0f0;
-      --muted: rgba(255,255,255,.45);
-      --font-display: 'Syne', sans-serif;
-      --font-mono: 'Space Mono', monospace;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-display);
-      overflow-x: hidden;
-      min-height: 100vh;
-      cursor: none;
-    }
-
-    /* ── Custom cursor ── */
-    #cursor {
-      position: fixed;
-      width: 10px; height: 10px;
-      background: var(--red);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width .2s, height .2s, background .2s;
-      mix-blend-mode: screen;
-    }
-    #cursor-ring {
-      position: fixed;
-      width: 36px; height: 36px;
-      border: 1px solid var(--red);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: all .12s ease;
-      opacity: .6;
-    }
-    body:has(.project-card:hover) #cursor { width: 20px; height: 20px; }
-    body:has(.project-card:hover) #cursor-ring { width: 60px; height: 60px; opacity: .3; }
-
-    /* ── Noise overlay ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 0; opacity: .4;
-    }
-
-    /* ── Background radial glow ── */
-    .bg-glow {
-      position: fixed; top: -20vh; left: 50%;
-      transform: translateX(-50%);
-      width: 120vw; height: 80vh;
-      background: radial-gradient(ellipse at center top, rgba(244,12,63,.07) 0%, transparent 65%);
-      pointer-events: none; z-index: 0;
-    }
-
-    /* ── Header ── */
-    header {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 24px 48px;
-      display: flex; align-items: center; justify-content: space-between;
-      background: linear-gradient(to bottom, rgba(13,13,15,.95), transparent);
-      backdrop-filter: blur(2px);
-    }
-
-    .logo {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--text);
-      text-decoration: none;
-      transition: color .3s;
-    }
-    .logo:hover { color: var(--red); }
-    .logo span { color: var(--red); }
-
-    nav { display: flex; gap: 36px; align-items: center; }
-
-    nav a {
-      font-family: var(--font-mono);
-      font-size: .75rem;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      transition: color .3s;
-      position: relative;
-    }
-    nav a::after {
-      content: '';
-      position: absolute; bottom: -3px; left: 0; right: 0;
-      height: 1px;
-      background: var(--red);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .4s cubic-bezier(.16,1.08,.38,.98);
-    }
-    nav a:hover { color: var(--text); }
-    nav a:hover::after { transform: scaleX(1); }
-    nav a.active { color: var(--text); }
-    nav a.active::after { transform: scaleX(1); }
-
-    /* ── Page layout ── */
-    main {
+    /* ── CASE STUDY GRID ── */
+    .cs-wrap {
+      padding: 56px 48px 80px;
       position: relative; z-index: 2;
-      padding: 140px 48px 80px;
-      max-width: 1280px;
-      margin: 0 auto;
     }
 
-    /* ── Section intro ── */
-    .section-header {
-      margin-bottom: 72px;
-    }
-
-    .eyebrow {
-      font-family: var(--font-mono);
-      font-size: .7rem;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 16px;
-      display: flex; align-items: center; gap: 12px;
-    }
-    .eyebrow::before {
-      content: '';
-      display: inline-block;
-      width: 32px; height: 1px;
-      background: var(--red);
-    }
-
-    .page-title {
-      font-size: clamp(3.5rem, 8vw, 7rem);
-      font-weight: 800;
-      line-height: .9;
-      letter-spacing: -.03em;
-      text-transform: uppercase;
-    }
-    .page-title span { color: var(--red); }
-
-    .page-desc {
-      margin-top: 24px;
-      font-family: var(--font-mono);
-      font-size: .85rem;
-      color: var(--muted);
-      line-height: 1.8;
-      max-width: 480px;
-    }
-
-    /* ── Filter bar ── */
-    .filter-bar {
-      display: flex; gap: 12px; flex-wrap: wrap;
-      margin-bottom: 56px;
-    }
-
-    .filter-btn {
-      font-family: var(--font-mono);
-      font-size: .7rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding: 8px 20px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: transparent;
-      color: var(--muted);
-      cursor: none;
-      transition: all .3s ease;
-    }
-    .filter-btn:hover, .filter-btn.active {
-      border-color: var(--red);
-      color: var(--red);
-      background: var(--red-dim);
-    }
-
-    /* ── Projects grid ── */
-    .projects-grid {
+    .cs-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 16px;
     }
 
-    /* ── Project card ── */
-    .project-card {
-      position: relative;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: var(--surface);
-      overflow: hidden;
-      cursor: none;
-      transition: border-color .4s ease, transform .5s cubic-bezier(.16,1.08,.38,.98), box-shadow .5s ease;
-      backdrop-filter: blur(8px);
+    /* Featured card — full width */
+    .cs-card {
+      display: block; text-decoration: none; color: inherit;
+      border: 1px solid var(--bd); border-radius: 20px;
+      background: var(--b2); overflow: hidden;
+      position: relative; cursor: pointer;
+      transition: border-color .4s var(--ease), transform .5s var(--ease), box-shadow .5s;
     }
-
-    .project-card:hover {
-      border-color: var(--border-hover);
-      transform: translateY(-6px);
-      box-shadow: 0 32px 80px rgba(244,12,63,.12), 0 0 0 1px rgba(244,12,63,.08);
+    .cs-card:hover {
+      border-color: var(--rb);
+      transform: translateY(-5px);
+      box-shadow: 0 28px 70px rgba(244,12,63,.12);
     }
-
-    /* Featured card spans full width */
-    .project-card.featured {
-      grid-column: 1 / -1;
-    }
-
-    /* Red line reveal on hover */
-    .project-card::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
+    .cs-card::after {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
       background: linear-gradient(90deg, transparent, var(--red), transparent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .6s cubic-bezier(.16,1.08,.38,.98);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .6s var(--ease);
     }
-    .project-card:hover::after { transform: scaleX(1); }
+    .cs-card:hover::after { transform: scaleX(1); }
 
-    .card-inner {
-      padding: 32px 32px 30px;
+    /* Full-width featured */
+    .cs-card.feat { grid-column: 1/-1; }
+
+    .cs-inner {
+      padding: 40px 44px 36px;
     }
-
-    .featured .card-inner {
+    .feat .cs-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 48px;
       align-items: center;
-      padding: 40px 44px 36px;
     }
 
-    /* Card number */
-    .card-number {
-      font-family: var(--font-mono);
-      font-size: .65rem;
-      letter-spacing: .2em;
-      color: var(--red);
-      opacity: .7;
-      margin-bottom: 20px;
-      text-transform: uppercase;
+    .cs-num {
+      font-family: var(--fm); font-size: .62rem;
+      letter-spacing: .2em; color: var(--red);
+      opacity: .75; margin-bottom: 16px; text-transform: uppercase;
     }
-
-    /* Card title */
-    .card-title {
-      font-size: clamp(1.9rem, 3vw, 2.6rem);
-      font-weight: 800;
-      line-height: .95;
-      letter-spacing: -.02em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-      transition: color .3s;
+    .cs-title {
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      font-weight: 800; line-height: .9;
+      letter-spacing: -.025em; text-transform: uppercase;
+      margin-bottom: 12px; transition: color .3s;
     }
-    .featured .card-title {
-      font-size: clamp(2.4rem, 4vw, 4rem);
+    .cs-card:hover .cs-title { color: var(--red); }
+    .cs-sub {
+      font-family: var(--fm); font-size: .72rem;
+      color: var(--mu); margin-bottom: 16px; letter-spacing: .05em;
     }
-    .project-card:hover .card-title { color: var(--red); }
-
-    .card-subtitle {
-      font-family: var(--font-mono);
-      font-size: .75rem;
-      color: var(--muted);
-      margin-bottom: 20px;
-      letter-spacing: .05em;
+    .cs-desc {
+      font-family: var(--fm); font-size: .78rem;
+      color: var(--mu); line-height: 1.9; margin-bottom: 22px;
     }
-
-    .card-desc {
-      font-family: var(--font-mono);
-      font-size: .8rem;
-      color: var(--muted);
-      line-height: 1.85;
-      margin-bottom: 28px;
-    }
-
-    /* Tags */
-    .card-tags {
-      display: flex; gap: 8px; flex-wrap: wrap;
-    }
-
-    .tag {
-      font-family: var(--font-mono);
-      font-size: .65rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: 5px 12px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      color: var(--muted);
+    .cs-tags { display: flex; gap: 7px; flex-wrap: wrap; }
+    .cs-tag {
+      font-family: var(--fm); font-size: .6rem;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 4px 11px; border: 1px solid var(--bd);
+      border-radius: 999px; color: var(--mu);
       transition: all .3s;
     }
-    .project-card:hover .tag {
-      border-color: rgba(244,12,63,.3);
-      color: rgba(244,12,63,.75);
+    .cs-card:hover .cs-tag { border-color: var(--rb); color: rgba(244,12,63,.8); }
+    .cs-arrow {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: var(--fm); font-size: .68rem;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--mu); margin-top: 24px; transition: all .3s;
     }
+    .cs-card:hover .cs-arrow { color: var(--red); gap: 15px; }
+    .cs-arrow svg { width: 13px; height: 13px; stroke: currentColor; transition: transform .3s; }
+    .cs-card:hover .cs-arrow svg { transform: translate(3px,-3px); }
 
-    /* Card arrow */
-    .card-arrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--font-mono);
-      font-size: .75rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 28px;
-      transition: all .3s;
-    }
-    .project-card:hover .card-arrow { color: var(--red); gap: 16px; }
-
-    .card-arrow svg {
-      width: 14px; height: 14px;
-      stroke: currentColor;
-      transition: transform .3s;
-    }
-    .project-card:hover .card-arrow svg { transform: translate(3px, -3px); }
-
-    /* Featured image placeholder */
-    .card-visual {
-      aspect-ratio: 4/3;
-      border-radius: 12px;
-      background: rgba(244,12,63,.04);
-      border: 1px solid var(--border);
+    /* Visual placeholder */
+    .cs-visual {
+      aspect-ratio: 4/3; border-radius: 12px;
+      background: rgba(244,12,63,.04); border: 1px solid var(--bd);
       display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-      position: relative;
+      overflow: hidden; position: relative;
     }
-
-    .visual-placeholder {
-      font-family: var(--font-display);
-      font-size: 5rem;
-      font-weight: 800;
-      color: rgba(244,12,63,.08);
-      letter-spacing: -.04em;
-      text-transform: uppercase;
-      transition: all .5s ease;
-      user-select: none;
-    }
-    .project-card:hover .visual-placeholder {
-      color: rgba(244,12,63,.16);
-      transform: scale(1.06);
-    }
-
-    /* Decorative grid lines in visual */
-    .card-visual::before {
-      content: '';
-      position: absolute; inset: 0;
+    .cs-visual::before {
+      content: ''; position: absolute; inset: 0;
       background-image:
         linear-gradient(rgba(244,12,63,.04) 1px, transparent 1px),
         linear-gradient(90deg, rgba(244,12,63,.04) 1px, transparent 1px);
       background-size: 32px 32px;
     }
-
-    /* ── Stats row ── */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      margin-top: 80px;
+    .cs-visual-img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; position: relative; z-index: 1; }
+    .cs-visual-ph {
+      font-size: 4.5rem; font-weight: 800;
+      color: rgba(244,12,63,.08); letter-spacing: -.04em;
+      text-transform: uppercase; user-select: none;
+      transition: all .5s; position: relative; z-index: 1;
     }
+    .cs-card:hover .cs-visual-ph { color: rgba(244,12,63,.16); transform: scale(1.05); }
 
-    .stat-item {
-      background: var(--bg);
-      padding: 36px 32px;
-      text-align: center;
+    /* ── STATS ── */
+    .stats {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--bd);
+      border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd);
+    }
+    .stat {
+      background: var(--bg); padding: 36px 32px; text-align: center;
       transition: background .3s;
     }
-    .stat-item:hover { background: rgba(244,12,63,.04); }
+    .stat:hover { background: rgba(244,12,63,.04); }
+    .stat-n { font-size: 2.8rem; font-weight: 800; color: var(--red); line-height: 1; margin-bottom: 8px; }
+    .stat-l { font-family: var(--fm); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; color: var(--mu); }
 
-    .stat-number {
-      font-size: 3rem;
-      font-weight: 800;
-      color: var(--red);
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-    .stat-label {
-      font-family: var(--font-mono);
-      font-size: .7rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* ── Footer nav ── */
-    footer {
-      position: relative; z-index: 2;
-      border-top: 1px solid var(--border);
-      padding: 32px 48px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-
-    .footer-copy {
-      font-family: var(--font-mono);
-      font-size: .7rem;
-      color: var(--muted);
-      letter-spacing: .1em;
-    }
-
-    .footer-links {
-      display: flex; gap: 32px;
-    }
-    .footer-links a {
-      font-family: var(--font-mono);
-      font-size: .7rem;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      transition: color .3s;
-    }
-    .footer-links a:hover { color: var(--red); }
-
-    /* ── Scroll indicator ── */
-    .scroll-line {
-      position: fixed;
-      top: 0; left: 0;
-      height: 2px;
-      background: var(--red);
-      z-index: 200;
-      transform-origin: left;
-      transform: scaleX(0);
-      transition: transform .1s linear;
-    }
-
-    /* ── Animations ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(28px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .animate-in {
-      opacity: 0;
-      animation: fadeUp .8s cubic-bezier(.16,1.08,.38,.98) forwards;
-    }
-    .delay-1 { animation-delay: .1s; }
-    .delay-2 { animation-delay: .22s; }
-    .delay-3 { animation-delay: .34s; }
-    .delay-4 { animation-delay: .46s; }
-    .delay-5 { animation-delay: .58s; }
-
-    /* ── Responsive ── */
+    /* ── RESPONSIVE ── */
     @media (max-width: 1100px) {
-      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .cs-grid { grid-template-columns: 1fr 1fr; }
     }
-
     @media (max-width: 900px) {
-      header { padding: 20px 24px; }
-      main { padding: 120px 24px 60px; }
-
-      nav { gap: 20px; }
-      nav a { font-size: .65rem; }
-
-      .page-title { font-size: clamp(3rem, 10vw, 5rem); }
-
-      .projects-grid { grid-template-columns: 1fr; }
-      .project-card.featured { grid-column: 1; }
-      .featured .card-inner { grid-template-columns: 1fr; gap: 28px; }
-
-      .card-inner { padding: 28px; }
-      .card-title, .featured .card-title { font-size: 2.4rem; }
-
-      .stats-row { grid-template-columns: 1fr; }
-
-      footer { flex-direction: column; gap: 20px; text-align: center; }
-      .footer-links { flex-wrap: wrap; justify-content: center; }
-
-      body { cursor: auto; }
-      #cursor, #cursor-ring { display: none; }
+      .cs-wrap { padding: 36px 20px 56px; }
+      .cs-grid { grid-template-columns: 1fr; gap: 12px; }
+      .cs-card.feat { grid-column: 1; }
+      .feat .cs-inner { grid-template-columns: 1fr; gap: 24px; }
+      .cs-inner { padding: 28px 24px; }
+      .cs-visual { display: none; }
+      .stats { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .cs-title { font-size: 2.4rem; }
     }
   </style>
 </head>
 <body>
+<div id="cur"></div><div id="cur-r"></div>
+<div class="sp" id="sp"></div>
 
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-<div class="scroll-line" id="scrollLine"></div>
-<div class="bg-glow"></div>
-
-<!-- Header -->
-<header>
-  <a href="index.html" class="logo">Carla <span>D'</span>Aria</a>
-  <nav>
+<header class="hdr">
+  <a href="index.html" class="logo">Carla <em>D'</em>Aria</a>
+  <nav class="nav-d">
     <a href="3d.html">3D Art</a>
-    <a href="ux_index.html" class="active">UX/UI</a>
+    <a href="ux_index.html" class="act">UX/UI</a>
     <a href="graphic.html">Graphic</a>
     <a href="2d.html">2D Art</a>
     <a href="visuals.html">Visuals</a>
     <a href="about.html">About</a>
   </nav>
+  <button class="nav-tog" id="navTog"><span></span><span></span><span></span></button>
 </header>
-
-<!-- Main content -->
-<main>
-
-  <!-- Section header -->
-  <div class="section-header">
-    <div class="eyebrow animate-in">UX / UI Design</div>
-    <h1 class="page-title animate-in delay-1">
-      Case<br><span>Studies</span>
-    </h1>
-    <p class="page-desc animate-in delay-2">
-      Research-driven design across mobile, web, and virtual environments.
-      From user flows to high-fidelity prototypes.
-    </p>
-  </div>
-
-  <!-- Filter bar -->
-  <div class="filter-bar animate-in delay-3">
-    <button class="filter-btn active">All Work</button>
-    <button class="filter-btn">Mobile</button>
-    <button class="filter-btn">Web Platform</button>
-    <button class="filter-btn">Virtual / Web3</button>
-    <button class="filter-btn">E-commerce</button>
-  </div>
-
-  <!-- Projects grid -->
-  <div class="projects-grid">
-
-    <!-- Card 1 — Runa and the Chaikuru Legacy (featured) -->
-    <article class="project-card featured animate-in delay-3" data-src="ux_runa.html">
-      <div class="card-inner">
-        <div>
-          <div class="card-number">01 / Case Study</div>
-          <h2 class="card-title">Runa &amp; Chaikuru</h2>
-          <p class="card-subtitle">Game UI / UX · Action-Adventure · 2025</p>
-          <p class="card-desc">
-            A full game UI/UX system rooted in Andean mythology — main menu,
-            in-game HUD, merchant interface, artifact codex, and monument
-            tracking unified under one carved-stone visual language.
-          </p>
-          <div class="card-tags">
-            <span class="tag">Game UI Design</span>
-            <span class="tag">UX Flows</span>
-            <span class="tag">Iconography</span>
-            <span class="tag">Motion / FX</span>
-          </div>
-          <div class="card-arrow">
-            View case study
-            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5">
-              <path d="M2 8h12M9 3l5 5-5 5"/>
-            </svg>
-          </div>
-        </div>
-        <div class="card-visual">
-          <span class="visual-placeholder">RUNA</span>
-        </div>
-      </div>
-    </article>
-
-    <!-- Card 2 — Cinematic -->
-    <article class="project-card animate-in delay-4" data-src="ux - copia.html">
-      <div class="card-inner">
-        <div class="card-number">02 / Case Study</div>
-        <h2 class="card-title">Cinematic</h2>
-        <p class="card-subtitle">Web & Mobile Platform · E-commerce · 2024</p>
-        <p class="card-desc">
-          A centralized cinema platform unifying every theater brand —
-          tickets, seats, and candy in a single flow. Checkout abandonment
-          cut from 65% to under 20%.
-        </p>
-        <div class="card-tags">
-          <span class="tag">UX Research</span>
-          <span class="tag">User Flows</span>
-          <span class="tag">UI Design</span>
-          <span class="tag">E-commerce</span>
-        </div>
-        <div class="card-arrow">
-          View case study
-          <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5">
-            <path d="M2 8h12M9 3l5 5-5 5"/>
-          </svg>
-        </div>
-      </div>
-    </article>
-
-    <!-- Card 3 — Bloopy -->
-    <article class="project-card animate-in delay-5" data-src="ux.html">
-      <div class="card-inner">
-        <div class="card-number">03 / Case Study</div>
-        <h2 class="card-title">Bloopy</h2>
-        <p class="card-subtitle">Mobile App · Pet Care · 2023</p>
-        <p class="card-desc">
-          An all-in-one pet care platform with walk booking, grooming, and
-          vet visits — gamified retention through a virtual Snowflake
-          currency system.
-        </p>
-        <div class="card-tags">
-          <span class="tag">UX Research</span>
-          <span class="tag">Wireframing</span>
-          <span class="tag">UI Design</span>
-          <span class="tag">Gamification</span>
-        </div>
-        <div class="card-arrow">
-          View case study
-          <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5">
-            <path d="M2 8h12M9 3l5 5-5 5"/>
-          </svg>
-        </div>
-      </div>
-    </article>
-
-    <!-- Card 4 — TeamHub -->
-    <article class="project-card animate-in delay-5" data-src="ux teamhub.html">
-      <div class="card-inner">
-        <div class="card-number">04 / Case Study</div>
-        <h2 class="card-title">TeamHub</h2>
-        <p class="card-subtitle">Virtual Space · Decentraland · Web3 · 2025</p>
-        <p class="card-desc">
-          A spatial collaboration platform inside Decentraland, replacing
-          static video calls with immersive rooms, polls, and a persistent
-          team identity.
-        </p>
-        <div class="card-tags">
-          <span class="tag">UX Strategy</span>
-          <span class="tag">Spatial Design</span>
-          <span class="tag">Web3</span>
-          <span class="tag">Prototyping</span>
-        </div>
-        <div class="card-arrow">
-          View case study
-          <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5">
-            <path d="M2 8h12M9 3l5 5-5 5"/>
-          </svg>
-        </div>
-      </div>
-    </article>
-
-  </div>
-
-  <!-- Stats row -->
-  <div class="stats-row animate-in delay-4">
-    <div class="stat-item">
-      <div class="stat-number">4</div>
-      <div class="stat-label">Case Studies</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">65%</div>
-      <div class="stat-label">Drop-off Reduced</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">2023–2026</div>
-      <div class="stat-label">Active Years</div>
-    </div>
-  </div>
-
-</main>
-
-<!-- Modal overlay -->
-<div id="overlay" style="
-  position:fixed; inset:0;
-  background:rgba(0,0,0,.92);
-  display:none; align-items:center; justify-content:center;
-  z-index:500;
-  backdrop-filter:blur(12px);
-">
-  <button id="closeBtn" style="
-    position:absolute; top:28px; right:32px;
-    width:48px; height:48px;
-    border-radius:50%;
-    background:rgba(244,12,63,.1);
-    border:1px solid rgba(244,12,63,.35);
-    color:#fff; font-size:28px; font-weight:300;
-    cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    transition:all .3s; z-index:2;
-    font-family:sans-serif; line-height:1;
-  ">×</button>
-  <div style="
-    width:min(1400px,95vw);
-    height:min(88vh,920px);
-    background:#fff;
-    border-radius:16px;
-    overflow:hidden;
-    border:1px solid rgba(244,12,63,.2);
-    box-shadow:0 40px 120px rgba(0,0,0,.8);
-    animation:modalIn .35s cubic-bezier(.16,1.08,.38,.98);
-  ">
-    <iframe id="frame" src="about:blank" style="width:100%;height:100%;border:0;background:#fff;"></iframe>
-  </div>
+<div class="nav-mob" id="navMob">
+  <a href="3d.html">3D Art</a><a href="ux_index.html" class="act">UX/UI</a>
+  <a href="graphic.html">Graphic</a><a href="2d.html">2D Art</a>
+  <a href="visuals.html">Visuals</a><a href="about.html">About</a>
 </div>
 
-<style>
-  @keyframes modalIn {
-    from { opacity:0; transform:translateY(24px) scale(.98); }
-    to { opacity:1; transform:translateY(0) scale(1); }
-  }
-  #closeBtn:hover {
-    background:rgba(244,12,63,.3) !important;
-    border-color:#f40c3f !important;
-    transform:rotate(90deg) !important;
-  }
-</style>
+<div class="page">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="eyebrow">UX / UI Design</div>
+    <h1 class="page-title">Case<br><em>Studies</em></h1>
+    <p class="hero-desc">Research-driven design across mobile, web, virtual environments, and game interfaces. From user flows to high-fidelity prototypes. 4 full case studies.</p>
+  </section>
 
-<!-- Footer -->
-<footer>
-  <span class="footer-copy">© 2025 Carla D'Aria · Creative Producer</span>
-  <div class="footer-links">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="https://wa.me/5491122539753" target="_blank">WhatsApp</a>
-    <a href="mailto:carlaldaria@gmail.com">Email</a>
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="stat-n">4</div><div class="stat-l">Case Studies</div></div>
+    <div class="stat"><div class="stat-n">65%</div><div class="stat-l">Drop-off Reduced</div></div>
+    <div class="stat"><div class="stat-n">2023–25</div><div class="stat-l">Active Years</div></div>
   </div>
-</footer>
+
+  <!-- CASE STUDIES -->
+  <div class="cs-wrap">
+    <div class="cs-grid">
+
+      <!-- Cinematic — featured -->
+      <a href="ux - copia.html" class="cs-card feat sr">
+        <div class="cs-inner">
+          <div>
+            <div class="cs-num">01 / Case Study</div>
+            <h2 class="cs-title">Cinematic</h2>
+            <p class="cs-sub">Web & Mobile Platform · E-commerce · 2024</p>
+            <p class="cs-desc">A centralized cinema platform unifying every theater brand under one ecosystem — ticket purchasing, seat selection, and candy ordering in a single frictionless flow. Reduced checkout abandonment from 65% to under 20%.</p>
+            <div class="cs-tags">
+              <span class="cs-tag">UX Research</span>
+              <span class="cs-tag">User Flows</span>
+              <span class="cs-tag">UI Design</span>
+              <span class="cs-tag">Prototyping</span>
+              <span class="cs-tag">E-commerce</span>
+            </div>
+            <div class="cs-arrow">View case study <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
+          </div>
+          <div class="cs-visual">
+            <img class="cs-visual-img" src="images/cinematic1.png" alt="Cinematic" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <span class="cs-visual-ph" style="display:none">CIN</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Bloopy -->
+      <a href="ux.html" class="cs-card sr">
+        <div class="cs-inner">
+          <div class="cs-num">02 / Case Study</div>
+          <h2 class="cs-title">Bloopy</h2>
+          <p class="cs-sub">Mobile App · Pet Care · 2023</p>
+          <p class="cs-desc">All-in-one pet care platform with booking, grooming, vet appointments, and gamified retention through a virtual Snowflake currency system.</p>
+          <div class="cs-tags">
+            <span class="cs-tag">UX Research</span>
+            <span class="cs-tag">Wireframing</span>
+            <span class="cs-tag">UI Design</span>
+            <span class="cs-tag">Gamification</span>
+          </div>
+          <div class="cs-arrow">View case study <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
+        </div>
+      </a>
+
+      <!-- TeamHub -->
+      <a href="ux_teamhub.html" class="cs-card sr">
+        <div class="cs-inner">
+          <div class="cs-num">03 / Case Study</div>
+          <h2 class="cs-title">Team&shy;Hub</h2>
+          <p class="cs-sub">Virtual Space · Decentraland · Web3 · 2025</p>
+          <p class="cs-desc">A spatial collaboration platform inside Decentraland. Immersive rooms, interactive polls, and a persistent team identity — replacing static video calls.</p>
+          <div class="cs-tags">
+            <span class="cs-tag">UX Strategy</span>
+            <span class="cs-tag">Spatial Design</span>
+            <span class="cs-tag">Web3</span>
+            <span class="cs-tag">Prototyping</span>
+          </div>
+          <div class="cs-arrow">View case study <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
+        </div>
+      </a>
+
+      <!-- Runa and the Chaikuru Legacy -->
+      <a href="ux_runa.html" class="cs-card sr">
+        <div class="cs-inner">
+          <div class="cs-num">04 / Case Study</div>
+          <h2 class="cs-title">Runa</h2>
+          <p class="cs-sub">Game UI · Fanny Pack Studios · 2025</p>
+          <p class="cs-desc">Full UI/UX system for an action-adventure game rooted in Andean mythology. Five connected modules — main menu, HUD, inventory, merchant, and monument tracking — sharing one visual language.</p>
+          <div class="cs-tags">
+            <span class="cs-tag">Game UI</span>
+            <span class="cs-tag">UI Design</span>
+            <span class="cs-tag">Godot</span>
+            <span class="cs-tag">Illustration</span>
+            <span class="cs-tag">Motion</span>
+          </div>
+          <div class="cs-arrow">View case study <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <footer class="ftr">
+    <span class="ftr-c">© 2025 Carla D'Aria · Creative Producer</span>
+    <div class="ftr-l">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="https://wa.me/5491122539753" target="_blank">WhatsApp</a>
+      <a href="mailto:carlamdaria@gmail.com">Email</a>
+    </div>
+  </footer>
+</div>
 
 <script>
-  // ── Custom cursor ──
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursor-ring');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  (function animCursor() {
-    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-    rx += (mx - rx) * .14; ry += (my - ry) * .14;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    requestAnimationFrame(animCursor);
-  })();
-
-  // ── Scroll progress bar ──
-  const scrollLine = document.getElementById('scrollLine');
-  window.addEventListener('scroll', () => {
-    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    scrollLine.style.transform = `scaleX(${pct})`;
-  });
-
-  // ── Filter buttons (visual only, no actual filtering needed for 3 items) ──
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    });
-  });
-
-  // ── Modal ──
-  const overlay = document.getElementById('overlay');
-  const frame = document.getElementById('frame');
-  const closeBtn = document.getElementById('closeBtn');
-
-  document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const src = card.dataset.src;
-      if (!src) return;
-      frame.src = src;
-      overlay.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  function closeModal() {
-    overlay.style.display = 'none';
-    frame.src = 'about:blank';
-    document.body.style.overflow = '';
-  }
-
-  closeBtn.addEventListener('click', closeModal);
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
-  window.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-  // ── Intersection observer for subtle card reveal ──
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: .1 });
-
-  document.querySelectorAll('.project-card').forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(32px)';
-    card.style.transition = 'opacity .7s ease, transform .7s cubic-bezier(.16,1.08,.38,.98), border-color .4s, box-shadow .5s';
-    io.observe(card);
-  });
+  const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+  if(cur){let mx=0,my=0,rx=0,ry=0;document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});(function l(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.14;ry+=(my-ry)*.14;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(l);})();document.querySelectorAll('.cs-card').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));});}
+  window.addEventListener('scroll',()=>document.getElementById('sp').style.width=(scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%');
+  const tog=document.getElementById('navTog'),mob=document.getElementById('navMob');
+  tog.addEventListener('click',()=>{const o=tog.classList.toggle('open');mob.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';});
+  mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{tog.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}));
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.1});
+  document.querySelectorAll('.sr').forEach((el,i)=>{el.style.transitionDelay=`${i*.1}s`;io.observe(el);});
 </script>
-
 </body>
 </html>
