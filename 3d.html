@@ -85,11 +85,12 @@
     .char-type{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--red);}
 
     /* ── ENVIRONMENTS — bento grid ── */
-    .env-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:320px 240px;gap:10px;}
+    .env-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:320px 240px;grid-auto-rows:280px;gap:10px;}
     .env-cell{border-radius:14px;overflow:hidden;position:relative;background:rgba(255,255,255,.06);border:1px solid var(--bd);cursor:pointer;transition:border-color .4s,transform .45s cubic-bezier(.16,1.08,.38,.98),box-shadow .45s;}
     .env-cell:hover{border-color:var(--rb);transform:scale(1.015);box-shadow:0 16px 50px var(--rm);z-index:2;}
     .env-cell.tall{grid-row:span 2;}
     .env-cell.wide{grid-column:span 2;}
+    .env-cell.full{grid-column:1/-1;}
     .env-cell img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s cubic-bezier(.16,1.08,.38,.98);}
     .env-cell:hover img{transform:scale(1.05);}
     .env-lbl{position:absolute;bottom:0;left:0;right:0;padding:28px 16px 14px;background:linear-gradient(to top,rgba(13,13,15,.9) 0%,transparent 100%);opacity:0;transform:translateY(6px);transition:all .35s;}
@@ -194,6 +195,13 @@
       font-family:var(--fm);font-size:.52rem;letter-spacing:.1em;
       color:rgba(244,12,63,.25);
     }
+
+    /* ── PROTECCIÓN DE CONTENIDO: evita guardar / abrir en pestaña / seleccionar ── */
+    img, video{
+      -webkit-user-drag:none;-khtml-user-drag:none;-moz-user-drag:none;-o-user-drag:none;user-drag:none;
+      -webkit-touch-callout:none;
+      -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+    }
   </style>
 </head>
 <body>
@@ -272,6 +280,22 @@
         <div class="char-img"><img src="images/matioli.png" alt="Fungnook"></div>
         <div class="char-meta"><div class="char-name">Fungnook</div><div class="char-type">3D Character · Animated</div></div>
       </div>
+      <div class="char-card" data-group="estrellada">
+        <div class="char-img"><img src="images/3d nuevo/Estrellada 1.png" alt="Estrellada"></div>
+        <div class="char-meta"><div class="char-name">Estrellada</div><div class="char-type">3D Character · Creature</div></div>
+      </div>
+      <div class="char-card" data-group="forestbeing">
+        <div class="char-img"><img src="images/3d nuevo/forest being.jpg" alt="Forest Being"></div>
+        <div class="char-meta"><div class="char-name">Forest Being</div><div class="char-type">3D Character · Creature</div></div>
+      </div>
+      <div class="char-card has-vid" data-group="pejelagarto">
+        <div class="char-img"><img src="images/3d nuevo/pejelagarto 1.png" alt="Pejelagarto"></div>
+        <div class="char-meta"><div class="char-name">Pejelagarto</div><div class="char-type">3D Character · Animated</div></div>
+      </div>
+      <div class="char-card has-vid" data-group="rainleaf">
+        <div class="char-img"><img src="images/3d nuevo/rainleaf.png" alt="Rainleaf"></div>
+        <div class="char-meta"><div class="char-name">Rainleaf</div><div class="char-type">3D Character · Animated</div></div>
+      </div>
     </div>
   </section>
 
@@ -298,6 +322,10 @@
         <img src="images/digital env (10).png" alt="Fantasy detail" style="object-position:center 30%">
         <div class="env-lbl"><div class="env-lt">Fantasy — Detail View</div><div class="env-ls">Click to open full collection</div></div>
       </div>
+      <div class="env-cell full" data-group="chinahouse">
+        <img src="images/3d nuevo/china house 1.png" alt="China House">
+        <div class="env-lbl"><div class="env-lt">China House</div><div class="env-ls">3D Environment</div></div>
+      </div>
     </div>
   </section>
 
@@ -310,7 +338,7 @@
     <div class="props-grid">
       <div class="prop" data-single="images/objects (7).png" data-type="image"><img src="images/objects (7).png" alt="Props"><div class="prop-lbl"><div class="pl-t">3D Props</div><div class="pl-s">3D Assets</div></div></div>
       <div class="prop" data-single="images/pupotacho.png" data-type="image"><img src="images/pupotacho.png" alt="Pupotacho"><div class="prop-lbl"><div class="pl-t">Pupotacho</div><div class="pl-s">3D Assets</div></div></div>
-      <div class="prop" data-single="images/UCHUGUAY.png" data-type="image"><img src="images/UCHUGUAY.png" alt="Uchuguay"><div class="prop-lbl"><div class="pl-t">Uchuguay</div><div class="pl-s">3D Assets</div></div></div>
+      <div class="prop" data-group="uchuguay"><img src="images/UCHUGUAY.png" alt="Uchuguay"><div class="prop-lbl"><div class="pl-t">Uchuguay</div><div class="pl-s">3D Assets</div></div></div>
       <div class="prop" data-single="images/nave.jpg" data-type="image"><img src="images/nave.jpg" alt="Spaceship"><div class="prop-lbl"><div class="pl-t">Spaceship</div><div class="pl-s">3D Assets</div></div></div>
       <div class="prop" data-single="images/nave.png" data-type="image"><img src="images/nave.png" alt="Spaceship Alt"><div class="prop-lbl"><div class="pl-t">Spaceship Alt</div><div class="pl-s">3D Assets</div></div></div>
       <div class="prop" data-single="images/nave1.png" data-type="image"><img src="images/nave1.png" alt="Spaceship Detail"><div class="prop-lbl"><div class="pl-t">Spaceship Detail</div><div class="pl-s">3D Assets</div></div></div>
@@ -318,6 +346,16 @@
       <div class="prop" data-single="images/objects (3).png" data-type="image"><img src="images/objects (3).png" alt="Objects"><div class="prop-lbl"><div class="pl-t">Objects 3</div><div class="pl-s">3D Assets</div></div></div>
       <div class="prop" data-single="images/objects (4).png" data-type="image"><img src="images/objects (4).png" alt="Objects"><div class="prop-lbl"><div class="pl-t">Objects 4</div><div class="pl-s">3D Assets</div></div></div>
       <div class="prop" data-single="images/objects (6).png" data-type="image"><img src="images/objects (6).png" alt="Objects"><div class="prop-lbl"><div class="pl-t">Objects 6</div><div class="pl-s">3D Assets</div></div></div>
+      <div class="prop" data-group="altar"><img src="images/3d nuevo/altar 1.png" alt="Altar"><div class="prop-lbl"><div class="pl-t">Altar</div><div class="pl-s">3D Assets</div></div></div>
+      <div class="prop" data-group="armas"><img src="images/3d nuevo/armas.png" alt="Weapons"><div class="prop-lbl"><div class="pl-t">Weapons</div><div class="pl-s">3D Assets</div></div></div>
+      <div class="prop" data-group="assetpack"><img src="images/3d nuevo/asset 1.png" alt="Asset Pack"><div class="prop-lbl"><div class="pl-t">Asset Pack</div><div class="pl-s">3D Assets</div></div></div>
+      <div class="prop" data-group="canchafutbol"><img src="images/3d nuevo/Cancha futbol 1.png" alt="Soccer Field"><div class="prop-lbl"><div class="pl-t">Soccer Field</div><div class="pl-s">3D Assets</div></div></div>
+      <div class="prop" data-group="canon"><img src="images/3d nuevo/cañon1.png" alt="Cannon"><div class="prop-lbl"><div class="pl-t">Cannon</div><div class="pl-s">3D Assets</div></div></div>
+      <div class="prop is-vid" data-group="caraya"><img src="images/3d nuevo/caraya estatua.png" alt="Caraya"><div class="prop-lbl"><div class="pl-t">Caraya</div><div class="pl-s">3D Animation</div></div></div>
+      <div class="prop" data-group="checkpoint"><img src="images/3d nuevo/checkpoint.png" alt="Checkpoint"><div class="prop-lbl"><div class="pl-t">Checkpoint</div><div class="pl-s">3D Assets</div></div></div>
+      <div class="prop" data-single="images/3d nuevo/fuentes.png" data-type="image"><img src="images/3d nuevo/fuentes.png" alt="Fountain"><div class="prop-lbl"><div class="pl-t">Fountain</div><div class="pl-s">3D Assets</div></div></div>
+      <div class="prop" data-group="tumbaguerrero"><img src="images/3d nuevo/tumba guerrero (1).png" alt="Warrior's Tomb"><div class="prop-lbl"><div class="pl-t">Warrior's Tomb</div><div class="pl-s">3D Assets</div></div></div>
+      <div class="prop" data-group="wearables"><img src="images/3d nuevo/wearables in game 1.png" alt="Wearables"><div class="prop-lbl"><div class="pl-t">Wearables</div><div class="pl-s">3D Assets</div></div></div>
       <div class="prop is-vid" data-single="images/newtonheads.mp4" data-type="video" data-thumb="images/newtonhead.png"><img src="images/newtonhead.png" alt="Newton Heads"><div class="prop-lbl"><div class="pl-t">Newton Heads</div><div class="pl-s">3D Animation</div></div></div>
     </div>
   </section>
@@ -340,7 +378,7 @@
       <div class="prop" data-single="images/rimel (2).png" data-type="image"><img src="images/rimel (2).png" alt="Rímel detalle"><div class="prop-lbl"><div class="pl-t">Rímel — Detail</div><div class="pl-s">Product Render</div></div></div>
 
       <div class="prop is-vid" data-single="images/teclado.mp4" data-type="video">
-        <video muted loop playsinline preload="metadata" style="width:100%;display:block;"><source src="images/teclado.mp4#t=0.1" type="video/mp4"></video>
+        <video muted loop playsinline preload="metadata" controlsList="nodownload noremoteplayback" disablePictureInPicture oncontextmenu="return false" style="width:100%;display:block;"><source src="images/teclado.mp4#t=0.1" type="video/mp4"></video>
         <div class="prop-lbl"><div class="pl-t">Teclado</div><div class="pl-s">3D Animation</div></div>
       </div>
 
@@ -358,6 +396,22 @@
 </div>
 
 <script>
+  // ── Protección de contenido: evita descargar, abrir en pestaña nueva, arrastrar o buscar imágenes ──
+  document.addEventListener('contextmenu', e=>{
+    if(e.target.tagName==='IMG' || e.target.tagName==='VIDEO') e.preventDefault();
+  });
+  document.addEventListener('dragstart', e=>{
+    if(e.target.tagName==='IMG' || e.target.tagName==='VIDEO') e.preventDefault();
+  });
+  document.querySelectorAll('img').forEach(img=>img.setAttribute('draggable','false'));
+  document.querySelectorAll('video').forEach(v=>{
+    v.setAttribute('controlsList','nodownload noremoteplayback');
+    v.disablePictureInPicture=true;
+  });
+  document.addEventListener('keydown', e=>{
+    if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='s') e.preventDefault();
+  });
+
   // Cursor
   const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
   if(cur){let mx=0,my=0,rx=0,ry=0;document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});(function l(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(l);})();document.querySelectorAll('a,button,[data-group],[data-single]').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));});}
@@ -393,7 +447,22 @@
     labial:[{t:'i',s:'images/labial (1).png'},{t:'i',s:'images/labial (2).png'},{t:'v',s:'images/labial.mp4',th:'images/labial (1).png'}],
     base:[{t:'i',s:'images/base (1).png'},{t:'i',s:'images/base (2).png'},{t:'v',s:'images/base.mp4',th:'images/base (1).png'}],
     rimel:[{t:'i',s:'images/rimel (1).png'},{t:'i',s:'images/rimel (2).png'},{t:'v',s:'images/rimel.mp4',th:'images/rimel (1).png'}],
-    fantasy:[{t:'i',s:'images/digital env (9).png'},{t:'i',s:'images/digital env (10).png'},{t:'i',s:'images/3d.jpg'},{t:'i',s:'images/digital env (1).png'},{t:'i',s:'images/digital env (2).png'},{t:'i',s:'images/godot (1).png'},{t:'i',s:'images/godot (5).png'},{t:'i',s:'images/godot (6).png'},{t:'i',s:'images/godot (2).png'},{t:'i',s:'images/godot (3).png'},{t:'i',s:'images/godot (4).png'},{t:'i',s:'images/digital env (3).png'},{t:'i',s:'images/digital env (4).png'},{t:'i',s:'images/digital env (5).png'},{t:'i',s:'images/digital env (6).png'},{t:'i',s:'images/digital env (7).png'},{t:'i',s:'images/digital env (8).png'}]
+    fantasy:[{t:'i',s:'images/digital env (9).png'},{t:'i',s:'images/digital env (10).png'},{t:'i',s:'images/3d.jpg'},{t:'i',s:'images/digital env (1).png'},{t:'i',s:'images/digital env (2).png'},{t:'i',s:'images/godot (1).png'},{t:'i',s:'images/godot (5).png'},{t:'i',s:'images/godot (6).png'},{t:'i',s:'images/godot (2).png'},{t:'i',s:'images/godot (3).png'},{t:'i',s:'images/godot (4).png'},{t:'i',s:'images/digital env (3).png'},{t:'i',s:'images/digital env (4).png'},{t:'i',s:'images/digital env (5).png'},{t:'i',s:'images/digital env (6).png'},{t:'i',s:'images/digital env (7).png'},{t:'i',s:'images/digital env (8).png'}],
+    estrellada:[{t:'i',s:'images/3d nuevo/Estrellada 1.png'},{t:'i',s:'images/3d nuevo/Estrellada 2.png'},{t:'i',s:'images/3d nuevo/Estrellada 3.png'}],
+    forestbeing:[{t:'i',s:'images/3d nuevo/forest being.jpg'}],
+    pejelagarto:[{t:'i',s:'images/3d nuevo/pejelagarto 1.png'},{t:'v',s:'images/3d nuevo/pejelagarto.mp4',th:'images/3d nuevo/pejelagarto 1.png'}],
+    rainleaf:[{t:'i',s:'images/3d nuevo/rainleaf.png'},{t:'v',s:'images/3d nuevo/Rainleaf.mp4',th:'images/3d nuevo/rainleaf.png'}],
+    chinahouse:[{t:'i',s:'images/3d nuevo/china house 1.png'},{t:'i',s:'images/3d nuevo/china house 2.png'},{t:'i',s:'images/3d nuevo/china house 3.png'}],
+    altar:[{t:'i',s:'images/3d nuevo/altar 1.png'},{t:'i',s:'images/3d nuevo/altar 1 (1).png'}],
+    armas:[{t:'i',s:'images/3d nuevo/armas.png'},{t:'i',s:'images/3d nuevo/armas 2.png'}],
+    assetpack:[{t:'i',s:'images/3d nuevo/asset 1.png'},{t:'i',s:'images/3d nuevo/asset 2.png'},{t:'i',s:'images/3d nuevo/asset 3.png'},{t:'i',s:'images/3d nuevo/asset 4.png'}],
+    canchafutbol:[{t:'i',s:'images/3d nuevo/Cancha futbol 1.png'},{t:'i',s:'images/3d nuevo/Cancha futbol 2.png'}],
+    canon:[{t:'i',s:'images/3d nuevo/cañon1.png'},{t:'i',s:'images/3d nuevo/cañon2png.png'}],
+    caraya:[{t:'i',s:'images/3d nuevo/caraya estatua.png'},{t:'v',s:'images/3d nuevo/caraya.mp4',th:'images/3d nuevo/caraya estatua.png'}],
+    checkpoint:[{t:'i',s:'images/3d nuevo/checkpoint.png'},{t:'i',s:'images/3d nuevo/checkpoint 2.png'}],
+    tumbaguerrero:[{t:'i',s:'images/3d nuevo/tumba guerrero (1).png'},{t:'i',s:'images/3d nuevo/tumba guerrero (2).png'}],
+    uchuguay:[{t:'i',s:'images/UCHUGUAY.png'},{t:'i',s:'images/3d nuevo/UCHUGUAY 2.png'}],
+    wearables:[{t:'i',s:'images/3d nuevo/wearables in game 1.png'},{t:'i',s:'images/3d nuevo/wearables in game 2.png'},{t:'i',s:'images/3d nuevo/wearables in game 3.png'},{t:'i',s:'images/3d nuevo/wearables in game 4.png'}]
   };
   let items=[],idx=0;
   function lbRender(){
@@ -401,8 +470,8 @@
     inner.querySelectorAll('video').forEach(v=>v.pause());
     inner.innerHTML='';
     const it=items[idx];
-    if(it.t==='i'){const img=new Image();img.src=it.s;inner.appendChild(img);}
-    else{const v=document.createElement('video');v.src=it.s;v.controls=v.autoplay=v.muted=v.loop=true;inner.appendChild(v);v.play().catch(()=>{});}
+    if(it.t==='i'){const img=new Image();img.src=it.s;img.draggable=false;img.oncontextmenu=()=>false;inner.appendChild(img);}
+    else{const v=document.createElement('video');v.src=it.s;v.controls=v.autoplay=v.muted=v.loop=true;v.setAttribute('controlsList','nodownload noremoteplayback');v.disablePictureInPicture=true;v.oncontextmenu=()=>false;inner.appendChild(v);v.play().catch(()=>{});}
     co.textContent=`${idx+1} / ${items.length}`;
     tb.querySelectorAll('.lb-th').forEach((th,i)=>{th.classList.toggle('on',i===idx);if(i===idx)th.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});});
   }
