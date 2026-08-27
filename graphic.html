@@ -9,6 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    /* ── CONTENT PROTECTION — deters casual right-click save / drag-out / reverse-image-search on images ── */
+    img{-webkit-user-drag:none;-khtml-user-drag:none;-moz-user-drag:none;-o-user-drag:none;user-drag:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;pointer-events:auto;}
     :root{
       --red:#f40c3f;--rd:rgba(244,12,63,.1);--rm:rgba(244,12,63,.2);
       --bg:#0d0d0f;--s1:rgba(255,255,255,.03);--s2:rgba(255,255,255,.06);
@@ -496,6 +498,16 @@
 </div>
 
 <script>
+// content protection — block right-click and drag on images to deter casual saving / reverse-image-search
+document.addEventListener('contextmenu', e => {
+  if (e.target.tagName === 'IMG' || e.target.closest('.proj-visual, .pb-thumb, .fy-thumb, .lb-wrap')) {
+    e.preventDefault();
+  }
+});
+document.addEventListener('dragstart', e => {
+  if (e.target.tagName === 'IMG') e.preventDefault();
+});
+
 // cursor
 const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
 let mx=0,my=0,rx=0,ry=0;
