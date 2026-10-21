@@ -203,6 +203,10 @@
     .lb-hint{position:fixed;bottom:80px;right:24px;font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;color:var(--mu);opacity:0;transition:opacity .3s;pointer-events:none;text-align:right;line-height:1.7;background:rgba(13,13,15,.6);padding:6px 12px;border-radius:8px;backdrop-filter:blur(6px);}
     .lb.open .lb-hint{opacity:.7;}
 
+
+    /* ── IMAGE PROTECTION (protected projects) ── */
+    .project[data-protect] img,.lb.protected img{-webkit-user-drag:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
+
     /* ── FOOTER ── */
     footer{position:relative;z-index:2;border-top:1px solid var(--bd);padding:26px 56px;display:flex;align-items:center;justify-content:space-between;}
     .fc{font-family:var(--fm);font-size:.68rem;color:var(--mu);letter-spacing:.1em;}
@@ -284,10 +288,32 @@
   <!-- PROJECTS -->
   <div class="projects">
 
-    <!-- 01 Los Alebrijes -->
-    <article class="project reveal" data-images='["images/los alebrijes mockup 1.png","images/los alebrijes mockup.png","images/Thumbnail1.png","images/los alebrijes  menu.png","images/los alebrijes  logo.png"]'>
+    <!-- 01 Bloopy Cat Food -->
+    <article class="project reveal" data-protect="true" data-images='["images/flyers/bloopy food (1).png", "images/flyers/bloopy food (2).png", "images/flyers/bloopy food (3).png", "images/flyers/bloopy food (4).png", "images/flyers/bloopy food (1).jpeg", "images/flyers/bloopy food (2).jpeg"]'>
       <div class="proj-info">
         <div class="proj-index">01</div>
+        <div class="proj-label">Campaign Design · Concept · 2026</div>
+        <h2>Bloopy Cat Food</h2>
+        <p class="proj-desc"><strong style="color:var(--tx);font-weight:700;">Happy cats, happy life.</strong> BLOOPY is a conceptual brand of natural food and snacks for cats, blending nutrition, wellbeing and a fun, friendly, contemporary visual identity. The goal: a recognizable, coherent brand able to stand out in the pet market through an attractive, emotional visual language. The creative direction is playful, minimalist and modern, with pastel colors, rounded typefaces, cat illustrations full of personality and dynamic compositions. The campaign covers packaging for food, snacks and supplements, advertising product photography, social media pieces and merchandising — building a warm, memorable and versatile universe that connects emotionally with cat lovers.</p>
+        <div class="proj-tags">
+          <span class="tag">Campaign Design</span>
+          <span class="tag">Brand Identity</span>
+          <span class="tag">Packaging</span>
+          <span class="tag">Illustration</span>
+          <span class="tag">Social Media</span>
+          <span class="tag">Merchandising</span>
+        </div>
+        <div class="proj-cta">View project <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
+      </div>
+      <div class="proj-visual">
+        <img src="images/flyers/bloopy food (1).png" alt="Bloopy Cat Food" draggable="false">
+      </div>
+    </article>
+
+    <!-- 02 Los Alebrijes -->
+    <article class="project flip reveal" data-images='["images/los alebrijes mockup 1.png","images/los alebrijes mockup.png","images/Thumbnail1.png","images/los alebrijes  menu.png","images/los alebrijes  logo.png"]'>
+      <div class="proj-info">
+        <div class="proj-index">02</div>
         <div class="proj-label">Brand Identity · 2026</div>
         <h2>Los Alebrijes</h2>
         <p class="proj-desc">Bold and expressive visual language inspired by Mexican folk art and alebrije symbolism. Includes logo design, logotype and symbol system, color palette, typography, illustration style, and comprehensive brand guidelines spanning menu design, signage, and mockups.</p>
@@ -305,9 +331,9 @@
     </article>
 
     <!-- 02 LEX -->
-    <article class="project flip reveal" data-images='["images/Slide 01.png","images/Slide 02.png","images/Slide 03.png","images/Slide 04.png","images/Slide 05.png","images/Slide 06.png","images/Slide 07.png","images/Slide 08.png","images/Slide 09.png","images/Slide 10.png","images/Slide 11.png","images/Slide 12.png","images/Slide 13.png","images/Slide 14.png","images/Slide 15.png","images/Slide 16.png","images/Slide 17.png","images/Slide 18.png","images/Slide 19.png","images/Slide 20.png","images/Slide 21.png","images/Slide 22.png","images/Slide 23.png","images/Slide 24.png","images/Slide 25.png","images/Slide 26.png","images/Slide 27.png","images/Slide 28.png","images/Slide 29.png","images/Slide 30.png","images/Slide 31.png","images/Slide 32.png","images/Slide 33.jpg","images/Slide 34.jpg","images/Slide 35.png","images/Slide 36.jpg","images/Slide 37.jpg","images/Slide 38.jpg","images/Slide 39.png","images/Slide 40.jpg","images/Slide 41.jpg","images/Slide 42.jpg","images/Slide 43.jpg","images/Slide 44.jpg","images/Slide 45.png","images/Slide 46.png"]'>
+    <article class="project reveal" data-images='["images/Slide 01.png","images/Slide 02.png","images/Slide 03.png","images/Slide 04.png","images/Slide 05.png","images/Slide 06.png","images/Slide 07.png","images/Slide 08.png","images/Slide 09.png","images/Slide 10.png","images/Slide 11.png","images/Slide 12.png","images/Slide 13.png","images/Slide 14.png","images/Slide 15.png","images/Slide 16.png","images/Slide 17.png","images/Slide 18.png","images/Slide 19.png","images/Slide 20.png","images/Slide 21.png","images/Slide 22.png","images/Slide 23.png","images/Slide 24.png","images/Slide 25.png","images/Slide 26.png","images/Slide 27.png","images/Slide 28.png","images/Slide 29.png","images/Slide 30.png","images/Slide 31.png","images/Slide 32.png","images/Slide 33.jpg","images/Slide 34.jpg","images/Slide 35.png","images/Slide 36.jpg","images/Slide 37.jpg","images/Slide 38.jpg","images/Slide 39.png","images/Slide 40.jpg","images/Slide 41.jpg","images/Slide 42.jpg","images/Slide 43.jpg","images/Slide 44.jpg","images/Slide 45.png","images/Slide 46.png"]'>
       <div class="proj-info">
-        <div class="proj-index">02</div>
+        <div class="proj-index">03</div>
         <div class="proj-label">Brand Identity · 2025</div>
         <h2>LEX Natural Cosmetics</h2>
         <p class="proj-desc">Complete brand identity system for a natural cosmetics line. Visual language, logo design, packaging system, color palette, typography, and comprehensive brand guidelines reflecting organic and sustainable values.</p>
@@ -326,9 +352,9 @@
     </article>
 
     <!-- 03 Dolce Luna -->
-    <article class="project reveal" data-images='["images/dolce luna.png","images/dolce luna1.png","images/dolce luna2.png","images/dolce luna 3.png"]'>
+    <article class="project flip reveal" data-images='["images/dolce luna.png","images/dolce luna1.png","images/dolce luna2.png","images/dolce luna 3.png"]'>
       <div class="proj-info">
-        <div class="proj-index">03</div>
+        <div class="proj-index">04</div>
         <div class="proj-label">Rebrand · 2025</div>
         <h2>Dolce Luna</h2>
         <p class="proj-desc">Quick rebrand for a bakery combining tradition and modernity in visual brand identity — creating a memorable and authentic presence that resonates with the brand's gastronomic character.</p>
@@ -346,9 +372,9 @@
     </article>
 
     <!-- 04 Pendufon -->
-    <article class="project flip reveal" data-images='["images/pendufon logo.png","images/penfufon.png","images/pendufon1.png","images/pendufon2.png"]'>
+    <article class="project reveal" data-images='["images/pendufon logo.png","images/penfufon.png","images/pendufon1.png","images/pendufon2.png"]'>
       <div class="proj-info">
-        <div class="proj-index">04</div>
+        <div class="proj-index">05</div>
         <div class="proj-label">Logo Design · 2025</div>
         <h2>Pendufon</h2>
         <p class="proj-desc">Logo design and brand asset development including custom logotype and sticker designs. Playful aesthetics with professional consistency across all touchpoints.</p>
@@ -366,9 +392,9 @@
     </article>
 
     <!-- 05 Funding Spree -->
-    <article class="project reveal" data-images='["images/funding spree logo.png","images/fd 4.jpg","images/fd6.jpg","images/fd5.jpg"]'>
+    <article class="project flip reveal" data-images='["images/funding spree logo.png","images/fd 4.jpg","images/fd6.jpg","images/fd5.jpg"]'>
       <div class="proj-info">
-        <div class="proj-index">05</div>
+        <div class="proj-index">06</div>
         <div class="proj-label">Logo Design · 2024</div>
         <h2>Funding Spree</h2>
         <p class="proj-desc">Logo design and brand identity for a real estate company. Distinctive visual identity communicating trust, professionalism, and innovation in the property sector — custom logotype, color system, and visual applications.</p>
@@ -386,9 +412,9 @@
     </article>
 
     <!-- 06 The Radical History of the Swimsuit -->
-    <article class="project flip reveal" data-images='["images/Letter - 2.jpg","images/Letter - 8.jpg","images/Letter - 1.jpg","images/Letter - 3.jpg","images/Letter - 4.jpg","images/Letter - 7.jpg","images/Letter - 9.jpg","images/Letter - 10.jpg","images/Letter - 11.jpg","images/Letter 9.jpg"]'>
+    <article class="project reveal" data-images='["images/Letter - 2.jpg","images/Letter - 8.jpg","images/Letter - 1.jpg","images/Letter - 3.jpg","images/Letter - 4.jpg","images/Letter - 7.jpg","images/Letter - 9.jpg","images/Letter - 10.jpg","images/Letter - 11.jpg","images/Letter 9.jpg"]'>
       <div class="proj-info">
-        <div class="proj-index">06</div>
+        <div class="proj-index">07</div>
         <div class="proj-label">Editorial Design · 2024</div>
         <h2>The Radical History of the Swimsuit</h2>
         <p class="proj-desc">Editorial design for a magazine article exploring how women's swimsuits have always been on the front lines of feminism — from bathing in the buff to bloomers and bikinis. Includes cover illustration, typographic system, multi-column layouts, infographic timeline, and mixed-media collage art direction.</p>
@@ -406,10 +432,10 @@
       </div>
     </article>
 
-    <!-- 07 Infografías -->
-    <a class="project reveal" href="https://www.figma.com/design/kl8yG17rVzfGoo1HPg1JS3/Infografias?node-id=1-2&t=4qLBp6nyRH83UCnW-1" target="_blank" rel="noopener noreferrer" aria-label="Infografías — Ver en Figma">
+    <!-- 08 Infografías -->
+    <a class="project flip reveal" href="https://www.figma.com/design/kl8yG17rVzfGoo1HPg1JS3/Infografias?node-id=1-2&t=4qLBp6nyRH83UCnW-1" target="_blank" rel="noopener noreferrer" aria-label="Infografías — Ver en Figma">
       <div class="proj-info">
-        <div class="proj-index">07</div>
+        <div class="proj-index">08</div>
         <div class="proj-label">Infographic Design · 2026</div>
         <h2>Infografías</h2>
         <p class="proj-desc">A growing collection of infographic design translating complex data and research into clear, visual narratives — spanning environmental themes, editorial explainers, and data storytelling. Custom iconography, typographic hierarchy, and layout systems built for quick visual comprehension.</p>
@@ -432,7 +458,7 @@
   <section class="photobooks reveal" id="photobooks">
     <div class="pb-header">
       <div>
-        <div class="pb-index">08</div>
+        <div class="pb-index">09</div>
         <div class="pb-label">Editorial Design · 2022–2026</div>
         <h2 style="font-size:clamp(2.2rem,4vw,3.8rem);">Photobooks</h2>
       </div>
@@ -463,7 +489,7 @@
   <section class="flyers reveal" id="flyers">
     <div class="fy-header">
       <div>
-        <div class="fy-index">09</div>
+        <div class="fy-index">10</div>
         <div class="fy-label">Event Design · 2023–2026</div>
         <h2 style="font-size:clamp(2.2rem,4vw,3.8rem);">Flyers</h2>
       </div>
@@ -540,7 +566,7 @@ const pbImages=['images/photo 1.png','images/photo 2.png','images/photo 3.png','
 const flyerImages=['images/flyers/flyer PROJECT UNPEOPLE.png','images/flyers/Frank Ocean poster.png','images/flyers/club de los vinilos.png','images/flyers/flyer CCM.png','images/flyers/flyer CCSM.png','images/flyers/flyer pocho 2.png'];
 
 // ── LIGHTBOX ──
-let LBitems=[],LBidx=0;
+let LBitems=[],LBidx=0,LBprotect=false;
 let zs={on:false,drag:false,scale:1,tx:0,ty:0,sx:0,sy:0,img:null};
 
 function lbRender(){
@@ -562,8 +588,9 @@ function lbRender(){
   tb.querySelectorAll('.lb-th').forEach((t,i)=>{t.classList.toggle('on',i===LBidx);if(i===LBidx)t.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});});
   document.getElementById('lbz').classList.remove('on');document.getElementById('lbz').textContent='⊕';
 }
-function lbOpen(items,idx=0){
-  LBitems=items;LBidx=idx;
+function lbOpen(items,idx=0,protect=false){
+  LBitems=items;LBidx=idx;LBprotect=protect;
+  document.getElementById('lb').classList.toggle('protected',protect);
   const tb=document.getElementById('lbt');tb.innerHTML='';
   items.forEach((src,i)=>{const t=document.createElement('div');t.className='lb-th';t.innerHTML=`<img src="${src}" alt="">`;t.addEventListener('click',()=>{LBidx=i;lbRender();});tb.appendChild(t);});
   document.getElementById('lb').classList.add('open');document.body.style.overflow='hidden';lbRender();
@@ -589,9 +616,22 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'){LBidx=(LBidx+1)%LBitems.length;lbRender();}
 });
 
+
+// image protection: block right-click menu, drag & middle-click on protected images
+['contextmenu','dragstart'].forEach(ev=>{
+  document.addEventListener(ev,e=>{
+    const t=e.target;
+    if(t.tagName==='IMG'&&(t.closest('.project[data-protect]')||(LBprotect&&t.closest('#lb')))) e.preventDefault();
+  });
+});
+document.addEventListener('auxclick',e=>{
+  const t=e.target;
+  if(e.button===1&&t.tagName==='IMG'&&(t.closest('.project[data-protect]')||(LBprotect&&t.closest('#lb')))) e.preventDefault();
+});
+
 // wire projects
 document.querySelectorAll('.project[data-images]').forEach(el=>{
-  el.addEventListener('click',function(){lbOpen(JSON.parse(this.dataset.images));});
+  el.addEventListener('click',function(){lbOpen(JSON.parse(this.dataset.images),0,this.hasAttribute('data-protect'));});
 });
 document.querySelectorAll('.pb-thumb[data-pb]').forEach(el=>{
   el.addEventListener('click',function(){lbOpen(pbImages,parseInt(this.dataset.pb));});
