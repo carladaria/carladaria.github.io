@@ -1,624 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UX/UI Design — Carla D'Aria</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-/* ══════════════════════════════════════════
-   CARLA D'ARIA — SHARED DESIGN SYSTEM
-   ══════════════════════════════════════════ */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UX/UI Design — Carla D’Aria</title>
+<meta name="description" content="UX/UI case studies by Carla D’Aria: Runa, TeamHub, Bloopy and Cinematic.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0c0c0b;--ink:#e9e4da;--red:#f40c3f;--line:rgba(233,228,218,.18);--mu:rgba(233,228,218,.62);
+--sans:"Inter Tight","Inter Variable","Inter","Helvetica Neue",Arial,system-ui,sans-serif;--mono:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;--pad:clamp(20px,3.4vw,44px)}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
+#bg{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:-2}
+.shade{position:fixed;inset:0;z-index:-1;background:rgba(10,10,12,.62);pointer-events:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+.page{height:100vh;height:100svh;min-height:600px;display:grid;grid-template-rows:auto auto minmax(0,1fr);overflow:hidden}
+.top{display:grid;grid-template-columns:minmax(0,1.25fr) repeat(3,minmax(0,1fr));gap:24px;padding:clamp(22px,3.4vw,40px) var(--pad) 0;font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;line-height:1.75}
+.brand strong{display:block;font-weight:500}.brand span{opacity:.6}.brand a{text-decoration:none}
+.col h2{font:inherit;opacity:.55}.col ul{list-style:none}
+.lk{text-decoration:none;opacity:.85;background:linear-gradient(currentColor,currentColor) 0 100%/0% 1px no-repeat;transition:opacity .25s,background-size .35s cubic-bezier(.2,.7,.1,1)}
+.lk:hover,.lk[aria-current]{opacity:1;background-size:100% 1px}
+.short{display:none}
+.rule{display:flex;justify-content:space-between;margin:clamp(14px,2.2vw,26px) var(--pad) 0;padding-top:12px;border-top:.5px solid var(--line);font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;opacity:.6}
 
-:root{
-  --bg:    #0d0d0f;
-  --bg2:   #131315;
-  --red:   #f40c3f;
-  --rd:    rgba(244,12,63,.10);
-  --rm:    rgba(244,12,63,.18);
-  --rb:    rgba(244,12,63,.32);
-  --bd:    rgba(255,255,255,.07);
-  --b2:    rgba(255,255,255,.04);
-  --tx:    #efefef;
-  --mu:    rgba(255,255,255,.42);
-  --ms:    rgba(255,255,255,.20);
-  --fd:    'Syne', sans-serif;
-  --fm:    'Space Mono', monospace;
-  --hdr:   64px;
-  --r:     16px;
-  --ease:  cubic-bezier(.16,1.08,.38,.98);
-}
+.stage{display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,1.45fr);gap:clamp(24px,4vw,60px);padding:clamp(14px,2vh,26px) var(--pad) clamp(18px,3vh,34px);min-height:0}
+.side{display:flex;flex-direction:column;gap:clamp(12px,2vh,22px);min-height:0}
+.list{display:flex;flex-direction:column;flex:1;min-height:0;list-style:none}
+.list li{flex:1 1 0;min-height:0;max-height:120px;display:flex}
+.row{flex:1;display:flex;align-items:center;gap:16px;min-width:0;border-bottom:.5px solid var(--line);opacity:.45;transition:opacity .25s,color .25s}
+.row:hover,.row.on{opacity:1}.row.on{color:var(--red)}
+.row .n,.row .y{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;flex:none}
+.row .n{width:2.2em}
+.row .t{flex:1;min-width:0;font-weight:800;letter-spacing:-.03em;line-height:1;font-size:clamp(1.6rem,6vh,3.4rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.desc{font-family:var(--mono);font-size:.74rem;line-height:1.8;color:var(--mu);max-width:44ch}
 
-html { scroll-behavior: smooth; }
+.panel{display:flex;flex-direction:column;min-height:0;min-width:0;border:.5px solid var(--line);background:rgba(12,12,11,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.tabs{display:flex;align-items:stretch;border-bottom:.5px solid var(--line);font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;flex:none;overflow-x:auto;scrollbar-width:none}
+.tabs button{padding:14px clamp(12px,1.8vw,22px);opacity:.5;border-bottom:1px solid transparent;margin-bottom:-.5px;white-space:nowrap;transition:opacity .25s,color .25s}
+.tabs button:hover{opacity:1}.tabs button.on{opacity:1;color:var(--red);border-bottom-color:var(--red)}
+.tabs .m{margin-left:auto;align-self:center;padding:0 clamp(12px,1.8vw,22px);opacity:.5;white-space:nowrap}
+.pane{flex:1;min-height:0;overflow:auto;padding:clamp(16px,2.2vw,28px);scrollbar-width:thin;scrollbar-color:rgba(233,228,218,.25) transparent;animation:in .3s ease}
+@keyframes in{from{opacity:0}to{opacity:1}}
+.cols{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(18px,3vw,40px);min-height:100%}
+.stack{display:flex;flex-direction:column;gap:clamp(14px,2vh,22px);min-width:0}
+.lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;opacity:.6;margin-bottom:8px}
+h3.h{font-size:clamp(1.3rem,2.6vh,1.9rem);font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.p,.stack li,.sub{font-family:var(--mono);font-size:.74rem;line-height:1.8;color:var(--mu)}
+.stack ul{list-style:none}
+.stack li{padding:7px 0;border-bottom:.5px solid var(--line)}
+.cover{position:relative;flex:1;min-height:120px;border:.5px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden;background:rgba(12,12,11,.5)}
+.cover img{position:relative;z-index:1;max-width:100%;max-height:100%;object-fit:contain;display:block;-webkit-user-drag:none}
+.ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:clamp(3rem,10vw,8rem);letter-spacing:-.04em;color:rgba(244,12,63,.14);user-select:none}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.stats b{display:block;font-size:clamp(1.3rem,3.2vh,2rem);font-weight:800;letter-spacing:-.03em;line-height:1}
+.stats span{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;opacity:.6;line-height:1.4;display:block;margin-top:4px}
+.step{display:grid;grid-template-columns:2.4em minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:.5px solid var(--line)}
+.step .sn{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--red);padding-top:3px}
+.step .sl{font-weight:800;letter-spacing:-.02em;font-size:1.05rem;line-height:1.2}
+.note{padding:14px 16px;border:.5px solid var(--line);background:rgba(12,12,11,.5)}
+.note .h2{font-weight:800;letter-spacing:-.02em;font-size:1.05rem;margin-bottom:6px;line-height:1.2}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;flex:none}
+.chips button{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--line);border-radius:999px;color:var(--mu);transition:color .25s,border-color .25s}
+.chips button:hover{color:var(--ink)}.chips button.on{border-color:var(--red);color:var(--red)}
+.shots{display:flex;flex-direction:column;height:100%;min-height:0}
+.sheet{display:grid;gap:8px;flex:1;min-height:0}
+.tile{position:relative;min-width:0;min-height:0;overflow:hidden;border:.5px solid var(--line);background:rgba(12,12,11,.55)}
+.tile img,.tile video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:.88;transition:opacity .3s,transform .5s cubic-bezier(.2,.7,.1,1);-webkit-user-drag:none}
+.tile:hover img,.tile:hover video,.tile:focus-visible img,.tile:focus-visible video{opacity:1;transform:scale(1.04)}
+.tile:hover,.tile:focus-visible{border-color:var(--red)}
+.tile .lb{position:absolute;left:0;right:0;bottom:0;padding:22px 10px 8px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;line-height:1.5;background:linear-gradient(to top,rgba(10,10,12,.85),transparent);opacity:0;transition:opacity .25s}
+.tile:hover .lb,.tile:focus-visible .lb{opacity:1}
+.tile .pl{position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;padding:2px 7px;border:1px solid rgba(233,228,218,.5);border-radius:999px;background:rgba(10,10,12,.5)}
+.res{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:.5px solid var(--line)}
+.rc{background:rgba(12,12,11,.7);padding:clamp(14px,2vw,22px)}
+.rc i{font-style:normal;color:var(--red);display:block;margin-bottom:8px}
+.rc b{display:block;font-size:1.05rem;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:6px}
 
-body {
-  background: var(--bg);
-  color: var(--tx);
-  font-family: var(--fd);
-  overflow-x: hidden;
-  line-height: 1.6;
-}
+/* viewer */
+.vw{position:fixed;inset:0;z-index:50;background:rgba(8,8,8,.97);display:none;grid-template-rows:minmax(0,1fr) auto auto;font-family:var(--mono)}
+.vw.open{display:grid}
+.vm{position:relative;min-height:0;display:flex;align-items:center;justify-content:center;padding:clamp(56px,8vh,72px) clamp(16px,6vw,88px) 8px;touch-action:pan-y}
+.vm img,.vm video{max-width:100%;max-height:100%;object-fit:contain;-webkit-user-drag:none;user-select:none}
+.vb{position:absolute;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;padding:12px 14px;opacity:.7;transition:opacity .25s,color .25s;z-index:2}
+.vb:hover{opacity:1;color:var(--red)}
+.vb.x{top:12px;right:var(--pad)}.vb.p,.vb.nx{top:50%;transform:translateY(-50%)}.vb.p{left:6px}.vb.nx{right:6px}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 20px;padding:12px var(--pad) 10px;border-top:.5px solid var(--line)}
+.bar b{font-family:var(--sans);font-size:1.15rem;font-weight:800;letter-spacing:-.03em}
+.bar small{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;opacity:.6;align-self:center;white-space:nowrap}
+.bar p{grid-column:1/-1;font-size:.72rem;line-height:1.8;color:var(--mu);max-height:12vh;overflow:auto;max-width:90ch}
+.th{display:flex;gap:6px;overflow-x:auto;padding:0 var(--pad) calc(16px + env(safe-area-inset-bottom,0px));scrollbar-width:thin}
+.th button{flex:none;width:64px;height:48px;border:.5px solid var(--line);overflow:hidden;opacity:.5;font-size:10px;text-align:center;line-height:48px}
+.th button.on{opacity:1;border-color:var(--red)}
+.th img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* Noise layer */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 0; opacity: .20;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+@media(max-width:820px){
+.top{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;font-size:9.5px;letter-spacing:.12em;padding-top:20px}
+.brand{grid-column:1/-1}.full{display:none}.short{display:inline}
+.rule{margin-top:12px;font-size:9.5px}
+.stage{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:12px}
+.list{flex:none;flex-direction:row;flex-wrap:wrap;gap:6px}
+.list li{flex:0 0 calc(50% - 3px);height:40px;max-height:none}
+.row{padding:0 12px;border:.5px solid var(--line);opacity:.6}.row.on{border-color:var(--red)}
+.row .t{font-size:.95rem}.row .n,.row .y,.desc,.tabs .m{display:none}
+.tabs button{flex:1;text-align:center;padding:12px 6px;letter-spacing:.1em;font-size:9.5px}
+.cols{grid-template-columns:minmax(0,1fr)}
+.res{grid-template-columns:minmax(0,1fr)}
+.cover{min-height:150px;flex:none;height:30vh}
+.vb.p,.vb.nx{top:auto;bottom:16px;transform:none}
 }
-
-/* ── Scroll progress bar ── */
-.sp {
-  position: fixed; top: 0; left: 0;
-  height: 2px; background: var(--red);
-  z-index: 9999; width: 0;
-  transition: width .06s linear;
+@media(max-width:820px){
+.page{height:auto;min-height:100svh;overflow:visible;grid-template-rows:auto auto auto}
+.stage{grid-template-rows:auto auto}
+.pane{overflow:visible}
+.panel{min-height:60svh}
+.shots{height:auto}
+.sheet{flex:none;height:min(60svh,480px);min-height:320px}
+.col a{display:inline-block;padding:3px 0}
 }
-
-/* ── Custom cursor (hover-capable devices only) ── */
-@media (hover: hover) {
-  body { cursor: none; }
-  #cur {
-    position: fixed; width: 8px; height: 8px;
-    background: var(--red); border-radius: 50%;
-    pointer-events: none; z-index: 9998;
-    transform: translate(-50%, -50%);
-    mix-blend-mode: screen;
-  }
-  #cur-r {
-    position: fixed; width: 32px; height: 32px;
-    border: 1px solid rgba(244,12,63,.45); border-radius: 50%;
-    pointer-events: none; z-index: 9997;
-    transform: translate(-50%, -50%);
-    transition: width .18s, height .18s, opacity .18s;
-  }
-  body.hov #cur-r { width: 52px; height: 52px; opacity: .25; }
-}
-
-/* ── HEADER ── */
-.hdr {
-  position: fixed; top: 0; left: 0; right: 0;
-  height: var(--hdr); z-index: 300;
-  padding: 0 48px;
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(13,13,15,.96);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--bd);
-}
-.logo {
-  font-family: var(--fd); font-weight: 800; font-size: .95rem;
-  letter-spacing: .15em; text-transform: uppercase;
-  color: var(--tx); text-decoration: none;
-  transition: color .3s; flex-shrink: 0;
-}
-.logo:hover { color: var(--red); }
-.logo em { color: var(--red); font-style: normal; }
-
-.nav-d { display: flex; gap: 24px; align-items: center; }
-.nav-d a {
-  font-family: var(--fm); font-size: .66rem;
-  color: var(--mu); text-decoration: none;
-  letter-spacing: .1em; text-transform: uppercase;
-  transition: color .3s; position: relative; padding-bottom: 2px;
-}
-.nav-d a::after {
-  content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
-  height: 1px; background: var(--red);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .4s var(--ease);
-}
-.nav-d a:hover, .nav-d a.act { color: var(--tx); }
-.nav-d a:hover::after, .nav-d a.act::after { transform: scaleX(1); }
-
-/* Hamburger */
-.nav-tog {
-  display: none; flex-direction: column; gap: 5px;
-  background: none; border: none; cursor: pointer;
-  padding: 6px; z-index: 302; flex-shrink: 0;
-}
-.nav-tog span {
-  display: block; width: 22px; height: 2px;
-  background: var(--tx); border-radius: 2px;
-  transition: all .35s var(--ease);
-}
-.nav-tog.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-tog.open span:nth-child(2) { opacity: 0; }
-.nav-tog.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-/* Mobile nav overlay */
-.nav-mob {
-  position: fixed; inset: 0;
-  background: rgba(13,13,15,.98); backdrop-filter: blur(20px);
-  z-index: 299;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 4px;
-  opacity: 0; pointer-events: none; transition: opacity .35s;
-}
-.nav-mob.open { opacity: 1; pointer-events: all; }
-.nav-mob a {
-  font-family: var(--fd); font-size: clamp(2rem, 8vw, 3rem);
-  font-weight: 800; color: var(--mu); text-decoration: none;
-  text-transform: uppercase; letter-spacing: -.02em;
-  transition: color .22s; padding: 6px 0; position: relative;
-}
-.nav-mob a::before {
-  content: ''; position: absolute; bottom: 4px; left: 0;
-  width: 0; height: 2px; background: var(--red);
-  transition: width .4s var(--ease);
-}
-.nav-mob a:hover, .nav-mob a.act { color: var(--tx); }
-.nav-mob a:hover::before, .nav-mob a.act::before { width: 100%; }
-
-/* ── PAGE WRAPPER ── */
-.page { position: relative; z-index: 2; }
-
-/* ── HERO ── */
-.hero {
-  padding: calc(var(--hdr) + 56px) 48px 56px;
-  position: relative; overflow: hidden;
-  border-bottom: 1px solid var(--bd);
-}
-.hero::before {
-  content: ''; position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(244,12,63,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244,12,63,.025) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: gd 28s linear infinite; pointer-events: none;
-}
-@keyframes gd { to { background-position: 60px 60px; } }
-.hero-glow {
-  position: absolute; top: -10%; right: -10%;
-  width: 55vw; height: 70vh;
-  background: radial-gradient(ellipse at top right, rgba(244,12,63,.07) 0%, transparent 65%);
-  pointer-events: none;
-}
-.eyebrow {
-  font-family: var(--fm); font-size: .65rem;
-  letter-spacing: .22em; text-transform: uppercase; color: var(--red);
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 20px; position: relative; z-index: 2;
-}
-.eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--red); }
-
-.page-title {
-  font-size: clamp(4rem, 10vw, 9rem);
-  font-weight: 800; line-height: .86;
-  letter-spacing: -.04em; text-transform: uppercase;
-  position: relative; z-index: 2;
-}
-.page-title em { color: var(--red); font-style: normal; }
-.hero-desc {
-  font-family: var(--fm); font-size: .82rem;
-  color: var(--mu); line-height: 1.95; max-width: 500px;
-  margin-top: 22px; position: relative; z-index: 2;
-}
-
-/* ── SECTION ANCHOR NAV ── */
-.sec-nav {
-  position: relative; z-index: 2;
-  display: flex; gap: 0;
-  border-bottom: 1px solid var(--bd);
-  overflow-x: auto; scrollbar-width: none;
-}
-.sec-nav::-webkit-scrollbar { display: none; }
-.sec-nav a {
-  font-family: var(--fm); font-size: .63rem;
-  letter-spacing: .14em; text-transform: uppercase;
-  color: var(--mu); text-decoration: none;
-  padding: 16px 28px; border-right: 1px solid var(--bd);
-  transition: color .3s, background .3s; white-space: nowrap;
-}
-.sec-nav a:hover { color: var(--red); background: var(--rd); }
-
-/* ── SECTION BLOCK ── */
-.sec {
-  padding: 72px 48px;
-  border-bottom: 1px solid var(--bd);
-  position: relative; z-index: 2;
-}
-.sec:last-of-type { border-bottom: none; }
-.sec-lbl {
-  font-family: var(--fm); font-size: .62rem;
-  letter-spacing: .2em; text-transform: uppercase; color: var(--red);
-  display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
-}
-.sec-lbl::before { content: ''; width: 18px; height: 1px; background: var(--red); }
-.sec-title {
-  font-size: clamp(2rem, 4.5vw, 3.2rem);
-  font-weight: 800; letter-spacing: -.025em;
-  text-transform: uppercase; line-height: .9; margin-bottom: 36px;
-}
-
-/* ── LIGHTBOX ── */
-.lb {
-  display: none; position: fixed; inset: 0; z-index: 900;
-  align-items: center; justify-content: center;
-}
-.lb.open { display: flex; background: rgba(0,0,0,.96); }
-.lb-inner {
-  position: relative; width: min(1300px, 92vw); max-height: 90vh;
-  display: flex; align-items: center; justify-content: center;
-  animation: lbin .3s var(--ease);
-}
-@keyframes lbin { from { opacity:0; transform:scale(.96) } to { opacity:1; transform:scale(1) } }
-.lb-inner img, .lb-inner video {
-  max-width: 100%; max-height: 84vh;
-  border-radius: 12px;
-  box-shadow: 0 16px 80px rgba(244,12,63,.18);
-  object-fit: contain;
-}
-.lb-inner video { background: #000; }
-.lb-close {
-  position: fixed; top: 20px; right: 22px;
-  width: 42px; height: 42px; border-radius: 50%;
-  background: rgba(244,12,63,.1); border: 1px solid rgba(244,12,63,.28);
-  color: #fff; font-size: 20px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .3s; z-index: 901; font-family: sans-serif;
-}
-.lb-close:hover { background: rgba(244,12,63,.28); transform: rotate(90deg); }
-.lb-prev, .lb-next {
-  position: fixed; top: 50%; transform: translateY(-50%);
-  width: 48px; height: 48px; border-radius: 50%;
-  background: rgba(244,12,63,.1); border: 1px solid rgba(244,12,63,.28);
-  color: #fff; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .25s; z-index: 901;
-}
-.lb-prev { left: 16px; } .lb-next { right: 16px; }
-.lb-prev:hover, .lb-next:hover { background: rgba(244,12,63,.28); }
-.lb-prev svg, .lb-next svg { width: 16px; height: 16px; stroke: #fff; stroke-width: 2; }
-.lb-counter {
-  position: fixed; top: 26px; left: 50%; transform: translateX(-50%);
-  font-family: var(--fm); font-size: .66rem; letter-spacing: .1em;
-  color: var(--mu); z-index: 901;
-  background: rgba(13,13,15,.65); padding: 5px 14px;
-  border-radius: 999px; backdrop-filter: blur(8px);
-}
-.lb-thumbs {
-  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 6px; z-index: 901;
-  background: rgba(13,13,15,.65); padding: 6px;
-  border-radius: 12px; backdrop-filter: blur(8px);
-  max-width: 88vw; overflow-x: auto; scrollbar-width: none;
-}
-.lb-thumbs::-webkit-scrollbar { display: none; }
-.lb-th {
-  width: 46px; height: 46px; border-radius: 7px; overflow: hidden;
-  border: 2px solid transparent; cursor: pointer; flex-shrink: 0;
-  transition: border-color .22s, transform .22s;
-  background: rgba(255,255,255,.06);
-}
-.lb-th img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.lb-th.on { border-color: var(--red); transform: scale(1.1); }
-
-/* ── FOOTER ── */
-.ftr {
-  position: relative; z-index: 2;
-  border-top: 1px solid var(--bd);
-  padding: 22px 48px;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 12px;
-}
-.ftr-c { font-family: var(--fm); font-size: .65rem; color: var(--mu); letter-spacing: .08em; }
-.ftr-l { display: flex; gap: 18px; flex-wrap: wrap; }
-.ftr-l a {
-  font-family: var(--fm); font-size: .65rem; color: var(--mu);
-  text-decoration: none; letter-spacing: .1em; text-transform: uppercase;
-  transition: color .3s;
-}
-.ftr-l a:hover { color: var(--red); }
-
-/* ── SCROLL REVEAL ── */
-.sr {
-  opacity: 0; transform: translateY(22px);
-  transition: opacity .75s ease, transform .75s var(--ease);
-}
-.sr.in { opacity: 1; transform: none; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  .hdr { padding: 0 20px; }
-  .nav-d { display: none; }
-  .nav-tog { display: flex; }
-  .hero { padding: calc(var(--hdr) + 32px) 20px 48px; }
-  .sec { padding: 48px 20px; }
-  .ftr { padding: 18px 20px; }
-  .lb-thumbs { display: none; }
-  .sec-nav a { padding: 14px 20px; font-size: .6rem; }
-}
-@media (max-width: 480px) {
-  .page-title { font-size: 3.8rem; }
-}
-
-
-    /* ── CASE STUDY GRID ── */
-    .cs-wrap {
-      padding: 56px 48px 80px;
-      position: relative; z-index: 2;
-    }
-
-    .cs-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    /* Featured card — full width */
-    .cs-card {
-      display: block; text-decoration: none; color: inherit;
-      border: 1px solid var(--bd); border-radius: 20px;
-      background: var(--b2); overflow: hidden;
-      position: relative; cursor: pointer;
-      transition: border-color .4s var(--ease), transform .5s var(--ease), box-shadow .5s;
-    }
-    .cs-card:hover {
-      border-color: var(--rb);
-      transform: translateY(-5px);
-      box-shadow: 0 28px 70px rgba(244,12,63,.12);
-    }
-    .cs-card::after {
-      content: ''; position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--red), transparent);
-      transform: scaleX(0); transform-origin: left;
-      transition: transform .6s var(--ease);
-    }
-    .cs-card:hover::after { transform: scaleX(1); }
-
-    /* Full-width featured */
-    .cs-card.feat { grid-column: 1/-1; }
-
-    .cs-inner {
-      padding: 40px 44px 36px;
-    }
-    .feat .cs-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: center;
-    }
-
-    .cs-num {
-      font-family: var(--fm); font-size: .62rem;
-      letter-spacing: .2em; color: var(--red);
-      opacity: .75; margin-bottom: 16px; text-transform: uppercase;
-    }
-    .cs-title {
-      font-size: clamp(2.6rem, 5vw, 4.2rem);
-      font-weight: 800; line-height: .9;
-      letter-spacing: -.025em; text-transform: uppercase;
-      margin-bottom: 12px; transition: color .3s;
-    }
-    .cs-card:hover .cs-title { color: var(--red); }
-    .cs-sub {
-      font-family: var(--fm); font-size: .72rem;
-      color: var(--mu); margin-bottom: 16px; letter-spacing: .05em;
-    }
-    .cs-desc {
-      font-family: var(--fm); font-size: .78rem;
-      color: var(--mu); line-height: 1.9; margin-bottom: 22px;
-    }
-    .cs-tags { display: flex; gap: 7px; flex-wrap: wrap; }
-    .cs-tag {
-      font-family: var(--fm); font-size: .6rem;
-      letter-spacing: .08em; text-transform: uppercase;
-      padding: 4px 11px; border: 1px solid var(--bd);
-      border-radius: 999px; color: var(--mu);
-      transition: all .3s;
-    }
-    .cs-card:hover .cs-tag { border-color: var(--rb); color: rgba(244,12,63,.8); }
-    .cs-arrow {
-      display: inline-flex; align-items: center; gap: 9px;
-      font-family: var(--fm); font-size: .68rem;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--mu); margin-top: 24px; transition: all .3s;
-    }
-    .cs-card:hover .cs-arrow { color: var(--red); gap: 15px; }
-    .cs-arrow svg { width: 13px; height: 13px; stroke: currentColor; transition: transform .3s; }
-    .cs-card:hover .cs-arrow svg { transform: translate(3px,-3px); }
-
-    /* Visual placeholder */
-    .cs-visual {
-      aspect-ratio: 4/3; border-radius: 12px;
-      background: rgba(244,12,63,.04); border: 1px solid var(--bd);
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden; position: relative;
-    }
-    .cs-visual::before {
-      content: ''; position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(244,12,63,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(244,12,63,.04) 1px, transparent 1px);
-      background-size: 32px 32px;
-    }
-    .cs-visual-img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; position: relative; z-index: 1; }
-    .cs-visual-ph {
-      font-size: 4.5rem; font-weight: 800;
-      color: rgba(244,12,63,.08); letter-spacing: -.04em;
-      text-transform: uppercase; user-select: none;
-      transition: all .5s; position: relative; z-index: 1;
-    }
-    .cs-card:hover .cs-visual-ph { color: rgba(244,12,63,.16); transform: scale(1.05); }
-
-    /* ── STATS ── */
-    .stats {
-      position: relative; z-index: 2;
-      display: grid; grid-template-columns: repeat(3,1fr);
-      gap: 1px; background: var(--bd);
-      border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd);
-    }
-    .stat {
-      background: var(--bg); padding: 36px 32px; text-align: center;
-      transition: background .3s;
-    }
-    .stat:hover { background: rgba(244,12,63,.04); }
-    .stat-n { font-size: 2.8rem; font-weight: 800; color: var(--red); line-height: 1; margin-bottom: 8px; }
-    .stat-l { font-family: var(--fm); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; color: var(--mu); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 1100px) {
-      .cs-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 900px) {
-      .cs-wrap { padding: 36px 20px 56px; }
-      .cs-grid { grid-template-columns: 1fr; gap: 12px; }
-      .cs-card.feat { grid-column: 1; }
-      .feat .cs-inner { grid-template-columns: 1fr; gap: 24px; }
-      .cs-inner { padding: 28px 24px; }
-      .cs-visual { display: none; }
-      .stats { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 480px) {
-      .cs-title { font-size: 2.4rem; }
-    }
-  </style>
+@media(prefers-reduced-motion:reduce){.lk,.row,.tabs button,.tile img,.tile video,.tile .lb,.vb{transition:none}.pane{animation:none}}
+</style>
 </head>
 <body>
-<div id="cur"></div><div id="cur-r"></div>
-<div class="sp" id="sp"></div>
-
-<header class="hdr">
-  <a href="index.html" class="logo">Carla <em>D'</em>Aria</a>
-  <nav class="nav-d">
-    <a href="3d.html">3D Art</a>
-    <a href="ux_index.html" class="act">UX/UI</a>
-    <a href="graphic.html">Graphic</a>
-    <a href="2d.html">2D Art</a>
-    <a href="visuals.html">Visuals</a>
-    <a href="about.html">About</a>
-  </nav>
-  <button class="nav-tog" id="navTog"><span></span><span></span><span></span></button>
-</header>
-<div class="nav-mob" id="navMob">
-  <a href="3d.html">3D Art</a><a href="ux_index.html" class="act">UX/UI</a>
-  <a href="graphic.html">Graphic</a><a href="2d.html">2D Art</a>
-  <a href="visuals.html">Visuals</a><a href="about.html">About</a>
-</div>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="shade"></div>
 
 <div class="page">
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-glow"></div>
-    <div class="eyebrow">UX / UI Design</div>
-    <h1 class="page-title">Case<br><em>Studies</em></h1>
-    <p class="hero-desc">Research-driven design across mobile, web, virtual environments, and game interfaces. From user flows to high-fidelity prototypes. 4 full case studies.</p>
-  </section>
+  <header class="top">
+    <div class="brand"><strong><a href="index.html">Carla D’Aria</a></strong><span>UX/UI Design</span></div>
+    <nav class="col" aria-label="Work">
+      <h2>Work</h2>
+      <ul>
+        <li><a class="lk" href="3d.html">3D Art</a></li>
+        <li><a class="lk" href="graphic.html">Graphic Design</a></li>
+        <li><a class="lk" href="ux_index.html" aria-current="page">UX/UI</a></li>
+        <li><a class="lk" href="visuals.html">Motion Graphics</a></li>
+      </ul>
+    </nav>
+    <nav class="col" aria-label="About">
+      <h2>About</h2>
+      <ul><li><a class="lk" href="about.html">About me</a></li></ul>
+    </nav>
+    <nav class="col" aria-label="Contact">
+      <h2>Contact</h2>
+      <ul>
+        <li><a class="lk" href="mailto:carlamdaria@gmail.com"><span class="full">carlamdaria@gmail.com</span><span class="short">Email</span></a></li>
+        <li><a class="lk" href="https://wa.me/5491122539753" target="_blank" rel="noopener">WhatsApp</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="rule"><span>UX/UI Design</span><span>4 case studies</span></div>
 
-  <!-- STATS -->
-  <div class="stats">
-    <div class="stat"><div class="stat-n">4</div><div class="stat-l">Case Studies</div></div>
-    <div class="stat"><div class="stat-n">65%</div><div class="stat-l">Drop-off Reduced</div></div>
-    <div class="stat"><div class="stat-n">2023–26</div><div class="stat-l">Active Years</div></div>
-  </div>
-
-  <!-- CASE STUDIES -->
-  <div class="cs-wrap">
-    <div class="cs-grid">
-
-      <!-- Runa — FEATURED -->
-      <a href="ux_runa.html" class="cs-card feat sr">
-        <div class="cs-inner">
-          <div>
-            <div class="cs-num">04 / Case Study · Featured</div>
-            <h2 class="cs-title">Runa</h2>
-            <p class="cs-sub">Game UI · Fanny Pack Studios · 2025</p>
-            <p class="cs-desc">Full UI/UX system for an action-adventure game rooted in Andean mythology. Five connected modules — main menu, HUD, inventory, merchant, and monument tracking — built in Godot and unified under a single visual language.</p>
-            <div class="cs-tags">
-              <span class="cs-tag">Game UI</span>
-              <span class="cs-tag">UI Design</span>
-              <span class="cs-tag">Godot</span>
-              <span class="cs-tag">Illustration</span>
-              <span class="cs-tag">Motion</span>
-            </div>
-            <div class="cs-arrow">View case study <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
-          </div>
-          <div class="cs-visual">
-            <img class="cs-visual-img" src="Asset website/ux/BOOK 8.png" alt="Runa — Game UI" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-            <span class="cs-visual-ph" style="display:none">RUNA</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- Bloopy -->
-      <a href="ux.html" class="cs-card sr">
-        <div class="cs-inner">
-          <div class="cs-num">02 / Case Study</div>
-          <h2 class="cs-title">Bloopy</h2>
-          <p class="cs-sub">Mobile App · Pet Care · 2023</p>
-          <p class="cs-desc">All-in-one pet care platform with booking, grooming, vet appointments, and gamified retention through a virtual Snowflake currency system.</p>
-          <div class="cs-tags">
-            <span class="cs-tag">UX Research</span>
-            <span class="cs-tag">Wireframing</span>
-            <span class="cs-tag">UI Design</span>
-            <span class="cs-tag">Gamification</span>
-          </div>
-          <div class="cs-arrow">View case study <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
-        </div>
-      </a>
-
-      <!-- TeamHub -->
-      <a href="ux_teamhub.html" class="cs-card sr">
-        <div class="cs-inner">
-          <div class="cs-num">03 / Case Study</div>
-          <h2 class="cs-title">Team&shy;Hub</h2>
-          <p class="cs-sub">Virtual Space · Decentraland · Web3 · 2025</p>
-          <p class="cs-desc">A spatial collaboration platform inside Decentraland. Immersive rooms, interactive polls, and a persistent team identity — replacing static video calls.</p>
-          <div class="cs-tags">
-            <span class="cs-tag">UX Strategy</span>
-            <span class="cs-tag">Spatial Design</span>
-            <span class="cs-tag">Web3</span>
-            <span class="cs-tag">Prototyping</span>
-          </div>
-          <div class="cs-arrow">View case study <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
-        </div>
-      </a>
-
-      <!-- Cinematic -->
-      <a href="ux - copia.html" class="cs-card sr">
-        <div class="cs-inner">
-          <div class="cs-num">01 / Case Study</div>
-          <h2 class="cs-title">Cine&shy;matic</h2>
-          <p class="cs-sub">Web & Mobile Platform · E-commerce · 2024</p>
-          <p class="cs-desc">Centralized cinema platform unifying every theater brand — ticket purchasing, seat selection, and candy ordering in one frictionless flow. Reduced checkout abandonment from 65% to under 20%.</p>
-          <div class="cs-tags">
-            <span class="cs-tag">UX Research</span>
-            <span class="cs-tag">User Flows</span>
-            <span class="cs-tag">UI Design</span>
-            <span class="cs-tag">E-commerce</span>
-          </div>
-          <div class="cs-arrow">View case study <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
-        </div>
-      </a>
-
+  <main class="stage">
+    <h1 class="sr">UX/UI Design — Case Studies</h1>
+    <div class="side">
+      <ul class="list" id="list"></ul>
+      <p class="desc">Research-driven design across mobile, web, virtual environments and game interfaces. From user flows to high-fidelity prototypes.</p>
     </div>
-  </div>
+    <section class="panel" aria-live="polite">
+      <div class="tabs" id="tabs" role="tablist"></div>
+      <div class="pane" id="pane"></div>
+    </section>
+  </main>
+</div>
 
-  <footer class="ftr">
-    <span class="ftr-c">© 2026 Carla D'Aria · Creative Producer</span>
-    <div class="ftr-l">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="https://wa.me/5491122539753" target="_blank">WhatsApp</a>
-      <a href="mailto:carlamdaria@gmail.com">Email</a>
-    </div>
-  </footer>
+<div class="vw" id="vw" role="dialog" aria-modal="true" aria-label="Screen viewer">
+  <div class="vm" id="vm">
+    <button class="vb x" id="vx" aria-label="Close">Close ×</button>
+    <button class="vb p" id="vp" aria-label="Previous">←</button>
+    <div id="vc" style="display:contents"></div>
+    <button class="vb nx" id="vn" aria-label="Next">→</button>
+  </div>
+  <div class="bar"><b id="vt"></b><small id="vk"></small><p id="vd"></p></div>
+  <div class="th" id="th"></div>
 </div>
 
 <script>
-  const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
-  if(cur){let mx=0,my=0,rx=0,ry=0;document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});(function l(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.14;ry+=(my-ry)*.14;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(l);})();document.querySelectorAll('.cs-card').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));});}
-  window.addEventListener('scroll',()=>document.getElementById('sp').style.width=(scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%');
-  const tog=document.getElementById('navTog'),mob=document.getElementById('navMob');
-  tog.addEventListener('click',()=>{const o=tog.classList.toggle('open');mob.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';});
-  mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{tog.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}));
-  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.1});
-  document.querySelectorAll('.sr').forEach((el,i)=>{el.style.transitionDelay=`${i*.1}s`;io.observe(el);});
+/* ── Shader de fondo (Hurricane Season, WebGL puro) ── */
+(()=>{
+const cv=document.getElementById('bg');
+const gl=cv.getContext('webgl',{antialias:false});
+if(!gl){cv.style.background='#2a0a14';return}
+const VERT='attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
+const FRAG=`
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#define SEED 2208.0
+#else
+precision mediump float;
+#define SEED 7.0
+#endif
+uniform vec3 u_c[5];
+uniform vec4 u_s; // res.xy, time, cursor presence
+uniform vec2 u_m;
+float h21(vec2 p){
+#ifndef GL_FRAGMENT_PRECISION_HIGH
+p=mod(p,31.);
+#endif
+p=fract(p*vec2(234.34,435.345));p+=dot(p,p+34.23);return fract(p.x*p.y);}
+float gh(vec2 p){vec3 q=fract(vec3(p.xyx)*.1031);q+=dot(q,q.yzx+33.33);return fract((q.x+q.y)*q.z);}
+float nz(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);
+return mix(mix(h21(i),h21(i+vec2(1.,0.)),u.x),mix(h21(i+vec2(0.,1.)),h21(i+vec2(1.,1.)),u.x),u.y);}
+float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*nz(p);p=p*2.03+vec2(17.,9.2);a*=.5;}return v;}
+vec3 pal(float x){float f=clamp(x,0.,1.)*4.;vec3 c=u_c[0];
+for(int i=0;i<4;i++)c=mix(c,u_c[i+1],smoothstep(0.,1.,clamp(f-float(i),0.,1.)));return c;}
+vec3 shade(vec2 p,float t){
+float fd=0.;
+for(int i=0;i<7;i++){float fi=float(i);
+vec2 c=vec2(sin(t*(.19+fi*.037)+fi*2.1+SEED),cos(t*(.16+fi*.043)+fi*1.4))*.63;
+vec2 d=p-c;fd+=.0471/(dot(d,d)+.006);}
+float s=smoothstep(.72,1.1,fd);
+return pal(clamp(s+fd*.05,0.,1.));}
+void main(){
+vec2 R=u_s.xy;float t=u_s.z;float m=min(R.x,R.y);
+vec2 p=(gl_FragCoord.xy-.5*R)/m;
+if(u_s.w>.001){
+vec2 cur=.5*u_m*R/m;vec2 d=p-cur;
+float k=u_s.w*(1.-smoothstep(0.,.433,length(d)));
+float a=k*2.2;float cc=cos(a),cs=sin(a);
+p=cur+mat2(cc,-cs,cs,cc)*d;}
+p*=1.44;
+p=vec2(p.y,-p.x);
+p+=.048*vec2(sin(t*.31),cos(t*.23));
+p+=.6*(vec2(fbm(p*4.+SEED),fbm(p*4.+vec2(5.2,1.3)))-.5);
+float e=.0576;
+vec3 col=shade(p,t)*.36+(shade(p+vec2(e,0.),t)+shade(p-vec2(e,0.),t)+shade(p+vec2(0.,e),t)+shade(p-vec2(0.,e),t))*.16;
+col=(col-.5)*1.5+.5;
+float l=dot(col,vec3(.299,.587,.114));
+col=mix(vec3(l),col,2.);
+col-=.11;
+col+=(gh(gl_FragCoord.xy+vec2(SEED*17.,SEED*31.))-.5)*.21;
+gl_FragColor=vec4(clamp(col,0.,1.),1.);}`;
+const mk=(t,s)=>{const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);return x};
+const pr=gl.createProgram();
+gl.attachShader(pr,mk(gl.VERTEX_SHADER,VERT));gl.attachShader(pr,mk(gl.FRAGMENT_SHADER,FRAG));
+gl.linkProgram(pr);gl.useProgram(pr);
+gl.bindBuffer(gl.ARRAY_BUFFER,gl.createBuffer());
+gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+const loc=gl.getAttribLocation(pr,'a');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+const U=n=>gl.getUniformLocation(pr,n);
+gl.uniform3fv(U('u_c'),new Float32Array([.0196,.0196,.0235, 1,0,0, .9961,.9529,.7843, .4784,.8,0, .4078,.2431,.5333]));
+const uS=U('u_s'),uM=U('u_m');
+let tx=0,ty=0,tp=0,mx=0,my=0,cp=0,last=null,raf=0,vis=true;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+addEventListener('pointermove',e=>{tx=e.clientX/innerWidth*2-1;ty=-(e.clientY/innerHeight*2-1);tp=1;if(cp<.01){mx=tx;my=ty}},{passive:true});
+document.documentElement.addEventListener('pointerleave',()=>tp=0);
+addEventListener('blur',()=>tp=0);
+function size(){
+const d=Math.min(devicePixelRatio||1,2);
+let w=Math.max(1,Math.round(innerWidth*d)),h=Math.max(1,Math.round(innerHeight*d));
+const k=Math.min(1,Math.sqrt((innerWidth<820?9e5:2e6)/(w*h)));w=Math.round(w*k);h=Math.round(h*k);
+if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;gl.viewport(0,0,w,h)}}
+function frame(now){
+raf=0;if(!vis)return;
+const dt=last===null?0:Math.min((now-last)/1000,.1);last=now;
+const f=1-Math.exp(-12*dt);
+mx+=(tx-mx)*f;my+=(ty-my)*f;cp+=(tp-cp)*f;
+size();
+gl.uniform4f(uS,cv.width,cv.height,reduced?0:now/1000*1.088,cp);
+gl.uniform2f(uM,mx,my);
+gl.drawArrays(gl.TRIANGLES,0,3);
+if(!reduced)raf=requestAnimationFrame(frame);}
+addEventListener('resize',()=>{if(!raf)raf=requestAnimationFrame(frame)});
+document.addEventListener('visibilitychange',()=>{vis=document.visibilityState==='visible';if(vis){last=null;if(!raf)raf=requestAnimationFrame(frame)}else{cancelAnimationFrame(raf);raf=0}});
+raf=requestAnimationFrame(frame);
+})();
+
+const CASES=[{"n": "04", "t": "Runa", "full": "Runa & the Chaikuru Legacy", "y": "2025", "l": "Game UI · Fanny Pack Studios · 2025", "hero": "Asset website/ux/BOOK 8.png", "stats": [["5", "Core UI Systems"], ["2", "Animated Menu Sequences"], ["1", "Unified Andean Visual Language"]], "ov": {"text": "Runa and the Chaikuru Legacy is an action-adventure game rooted in Andean mythology, where players explore ancient ruins, restore forgotten monuments, and collect sacred artifacts tied to the Chaikuru lineage. The full UI/UX system was designed to feel like an extension of that world — every menu, icon, and transition reinforces the game's cultural identity instead of sitting on top of it as generic game-chrome.", "pt": "The Problem", "pl": ["Generic game UI patterns clash with a culturally-rooted narrative", "Multiple disconnected systems — menus, inventory, trading, progression", "Need for clarity under gameplay pressure without losing atmosphere", "Iconography had to read instantly while staying true to Andean motifs"], "gt": "The Goal", "gp": "Build a cohesive UI/UX system across every player-facing screen — main menu, in-game HUD, merchant interface, artifact codex, and monument / key item tracking — so the interface feels carved from the same world as the game itself, while staying fast and legible in real-time play."}, "pr": {"text": "A full game-UI design cycle: defining the visual language from narrative and art references, structuring each system's information hierarchy, then building and animating high-fidelity screens consistent across every module.", "steps": [["Visual Language", "Establishing stone, gold-leaf, and woven-textile motifs from Andean references"], ["System Mapping", "Defining navigation between menu, HUD, merchant, and codex layers"], ["UI + Iconography", "High-fidelity screens, item icons, and frame ornamentation"], ["Motion + Polish", "Animated menu sequences and transition feedback"]], "mods": [["Main Menu", "Animated entry sequence, level selector, and graphics / sound settings."], ["In-Game Menu", "Pause overlay with quick access to progress, settings, and exit flow."], ["Merchant UI", "Trading interface for exchanging resources and artifacts with NPCs."], ["Artifacts Codex", "A living book interface cataloging collected relics and lore entries."]], "modsT": "Five Core Modules", "notes": [["The Living Codex", "Every artifact, monument, and key item the player discovers is recorded into an in-world book — turning inventory management into a piece of lore itself, rather than a flat list bolted onto the HUD."]]}, "groups": ["First Impressions", "During Play", "Trade & Collection", "Tracking Progress"], "shots": [{"g": "First Impressions", "t": "v", "s": "Asset website/ux/menu principal.mp4", "cap": "Main Menu — Animated", "d": "The main menu sets the tone before gameplay even begins — a fully animated sequence built around carved stone and ember-lit gold accents, leading into a level selector that doubles as a map of the player's journey."}, {"g": "First Impressions", "t": "i", "s": "Asset website/ux/Runa level selector.png", "cap": "Level Selector", "d": "The main menu sets the tone before gameplay even begins — a fully animated sequence built around carved stone and ember-lit gold accents, leading into a level selector that doubles as a map of the player's journey."}, {"g": "First Impressions", "t": "i", "s": "Asset website/ux/Runa level selector 2.png", "cap": "Level Selector — Detail", "d": "The main menu sets the tone before gameplay even begins — a fully animated sequence built around carved stone and ember-lit gold accents, leading into a level selector that doubles as a map of the player's journey."}, {"g": "First Impressions", "t": "i", "s": "Asset website/ux/settings GRAPHICS A.png", "cap": "Settings — Graphics", "d": "The main menu sets the tone before gameplay even begins — a fully animated sequence built around carved stone and ember-lit gold accents, leading into a level selector that doubles as a map of the player's journey."}, {"g": "First Impressions", "t": "i", "s": "Asset website/ux/settings SOUNDS B.png", "cap": "Settings — Sound", "d": "The main menu sets the tone before gameplay even begins — a fully animated sequence built around carved stone and ember-lit gold accents, leading into a level selector that doubles as a map of the player's journey."}, {"g": "During Play", "t": "i", "s": "Asset website/ux/menu in game runa.png", "cap": "In-game pause menu", "d": "The in-game pause menu had to interrupt action cleanly — readable at a glance, fast to dismiss, and visually consistent with the main menu without repeating its full ornamentation."}, {"g": "Trade & Collection", "t": "v", "s": "Asset website/ux/libro runa_artefactos.mp4", "cap": "Artifacts codex — animated", "d": "The merchant interface and the artifacts codex share the same \"ancient book\" framing device — every relic the player collects is logged into a living book UI, animated to feel like pages of real parchment turning."}, {"g": "Trade & Collection", "t": "i", "s": "Asset website/ux/BOOK 8.png", "cap": "Artifacts codex page", "d": "The merchant interface and the artifacts codex share the same \"ancient book\" framing device — every relic the player collects is logged into a living book UI, animated to feel like pages of real parchment turning."}, {"g": "Trade & Collection", "t": "i", "s": "Asset website/ux/BOOK 9.png", "cap": "Artifacts codex page", "d": "The merchant interface and the artifacts codex share the same \"ancient book\" framing device — every relic the player collects is logged into a living book UI, animated to feel like pages of real parchment turning."}, {"g": "Trade & Collection", "t": "i", "s": "Asset website/ux/coati_final_2_item 5.png", "cap": "Artifact item icon", "d": "The merchant interface and the artifacts codex share the same \"ancient book\" framing device — every relic the player collects is logged into a living book UI, animated to feel like pages of real parchment turning."}, {"g": "Tracking Progress", "t": "i", "s": "Asset website/ux/monuments 1.png", "cap": "Monument tracking screen", "d": "Monuments and key items act as the game's macro-progression layer — large landmarks the player restores across the world, each tied to its own icon, state, and unlock condition inside the UI."}, {"g": "Tracking Progress", "t": "i", "s": "Asset website/ux/monuments 4.png", "cap": "Monument tracking screen", "d": "Monuments and key items act as the game's macro-progression layer — large landmarks the player restores across the world, each tied to its own icon, state, and unlock condition inside the UI."}, {"g": "Tracking Progress", "t": "i", "s": "Asset website/ux/monuments 5.png", "cap": "Monument tracking screen", "d": "Monuments and key items act as the game's macro-progression layer — large landmarks the player restores across the world, each tied to its own icon, state, and unlock condition inside the UI."}], "out": {"results": [["Unified Visual Language", "Five separate UI systems reading as one cohesive world instead of five disconnected menus"], ["Diegetic Inventory", "Artifacts and codex framed as an in-world book, turning UI into lore"], ["Clarity Under Pressure", "HUD and pause menu kept fast and legible despite rich ornamentation"]], "insights": ["Animated entry reinforces tone before the player touches a single control", "Level selector doubles as a narrative map, not just a list of stages", "Settings panels kept legible and fast despite the ornamental frame language"], "cards": []}}, {"n": "03", "t": "TeamHub", "full": "TeamHub", "y": "2025", "l": "Virtual Space · Decentraland · Web3 · 2025", "hero": "images/teamhub.png", "stats": [["↑", "Participation Rate"], ["3D", "Spatial Navigation"], ["Web3", "Decentraland Native"]], "ov": {"text": "TeamHub is a virtual workspace built inside Decentraland. It enables teams to collaborate, make decisions, and share content through a playful and immersive environment — replacing the static, disengaging nature of traditional video calls and productivity tools.", "pt": "The Problem", "pl": ["Remote teams suffer from low engagement in traditional tools", "Decision-making processes feel slow and disconnected", "Meetings lack interaction and emotional presence", "No customizable shared space for team identity", "Decentraland imposes strict UI and screen-space constraints"], "gt": "The Goal", "gp": "Design a virtual collaboration platform that transforms meetings and decision-making into an engaging, social, and spatial experience — through rooms, polls, and interactive shared content inside a persistent Web3 environment."}, "pr": {"text": "Unlike traditional product design, TeamHub required thinking spatially from the start — treating navigation as movement through physical rooms rather than linear screen flows.", "steps": [["Concept", "Defining the spatial collaboration model and core interactions"], ["Spatial UX", "Mapping rooms, zones, and movement as the primary navigation"], ["Interaction", "Designing polls, content sharing, and real-time team feedback"], ["UI Systems", "Minimal overlay UI that doesn't break immersion in 3D space"], ["Prototype", "End-to-end prototype and walkthrough inside Decentraland"]], "mods": [], "modsT": "", "notes": [["Platform Constraint: Decentraland UI Limits", "Decentraland imposes strict constraints on UI overlays, screen resolution, and available interaction space. Every design decision had to account for these limitations — resulting in a minimal-UI approach that keeps all functional controls within a tight, responsive layout without breaking spatial presence."]]}, "groups": ["Spatial Flow", "Core Rooms", "Visual System"], "shots": [{"g": "Spatial Flow", "t": "i", "s": "images/user flow.png", "cap": "User flow diagram", "d": "Instead of linear screen transitions, TeamHub was designed as a spatial flow — users navigate rooms and trigger interactions by moving through a shared virtual world."}, {"g": "Core Rooms", "t": "i", "s": "images/team hub (5).png", "cap": "Key space", "d": "Each room in TeamHub serves a specific collaborative function — from decision-making polls to content sharing and social presence — all navigable through physical movement."}, {"g": "Core Rooms", "t": "i", "s": "images/team hub (6).png", "cap": "Key space", "d": "Each room in TeamHub serves a specific collaborative function — from decision-making polls to content sharing and social presence — all navigable through physical movement."}, {"g": "Core Rooms", "t": "i", "s": "images/team hub (3).png", "cap": "Key space", "d": "Each room in TeamHub serves a specific collaborative function — from decision-making polls to content sharing and social presence — all navigable through physical movement."}, {"g": "Core Rooms", "t": "i", "s": "images/team hub (2).png", "cap": "Key space", "d": "Each room in TeamHub serves a specific collaborative function — from decision-making polls to content sharing and social presence — all navigable through physical movement."}, {"g": "Visual System", "t": "i", "s": "images/1.png", "cap": "Visual System 01", "d": "The final design blends minimal UI overlays with immersive 3D spaces — ensuring functional clarity without breaking presence inside the virtual world."}, {"g": "Visual System", "t": "i", "s": "images/2.png", "cap": "Visual System 02", "d": "The final design blends minimal UI overlays with immersive 3D spaces — ensuring functional clarity without breaking presence inside the virtual world."}, {"g": "Visual System", "t": "i", "s": "images/3.png", "cap": "Visual System 03", "d": "The final design blends minimal UI overlays with immersive 3D spaces — ensuring functional clarity without breaking presence inside the virtual world."}, {"g": "Visual System", "t": "i", "s": "images/4.png", "cap": "Visual System 04", "d": "The final design blends minimal UI overlays with immersive 3D spaces — ensuring functional clarity without breaking presence inside the virtual world."}, {"g": "Visual System", "t": "i", "s": "images/5.png", "cap": "Visual System 05", "d": "The final design blends minimal UI overlays with immersive 3D spaces — ensuring functional clarity without breaking presence inside the virtual world."}, {"g": "Visual System", "t": "i", "s": "images/6.png", "cap": "Visual System 06", "d": "The final design blends minimal UI overlays with immersive 3D spaces — ensuring functional clarity without breaking presence inside the virtual world."}, {"g": "Visual System", "t": "i", "s": "images/7.png", "cap": "Visual System 07", "d": "The final design blends minimal UI overlays with immersive 3D spaces — ensuring functional clarity without breaking presence inside the virtual world."}, {"g": "Visual System", "t": "i", "s": "images/8.png", "cap": "Visual System 08", "d": "The final design blends minimal UI overlays with immersive 3D spaces — ensuring functional clarity without breaking presence inside the virtual world."}], "out": {"results": [["Increased Participation", "Teams made faster decisions with higher engagement through spatial polling rooms"], ["More Memorable Meetings", "Spatial presence created genuine shared experiences that static video calls cannot replicate"], ["Team Identity", "Persistent, customizable spaces gave teams ownership of their digital environment"]], "insights": ["Spatial navigation was preferred over menu-based navigation by all tested users", "Poll rooms increased participation compared to voice-only meeting formats", "Goal: encourage collaboration through play, movement, and shared presence"], "cards": [{"h": "Platform Value", "ul": ["Higher engagement than traditional collaboration tools", "Fully customizable environments per team or company", "Shared decision-making through interactive polls"], "p": ""}, {"h": "Why Decentraland", "ul": [], "p": "Decentraland enabled ownership, customization, and persistence of virtual spaces — allowing teams to build a genuine digital identity beyond the transient nature of standard collaboration platforms. The team's space is theirs to keep and evolve."}]}}, {"n": "02", "t": "Bloopy", "full": "Bloopy", "y": "2023", "l": "Mobile App · Pet Care · 2023", "hero": "images/herobloopy.png", "stats": [["60%", "Booking Drop-off"], ["3", "Steps to Book"], ["❄", "Snowflake Currency"]], "ov": {"text": "Bloopy is a mobile app designed to centralize pet care services — walking, grooming, and veterinary visits. Users can manage multiple pets, track their full service history, and communicate with caregivers, all in one place.", "pt": "The Problem", "pl": ["Pet services scattered across multiple disconnected platforms", "No unified service history per individual pet", "Low user retention in service-based apps"], "gt": "The Goal", "gp": "Design a user-friendly platform that simplifies pet care management and increases long-term retention through a reward-based virtual currency system — Snowflakes."}, "pr": {"text": "A full product design cycle: starting from user research and mapping real pain points, through wireframing, visual design, and prototyping — with multiple iterations at each stage.", "steps": [["User Research", "Identifying drop-off points and user frustrations with existing pet apps"], ["User Flows", "Mapping the booking journey and core service interactions"], ["Wireframing", "Lo-fi structure focused on reducing booking friction"], ["UI + Prototype", "High-fidelity screens with gamification system and iteration"]], "mods": [], "modsT": "", "notes": [["Virtual Currency System", "Users earn Snowflakes for every booking, review, and referral. They can redeem them for discounts, free services, or exclusive features — creating a reward loop that makes the app compelling beyond the immediate transaction."]]}, "groups": ["Key Screens", "Visual System"], "shots": [{"g": "Key Screens", "t": "i", "s": "images/key-home.png", "cap": "Home wireframe", "d": "High-level overview of the booking flow and core screens, focused on reducing friction and improving task completion across the main user journeys."}, {"g": "Key Screens", "t": "i", "s": "images/key-booking.png", "cap": "Booking wireframe", "d": "High-level overview of the booking flow and core screens, focused on reducing friction and improving task completion across the main user journeys."}, {"g": "Key Screens", "t": "i", "s": "images/key-payment.png", "cap": "Payment wireframe", "d": "High-level overview of the booking flow and core screens, focused on reducing friction and improving task completion across the main user journeys."}, {"g": "Key Screens", "t": "i", "s": "images/key-activity.png", "cap": "Activity wireframe", "d": "High-level overview of the booking flow and core screens, focused on reducing friction and improving task completion across the main user journeys."}, {"g": "Key Screens", "t": "i", "s": "images/key-chat.png", "cap": "Chat wireframe", "d": "High-level overview of the booking flow and core screens, focused on reducing friction and improving task completion across the main user journeys."}, {"g": "Visual System", "t": "i", "s": "images/final-1.png", "cap": "Visual System 01", "d": "The final UI balances warmth and playfulness with the clarity needed for a service-booking experience — ensuring pet owners feel confident and engaged throughout."}, {"g": "Visual System", "t": "i", "s": "images/final-2.png", "cap": "Visual System 02", "d": "The final UI balances warmth and playfulness with the clarity needed for a service-booking experience — ensuring pet owners feel confident and engaged throughout."}, {"g": "Visual System", "t": "i", "s": "images/final-3.png", "cap": "Visual System 03", "d": "The final UI balances warmth and playfulness with the clarity needed for a service-booking experience — ensuring pet owners feel confident and engaged throughout."}, {"g": "Visual System", "t": "i", "s": "images/final-4.png", "cap": "Visual System 04", "d": "The final UI balances warmth and playfulness with the clarity needed for a service-booking experience — ensuring pet owners feel confident and engaged throughout."}, {"g": "Visual System", "t": "i", "s": "images/final-5.png", "cap": "Visual System 05", "d": "The final UI balances warmth and playfulness with the clarity needed for a service-booking experience — ensuring pet owners feel confident and engaged throughout."}, {"g": "Visual System", "t": "i", "s": "images/final-6.png", "cap": "Visual System 06", "d": "The final UI balances warmth and playfulness with the clarity needed for a service-booking experience — ensuring pet owners feel confident and engaged throughout."}, {"g": "Visual System", "t": "i", "s": "images/final-7.png", "cap": "Visual System 07", "d": "The final UI balances warmth and playfulness with the clarity needed for a service-booking experience — ensuring pet owners feel confident and engaged throughout."}], "out": {"results": [["Simplified Booking", "Pet care booking reduced to 3 clear, low-friction steps"], ["Multi-Pet Management", "Full service history and caregiver communication for every pet in one account"], ["Increased Engagement", "Snowflake currency system created a retention loop beyond single-use bookings"]], "insights": ["60% of users abandoned the booking process before completion", "Booking flow simplified to only 3 main steps", "Goal: create a user-friendly pet care app that increases bookings and sustains engagement"], "cards": []}}, {"n": "01", "t": "Cinematic", "full": "Cinematic", "y": "2024", "l": "Web & Mobile Platform · E-commerce · 2024", "hero": "images/cinematic1.png", "stats": [["65%", "Abandonment Rate"], ["3", "Steps to Checkout"], ["2%", "Service Fee Model"]], "ov": {"text": "Cinematic is a centralized platform that brings together all movie theaters in the country — regardless of brand — into a single ecosystem. Users can browse movies, compare theaters, purchase tickets, and order candy from one unified app or website.", "pt": "The Problem", "pl": ["Movie theaters operate in isolated ecosystems", "Users must navigate multiple apps and websites", "Inconsistent UX across different cinema brands", "No centralized ticket + candy purchasing experience"], "gt": "The Goal", "gp": "Design a centralized cinema platform that simplifies movie discovery, ticket purchasing, and candy ordering — while remaining profitable through a minimal 2% service fee per transaction."}, "pr": {"text": "A full end-to-end design process from competitive market analysis through validated high-fidelity prototyping.", "steps": [["Market Analysis", "Competitive mapping of existing cinema platforms"], ["User Research", "Interviews and behavioral data on ticket buyers"], ["User Flows", "Mapping key journeys and reducing friction points"], ["Wireframes", "Lo-fi structure for the core booking flow"], ["UI + Prototype", "High-fidelity screens and interactive validation"]], "mods": [], "modsT": "", "notes": []}, "groups": ["Structure", "Core UI", "Visual System"], "shots": [{"g": "Structure", "t": "i", "s": "images/wireframe 2.png", "cap": "Wireframe 01", "d": "The core challenge was reducing friction in the ticket buying process while supporting multiple cinema brands and seating systems simultaneously."}, {"g": "Structure", "t": "i", "s": "images/wireframe 3.png", "cap": "Wireframe 02", "d": "The core challenge was reducing friction in the ticket buying process while supporting multiple cinema brands and seating systems simultaneously."}, {"g": "Structure", "t": "i", "s": "images/wireframe1.png", "cap": "Wireframe 03", "d": "The core challenge was reducing friction in the ticket buying process while supporting multiple cinema brands and seating systems simultaneously."}, {"g": "Core UI", "t": "i", "s": "images/key frame 2.png", "cap": "Key screen", "d": ""}, {"g": "Core UI", "t": "i", "s": "images/key frame 3.png", "cap": "Key screen", "d": ""}, {"g": "Core UI", "t": "i", "s": "images/key frame 1.png", "cap": "Key screen", "d": ""}, {"g": "Visual System", "t": "i", "s": "images/final-cinematic (6).png", "cap": "Visual System 01", "d": "The final UI focuses on clarity, brand neutrality, and cinematic atmosphere — allowing different theaters to coexist under a single visual system."}, {"g": "Visual System", "t": "i", "s": "images/final-cinematic (7).png", "cap": "Visual System 02", "d": "The final UI focuses on clarity, brand neutrality, and cinematic atmosphere — allowing different theaters to coexist under a single visual system."}, {"g": "Visual System", "t": "i", "s": "images/final-cinematic (5).png", "cap": "Visual System 03", "d": "The final UI focuses on clarity, brand neutrality, and cinematic atmosphere — allowing different theaters to coexist under a single visual system."}, {"g": "Visual System", "t": "i", "s": "images/final-cinematic (1).png", "cap": "Visual System 04", "d": "The final UI focuses on clarity, brand neutrality, and cinematic atmosphere — allowing different theaters to coexist under a single visual system."}, {"g": "Visual System", "t": "i", "s": "images/final-cinematic (2).png", "cap": "Visual System 05", "d": "The final UI focuses on clarity, brand neutrality, and cinematic atmosphere — allowing different theaters to coexist under a single visual system."}, {"g": "Visual System", "t": "i", "s": "images/final-cinematic (3).png", "cap": "Visual System 06", "d": "The final UI focuses on clarity, brand neutrality, and cinematic atmosphere — allowing different theaters to coexist under a single visual system."}, {"g": "Visual System", "t": "i", "s": "images/final-cinematic (4).png", "cap": "Visual System 07", "d": "The final UI focuses on clarity, brand neutrality, and cinematic atmosphere — allowing different theaters to coexist under a single visual system."}], "out": {"results": [["Simplified Purchasing", "Multi-cinema ticket buying unified into one intuitive flow"], ["Higher Completion Rate", "Checkout abandonment significantly reduced through flow simplification"], ["Integrated Experience", "Seamless concession and ticket sales in a single transaction"]], "insights": ["65% of users abandoned ticket purchases due to complex flows", "Unified flow reduced the process to just 3 main steps", "Goal: increase completed purchases while maintaining a seamless cross-brand experience"], "cards": [{"h": "Business Model", "ul": ["No exclusivity required for cinemas", "Lower fees than traditional ticketing platforms", "Additional revenue through featured placements"], "p": "Cinematic operates with a minimal 2% service fee per transaction, making it attractive for theaters while sustaining the platform."}, {"h": "Value Proposition", "ul": [], "p": "A single platform for users, a low-cost distribution channel for cinemas, and a scalable centralized system for the entire movie industry."}]}}];
+const TABS=['Overview','Process','Screens','Outcomes'];
+
+(()=>{
+const $=id=>document.getElementById(id),pad=n=>String(n).padStart(2,'0');
+const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e};
+const list=$('list'),tabs=$('tabs'),pane=$('pane'),vw=$('vw'),vc=$('vc'),thb=$('th');
+let ci=-1,ti=0,grp=0,opener=null,vList=[],vIdx=0,x0=null;
+
+CASES.forEach((c,i)=>{
+  const li=el('li'),b=el('button','row');b.type='button';
+  b.append(el('span','n',c.n),el('span','t',c.t),el('span','y',c.y));
+  b.addEventListener('click',()=>setCase(i));b.addEventListener('focus',()=>setCase(i));
+  li.appendChild(b);list.appendChild(li);
+});
+TABS.forEach((t,i)=>{const b=el('button',null,t);b.type='button';b.setAttribute('role','tab');b.addEventListener('click',()=>setTab(i));tabs.appendChild(b)});
+const meta=el('span','m');tabs.appendChild(meta);
+
+function setCase(i){if(i===ci)return;ci=i;grp=0;list.querySelectorAll('.row').forEach((r,k)=>r.classList.toggle('on',k===i));meta.textContent=CASES[i].l;render()}
+function setTab(i){ti=i;render()}
+function render(){
+  const c=CASES[ci];
+  [...tabs.querySelectorAll('button')].forEach((b,k)=>{b.classList.toggle('on',k===ti);b.setAttribute('aria-selected',k===ti)});
+  pane.textContent='';pane.style.animation='none';void pane.offsetWidth;pane.style.animation='';
+  [overview,process,screens,outcomes][ti](c);
+}
+const ul=a=>{const u=el('ul');a.forEach(x=>u.appendChild(el('li',null,x)));return u};
+
+function overview(c){
+  const g=el('div','cols'),a=el('div','stack'),b=el('div','stack');
+  const cv=el('div','cover');cv.append(el('span','ph',c.t.toLowerCase()));
+  const im=new Image();im.src=c.hero;im.alt=c.full+' — cover';im.draggable=false;im.onerror=()=>im.remove();cv.appendChild(im);
+  const st=el('div','stats');c.stats.forEach(s=>{const d=el('div');d.append(el('b',null,s[0]),el('span',null,s[1]));st.appendChild(d)});
+  a.append(cv,st);
+  const h=el('div');h.append(el('h3','h',c.full),el('p','sub',c.l));
+  b.append(h,el('p','p',c.ov.text));
+  const pr=el('div');pr.append(el('div','lbl',c.ov.pt),ul(c.ov.pl));b.appendChild(pr);
+  const gl=el('div');gl.append(el('div','lbl',c.ov.gt),el('p','p',c.ov.gp));b.appendChild(gl);
+  g.append(a,b);pane.appendChild(g);
+}
+function process(c){
+  const g=el('div','cols'),a=el('div','stack'),b=el('div','stack');
+  a.append(el('div','lbl','Approach'),el('p','p',c.pr.text));
+  const s=el('div');c.pr.steps.forEach((x,i)=>{const r=el('div','step'),d=el('div');d.append(el('div','sl',x[0]),el('div','sub',x[1]));r.append(el('div','sn',pad(i+1)),d);s.appendChild(r)});a.appendChild(s);
+  if(c.pr.mods.length){b.appendChild(el('div','lbl',c.pr.modsT));c.pr.mods.forEach((x,i)=>{const r=el('div','step'),d=el('div');d.append(el('div','sl',x[0]),el('div','sub',x[1]));r.append(el('div','sn',pad(i+1)),d);b.appendChild(r)})}
+  c.pr.notes.forEach(n=>{const d=el('div','note');d.append(el('div','h2',n[0]),el('p','p',n[1]));b.appendChild(d)});
+  g.appendChild(a);if(b.children.length)g.appendChild(b);else g.style.gridTemplateColumns='minmax(0,1fr)';pane.appendChild(g);
+}
+function screens(c){
+  const w=el('div','shots'),ch=el('div','chips');
+  const groups=['All',...c.groups];
+  groups.forEach((t,i)=>{const b=el('button',null,t);b.type='button';b.classList.toggle('on',i===grp);b.addEventListener('click',()=>{grp=i;screens2()});ch.appendChild(b)});
+  const sh=el('div','sheet');sh.id='sheet';w.append(ch,sh);pane.appendChild(w);
+  function screens2(){[...ch.children].forEach((b,i)=>b.classList.toggle('on',i===grp));draw()}
+  function draw(){
+    const arr=c.shots.filter(s=>grp===0||s.g===groups[grp]);vList=arr;sh.textContent='';
+    arr.forEach((s,k)=>{
+      const b=el('button','tile');b.type='button';b.setAttribute('aria-label',s.cap||s.g);
+      if(s.t==='v'){const v=document.createElement('video');v.muted=true;v.playsInline=true;v.preload='metadata';v.src=s.s+'#t=0.1';b.appendChild(v);b.appendChild(el('span','pl','▶'))}
+      else{const im=new Image();im.src=s.s;im.alt='';im.draggable=false;im.loading='lazy';b.appendChild(im)}
+      const l=el('span','lb',s.cap||s.g);b.appendChild(l);
+      b.addEventListener('click',()=>openV(k,b));sh.appendChild(b);
+    });
+    fit(sh,arr.length);
+  }
+  draw();
+}
+function fit(s,n){
+  if(!n)return;const W=s.clientWidth,H=s.clientHeight,g=8;let best=1,sc0=1e9;
+  for(let c=1;c<=n;c++){const r=Math.ceil(n/c),tw=(W-g*(c-1))/c,th=(H-g*(r-1))/r;if(tw<=0||th<=0)continue;const sc=Math.abs(Math.log(tw/th/1.2));if(sc<sc0){sc0=sc;best=c}}
+  const r=Math.ceil(n/best),tw=(W-g*(best-1))/best,th=(H-g*(r-1))/r;
+  s.style.gridTemplateColumns='repeat('+best+',minmax(0,1fr))';
+  if(Math.min(tw,th)<72){s.style.gridAutoRows='96px';s.style.gridTemplateRows='';s.style.overflowY='auto';s.style.alignContent='start'}
+  else{s.style.gridTemplateRows='repeat('+r+',minmax(0,1fr))';s.style.gridAutoRows='';s.style.overflowY='';s.style.alignContent=''}
+}
+function outcomes(c){
+  const w=el('div','stack');
+  w.appendChild(el('div','lbl','Outcomes'));
+  const r=el('div','res');c.out.results.forEach(x=>{const d=el('div','rc');d.append(el('i',null,'✦'),el('b',null,x[0]),el('p','p',x[1]));r.appendChild(d)});w.appendChild(r);
+  const g=el('div','cols');
+  const a=el('div','stack');
+  if(c.out.insights.length){a.append(el('div','lbl','Insights'),ul(c.out.insights))}
+  const b=el('div','stack');
+  c.out.cards.forEach(k=>{const d=el('div');d.append(el('div','lbl',k.h));if(k.ul&&k.ul.length)d.appendChild(ul(k.ul));if(k.p)d.appendChild(el('p','p',k.p));b.appendChild(d)});
+  if(a.children.length)g.appendChild(a);if(b.children.length)g.appendChild(b);
+  if(g.children.length===1)g.style.gridTemplateColumns='minmax(0,1fr)';
+  if(g.children.length)w.appendChild(g);
+  pane.appendChild(w);
+}
+new ResizeObserver(()=>{const s=$('sheet');if(s)fit(s,vList.length)}).observe(pane);
+
+addEventListener('keydown',e=>{
+  if(vw.classList.contains('open'))return;
+  const k=e.key;if(!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(k))return;
+  if(k==='ArrowUp'||k==='ArrowDown'){e.preventDefault();setCase(Math.max(0,Math.min(CASES.length-1,ci+(k==='ArrowDown'?1:-1))));list.querySelectorAll('.row')[ci].focus({preventScroll:true})}
+  else if(document.activeElement.closest&&document.activeElement.closest('.tabs')){setTab(Math.max(0,Math.min(3,ti+(k==='ArrowRight'?1:-1))));tabs.children[ti].focus({preventScroll:true})}
+});
+
+/* ── Visor (imágenes y video) ── */
+function openV(k,from){
+  vIdx=k;opener=from;vw.classList.add('open');document.body.style.overflow='hidden';
+  thb.textContent='';thb.style.display=vList.length>1?'flex':'none';
+  vList.forEach((m,j)=>{const b=el('button');b.type='button';b.setAttribute('aria-label','Item '+(j+1));
+    if(m.t==='i'){const im=new Image();im.src=m.s;im.alt='';im.draggable=false;b.appendChild(im)}else b.textContent='▶';
+    b.addEventListener('click',()=>{vIdx=j;drawV()});thb.appendChild(b)});
+  drawV();$('vx').focus();
+}
+function closeV(){vc.querySelectorAll('video').forEach(v=>v.pause());vc.textContent='';vw.classList.remove('open');document.body.style.overflow='';if(opener)opener.focus({preventScroll:true})}
+function drawV(){
+  const m=vList[vIdx],c=CASES[ci];vc.querySelectorAll('video').forEach(v=>v.pause());vc.textContent='';
+  if(m.t==='v'){const v=document.createElement('video');v.src=m.s;v.controls=true;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;
+    v.setAttribute('controlslist','nodownload noremoteplayback');v.disablePictureInPicture=true;v.oncontextmenu=()=>false;vc.appendChild(v)}
+  else{const im=new Image();im.src=m.s;im.alt=(m.cap||m.g)+' — '+c.t;im.draggable=false;vc.appendChild(im)}
+  $('vt').textContent=c.t+' · '+m.g;$('vk').textContent=(m.cap?m.cap+' · ':'')+pad(vIdx+1)+' / '+pad(vList.length);$('vd').textContent=m.d||'';
+  const multi=vList.length>1;$('vp').hidden=!multi;$('vn').hidden=!multi;
+  [...thb.children].forEach((b,j)=>{b.classList.toggle('on',j===vIdx);if(j===vIdx)b.scrollIntoView({inline:'center',block:'nearest'})});
+}
+const step=d=>{vIdx=(vIdx+d+vList.length)%vList.length;drawV()};
+$('vx').onclick=closeV;$('vp').onclick=()=>step(-1);$('vn').onclick=()=>step(1);
+$('vm').addEventListener('click',e=>{if(e.target===$('vm'))closeV()});
+$('vm').addEventListener('pointerdown',e=>{x0=e.target.tagName==='VIDEO'?null:e.clientX});
+$('vm').addEventListener('pointerup',e=>{if(x0!==null&&Math.abs(e.clientX-x0)>50&&vList.length>1)step(e.clientX<x0?1:-1);x0=null});
+addEventListener('keydown',e=>{
+  if(!vw.classList.contains('open'))return;
+  if(e.key==='Escape')closeV();else if(e.key==='ArrowRight'&&vList.length>1)step(1);else if(e.key==='ArrowLeft'&&vList.length>1)step(-1);
+});
+document.addEventListener('contextmenu',e=>{if(e.target.tagName==='IMG'||e.target.tagName==='VIDEO')e.preventDefault()});
+document.addEventListener('dragstart',e=>{if(e.target.tagName==='IMG')e.preventDefault()});
+setCase(0);
+})();
 </script>
 </body>
 </html>

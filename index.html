@@ -1,417 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carla D'Aria — Creative Producer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    /* ── RESET ─────────────────────────────────────────── */
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-    :root{
-      --bg:#0d0d0f;--bg2:#131315;
-      --red:#f40c3f;--rd:rgba(244,12,63,.1);--rm:rgba(244,12,63,.18);--rb:rgba(244,12,63,.32);
-      --bd:rgba(255,255,255,.07);--b2:rgba(255,255,255,.12);
-      --tx:#efefef;--mu:rgba(255,255,255,.42);--ms:rgba(255,255,255,.22);
-      --fd:'Syne',sans-serif;--fm:'Space Mono',monospace;
-      --hdr:64px;
-    }
-    html{scroll-behavior:smooth;}
-    body{background:var(--bg);color:var(--tx);font-family:var(--fd);overflow-x:hidden;line-height:1.6;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carla D’Aria — Creative Producer</title>
+<meta name="description" content="Multimedia designer and Creative Producer: 3D art, UX/UI, graphic design and motion graphics. Buenos Aires.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0c0c0b;--ink:#e9e4da;--warm:#ffcd3c;--line:rgba(233,228,218,.18);--mu:rgba(233,228,218,.62);
+--sans:"Inter Tight","Inter Variable","Inter","Helvetica Neue",Arial,system-ui,sans-serif;--mono:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace}
+body{min-height:100svh}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+#bg{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:-2}
+.shade{position:fixed;inset:0;z-index:-1;background:rgba(10,10,12,.5);pointer-events:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 
-    /* NOISE */
-    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.22;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");}
+/* HERO · halftone wordmark */
+.hwf{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;touch-action:pan-y;isolation:isolate}
+.hwf canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.top{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.25fr) repeat(3,minmax(0,1fr));gap:24px;
+padding:clamp(22px,3.4vw,40px) clamp(20px,3.4vw,44px) 0;font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;line-height:1.75}
+.brand strong{display:block;font-weight:500}.brand span{opacity:.6}
+.col h2{font:inherit;opacity:.55}
+.col ul{list-style:none}
+.lk{text-decoration:none;opacity:.85;background:linear-gradient(currentColor,currentColor) 0 100%/0% 1px no-repeat;transition:opacity .25s,background-size .35s cubic-bezier(.2,.7,.1,1)}
+.lk:hover{opacity:1;background-size:100% 1px}
+.lk:focus-visible{outline:2px solid var(--warm);outline-offset:3px}
+.short{display:none}
+.rule{position:relative;z-index:1;display:flex;justify-content:flex-end;margin:clamp(18px,2.6vw,30px) clamp(20px,3.4vw,44px) 0;padding-top:12px;border-top:.5px solid var(--line);font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase}
 
-    /* SCROLL PROGRESS */
-    .sp{position:fixed;top:0;left:0;height:2px;background:var(--red);z-index:9999;width:0;transition:width .06s linear;}
 
-    /* CURSOR */
-    @media(hover:hover){
-      body{cursor:none;}
-      #cur{position:fixed;width:8px;height:8px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);mix-blend-mode:screen;}
-      #cur-r{position:fixed;width:32px;height:32px;border:1px solid rgba(244,12,63,.45);border-radius:50%;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:width .18s,height .18s,opacity .18s;}
-      body.hov #cur-r{width:52px;height:52px;opacity:.25;}
-    }
-
-    /* ── HEADER ─────────────────────────────────────────── */
-    .hdr{position:fixed;top:0;left:0;right:0;height:var(--hdr);z-index:300;padding:0 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,13,15,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);}
-    .logo{font-family:var(--fd);font-weight:800;font-size:.95rem;letter-spacing:.15em;text-transform:uppercase;color:var(--tx);text-decoration:none;transition:color .3s;}
-    .logo:hover{color:var(--red);}
-    .logo em{color:var(--red);font-style:normal;}
-    .nav-d{display:flex;gap:24px;align-items:center;}
-    .nav-d a{font-family:var(--fm);font-size:.66rem;color:var(--mu);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s;position:relative;padding-bottom:2px;}
-    .nav-d a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.16,1.08,.38,.98);}
-    .nav-d a:hover{color:var(--tx);}
-    .nav-d a:hover::after{transform:scaleX(1);}
-
-    /* HAMBURGER */
-    .nav-tog{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;z-index:302;flex-shrink:0;}
-    .nav-tog span{display:block;width:22px;height:2px;background:var(--tx);border-radius:2px;transition:all .35s cubic-bezier(.16,1.08,.38,.98);}
-    .nav-tog.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-    .nav-tog.open span:nth-child(2){opacity:0;}
-    .nav-tog.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-
-    /* MOBILE NAV */
-    .nav-mob{position:fixed;inset:0;background:rgba(13,13,15,.98);backdrop-filter:blur(20px);z-index:299;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0;pointer-events:none;transition:opacity .35s ease;}
-    .nav-mob.open{opacity:1;pointer-events:all;}
-    .nav-mob a{font-family:var(--fd);font-size:clamp(2rem,8vw,3.2rem);font-weight:800;color:var(--mu);text-decoration:none;text-transform:uppercase;letter-spacing:-.02em;transition:color .22s;padding:6px 0;position:relative;}
-    .nav-mob a::before{content:'';position:absolute;bottom:4px;left:0;width:0;height:2px;background:var(--red);transition:width .4s cubic-bezier(.16,1.08,.38,.98);}
-    .nav-mob a:hover{color:var(--tx);}
-    .nav-mob a:hover::before{width:100%;}
-
-    /* ── HERO ─────────────────────────────────────────── */
-    .hero{position:relative;min-height:100svh;display:flex;align-items:center;padding:calc(var(--hdr) + 48px) 48px 72px;overflow:hidden;border-bottom:1px solid var(--bd);}
-    /* animated grid bg */
-    .hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(244,12,63,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(244,12,63,.025) 1px,transparent 1px);background-size:60px 60px;animation:gridmove 24s linear infinite;pointer-events:none;z-index:0;}
-    @keyframes gridmove{to{background-position:60px 60px;}}
-    /* radial glow */
-    .hero::after{content:'';position:absolute;top:-10%;right:-15%;width:60vw;height:80vh;background:radial-gradient(ellipse at top right,rgba(244,12,63,.06) 0%,transparent 65%);pointer-events:none;z-index:0;}
-    .hero-inner{position:relative;z-index:2;max-width:900px;}
-    .hero-eyebrow{font-family:var(--fm);font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:10px;margin-bottom:24px;opacity:0;animation:fadeup .8s .1s cubic-bezier(.16,1.08,.38,.98) forwards;}
-    .hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--red);}
-    .hero-name{font-size:clamp(4.5rem,13vw,11rem);font-weight:800;line-height:.86;letter-spacing:-.04em;text-transform:uppercase;margin-bottom:32px;opacity:0;animation:fadeup .9s .2s cubic-bezier(.16,1.08,.38,.98) forwards;}
-    .hero-name em{color:var(--red);font-style:normal;}
-    .hero-roles{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;opacity:0;animation:fadeup .9s .35s cubic-bezier(.16,1.08,.38,.98) forwards;}
-    .hero-role-tag{font-family:var(--fm);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 16px;border:1px solid var(--bd);border-radius:999px;color:var(--mu);}
-    .hero-desc{font-family:var(--fm);font-size:.84rem;color:var(--mu);line-height:1.95;max-width:560px;margin-bottom:40px;opacity:0;animation:fadeup .9s .45s cubic-bezier(.16,1.08,.38,.98) forwards;}
-    .hero-cta{display:inline-flex;align-items:center;gap:12px;font-family:var(--fm);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--tx);text-decoration:none;border:1px solid var(--rb);padding:12px 24px;border-radius:999px;transition:all .35s;opacity:0;animation:fadeup .9s .55s cubic-bezier(.16,1.08,.38,.98) forwards;}
-    .hero-cta:hover{background:var(--rd);border-color:var(--red);color:var(--red);}
-    .hero-cta svg{width:14px;height:14px;stroke:currentColor;transition:transform .3s;}
-    .hero-cta:hover svg{transform:translateY(3px);}
-    @keyframes fadeup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-
-    /* hero scroll cue */
-    .scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;font-family:var(--fm);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ms);animation:bob 2.8s ease-in-out infinite;}
-    .scroll-cue::after{content:'';width:1px;height:32px;background:linear-gradient(to bottom,var(--ms),transparent);}
-    @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
-
-    /* ── WORK SECTION ─────────────────────────────────── */
-    .work{position:relative;z-index:2;padding:88px 48px 80px;}
-    .section-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:52px;flex-wrap:wrap;}
-    .section-label{font-family:var(--fm);font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-    .section-label::before{content:'';width:24px;height:1px;background:var(--red);}
-    .section-title{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:800;letter-spacing:-.03em;text-transform:uppercase;line-height:.92;}
-    .section-sub{font-family:var(--fm);font-size:.75rem;color:var(--mu);max-width:340px;line-height:1.85;text-align:right;}
-
-    /* CATEGORY GRID */
-    .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--bd);border:1px solid var(--bd);border-radius:20px;overflow:hidden;}
-    .cat-card{position:relative;background:var(--bg);padding:44px 40px 40px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:0;overflow:hidden;transition:background .4s;}
-    .cat-card:hover{background:var(--bg2);}
-    /* left accent bar */
-    .cat-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--red);transform:scaleY(0);transform-origin:bottom;transition:transform .5s cubic-bezier(.16,1.08,.38,.98);}
-    .cat-card:hover::before{transform:scaleY(1);}
-    /* top line */
-    .cat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent);transform:scaleX(0);transform-origin:left;transition:transform .55s cubic-bezier(.16,1.08,.38,.98);}
-    .cat-card:hover::after{transform:scaleX(1);}
-    /* full width card */
-    .cat-card.wide{grid-column:1/-1;}
-    .cat-card.wide .cat-inner{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
-
-    .cat-num{font-family:var(--fm);font-size:.6rem;letter-spacing:.2em;color:var(--red);opacity:.75;margin-bottom:20px;}
-    .cat-title{font-size:clamp(2rem,3.5vw,3rem);font-weight:800;letter-spacing:-.025em;text-transform:uppercase;line-height:.9;margin-bottom:18px;transition:color .3s;}
-    .cat-card:hover .cat-title{color:var(--red);}
-    .cat-subs{font-family:var(--fm);font-size:.65rem;color:var(--mu);line-height:1.8;margin-bottom:20px;}
-    .cat-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px;}
-    .cat-tag{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--bd);border-radius:999px;color:var(--mu);transition:all .3s;}
-    .cat-card:hover .cat-tag{border-color:var(--rb);color:rgba(244,12,63,.8);}
-    .cat-arrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);transition:all .3s;margin-top:auto;}
-    .cat-card:hover .cat-arrow{color:var(--red);gap:14px;}
-    .cat-arrow svg{width:13px;height:13px;stroke:currentColor;transition:transform .3s;}
-    .cat-card:hover .cat-arrow svg{transform:translate(3px,-3px);}
-
-    /* visual side for wide card */
-    .cat-visual{position:relative;aspect-ratio:16/9;border-radius:12px;background:rgba(244,12,63,.04);border:1px solid var(--bd);overflow:hidden;display:flex;align-items:center;justify-content:center;}
-    .cat-visual::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(244,12,63,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(244,12,63,.04) 1px,transparent 1px);background-size:32px 32px;}
-    .cat-visual-label{font-size:4.5rem;font-weight:800;color:rgba(244,12,63,.08);letter-spacing:-.04em;text-transform:uppercase;user-select:none;transition:all .5s;position:relative;z-index:1;}
-    .cat-card:hover .cat-visual-label{color:rgba(244,12,63,.15);transform:scale(1.05);}
-
-    /* ── ABOUT TEASER ────────────────────────────────── */
-    .about-t{position:relative;z-index:2;padding:80px 48px;border-top:1px solid var(--bd);display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
-    .about-t::before{content:'';position:absolute;bottom:-10%;left:-5%;width:50vw;height:60vh;background:radial-gradient(ellipse,rgba(244,12,63,.05) 0%,transparent 65%);pointer-events:none;}
-    .about-photo{position:relative;aspect-ratio:1;border-radius:50%;overflow:hidden;max-width:280px;margin:0 auto;border:1px solid var(--bd);}
-    .about-photo-inner{width:100%;height:100%;background:rgba(244,12,63,.08);display:flex;align-items:center;justify-content:center;}
-    .about-photo img{width:100%;height:100%;object-fit:cover;object-position:center;filter:grayscale(.3);}
-    .about-photo::after{content:'';position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 0 2px var(--rb);}
-    .about-text .section-label{margin-bottom:16px;}
-    .about-text h2{font-size:clamp(2rem,4vw,3.2rem);font-weight:800;letter-spacing:-.03em;text-transform:uppercase;line-height:.9;margin-bottom:24px;}
-    .about-text p{font-family:var(--fm);font-size:.8rem;color:var(--mu);line-height:2;margin-bottom:28px;}
-    .about-link{display:inline-flex;align-items:center;gap:10px;font-family:var(--fm);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:1px solid var(--rb);padding-bottom:4px;transition:all .3s;}
-    .about-link:hover{gap:16px;border-color:var(--red);}
-    .about-link svg{width:13px;height:13px;stroke:currentColor;}
-
-    /* ── CONTACT ─────────────────────────────────────── */
-    .contact{position:relative;z-index:2;padding:72px 48px;border-top:1px solid var(--bd);text-align:center;}
-    .contact h2{font-size:clamp(3rem,8vw,6rem);font-weight:800;letter-spacing:-.04em;text-transform:uppercase;line-height:.88;margin-bottom:24px;}
-    .contact h2 em{color:var(--red);font-style:normal;}
-    .contact p{font-family:var(--fm);font-size:.8rem;color:var(--mu);margin-bottom:40px;line-height:1.9;}
-    .contact-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
-    .contact-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:14px 28px;border-radius:12px;text-decoration:none;transition:all .3s;}
-    .contact-btn.primary{background:var(--red);color:#fff;}
-    .contact-btn.primary:hover{background:#ff2550;transform:translateY(-2px);box-shadow:0 12px 32px rgba(244,12,63,.35);}
-    .contact-btn.outline{border:1px solid var(--rb);color:var(--mu);}
-    .contact-btn.outline:hover{border-color:var(--red);color:var(--red);background:var(--rd);}
-    .contact-btn svg{width:16px;height:16px;fill:currentColor;}
-
-    /* ── FOOTER ─────────────────────────────────────── */
-    .ftr{position:relative;z-index:2;border-top:1px solid var(--bd);padding:24px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
-    .ftr-c{font-family:var(--fm);font-size:.65rem;color:var(--mu);letter-spacing:.08em;}
-    .ftr-l{display:flex;gap:20px;flex-wrap:wrap;}
-    .ftr-l a{font-family:var(--fm);font-size:.65rem;color:var(--mu);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s;}
-    .ftr-l a:hover{color:var(--red);}
-
-    /* ── RESPONSIVE ─────────────────────────────────── */
-    @media(max-width:900px){
-      .hdr{padding:0 20px;}
-      .nav-d{display:none;}
-      .nav-tog{display:flex;}
-      .hero{padding:calc(var(--hdr) + 36px) 24px 64px;}
-      .work{padding:64px 20px 60px;}
-      .section-intro{flex-direction:column;align-items:flex-start;margin-bottom:36px;}
-      .section-sub{text-align:left;max-width:100%;}
-      .cat-grid{grid-template-columns:1fr;gap:1px;}
-      .cat-card.wide{grid-column:1;}
-      .cat-card.wide .cat-inner{grid-template-columns:1fr;}
-      .cat-visual{display:none;}
-      .cat-card{padding:32px 24px;}
-      .about-t{grid-template-columns:1fr;gap:40px;padding:56px 20px;}
-      .about-photo{max-width:200px;}
-      .contact{padding:56px 20px;}
-      .ftr{padding:20px;}
-    }
-    @media(max-width:480px){
-      .hero-name{font-size:3.8rem;}
-      .cat-card{padding:28px 20px;}
-      .scroll-cue{display:none;}
-    }
-  </style>
+@media(max-width:720px){
+.top{grid-template-columns:minmax(0,1fr) minmax(0,1fr);row-gap:18px}.brand{grid-column:1/-1}
+.full{display:none}.short{display:inline}.col a{display:inline-block;padding:3px 0}
+}
+@media(prefers-reduced-motion:reduce){.lk{transition:none}}
+</style>
 </head>
 <body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="shade"></div>
 
-<div id="cur"></div>
-<div id="cur-r"></div>
-<div class="sp" id="sp"></div>
-
-<!-- ── HEADER ── -->
-<header class="hdr">
-  <a href="index.html" class="logo">Carla <em>D'</em>Aria</a>
-  <nav class="nav-d">
-    <a href="3d.html">3D Art</a>
-    <a href="ux_index.html">UX/UI</a>
-    <a href="graphic.html">Graphic</a>
-    <a href="2d.html">2D Art</a>
-    <a href="visuals.html">Visuals</a>
-    <a href="about.html">About</a>
-  </nav>
-  <button class="nav-tog" id="navTog" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+<header class="hwf" id="hero">
+  <canvas id="ht" aria-hidden="true"></canvas>
+  <h1 class="sr">Carla D’Aria — Multimedia Designer</h1>
+  <div class="top">
+    <div class="brand"><strong>Carla D’Aria</strong><span>Multimedia Designer · Buenos Aires</span></div>
+    <nav class="col" aria-label="Work">
+      <h2>Work</h2>
+      <ul>
+        <li><a class="lk" href="3d.html">3D Art</a></li>
+        <li><a class="lk" href="graphic.html">Graphic Design</a></li>
+        <li><a class="lk" href="ux_index.html">UX/UI</a></li>
+        <li><a class="lk" href="visuals.html">Motion Graphics</a></li>
+      </ul>
+    </nav>
+    <nav class="col" aria-label="About">
+      <h2>About</h2>
+      <ul><li><a class="lk" href="about.html">About me</a></li></ul>
+    </nav>
+    <nav class="col" aria-label="Contact">
+      <h2>Contact</h2>
+      <ul>
+        <li><a class="lk" href="mailto:carlamdaria@gmail.com"><span class="full">carlamdaria@gmail.com</span><span class="short">Email</span></a></li>
+        <li><a class="lk" href="https://wa.me/5491122539753" target="_blank" rel="noopener">WhatsApp</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="rule"></div>
 </header>
 
-<!-- ── MOBILE NAV ── -->
-<div class="nav-mob" id="navMob">
-  <a href="3d.html">3D Art</a>
-  <a href="ux_index.html">UX/UI</a>
-  <a href="graphic.html">Graphic</a>
-  <a href="2d.html">2D Art</a>
-  <a href="visuals.html">Visuals</a>
-  <a href="about.html">About</a>
-</div>
-
-<!-- ── HERO ── -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Creative Portfolio · Buenos Aires</div>
-    <h1 class="hero-name">CARLA<br><em>D'ARIA</em></h1>
-    <div class="hero-roles">
-      <span class="hero-role-tag">3D Artist</span>
-      <span class="hero-role-tag">UX/UI Designer</span>
-      <span class="hero-role-tag">Graphic Designer</span>
-      <span class="hero-role-tag">Motion Artist</span>
-    </div>
-    <p class="hero-desc">Multimedia artist and Creative Producer working across 3D art, UX/UI design, graphic design, and motion graphics. From characters and environments to brand identities and digital experiences.</p>
-    <a href="#work" class="hero-cta">
-      View Work
-      <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M8 2v12M3 9l5 5 5-5"/></svg>
-    </a>
-  </div>
-  <div class="scroll-cue">Scroll</div>
-</section>
-
-<!-- ── WORK ── -->
-<section class="work" id="work">
-  <div class="section-intro">
-    <div>
-      <div class="section-label">Selected Work</div>
-      <h2 class="section-title">Portfolio</h2>
-    </div>
-    <p class="section-sub">Five disciplines. One visual language. Explore the full range of work across 3D, UX, graphic design, illustration, and motion.</p>
-  </div>
-
-  <div class="cat-grid">
-
-    <!-- 3D ART -->
-    <a href="3d.html" class="cat-card sr">
-      <div class="cat-num">01</div>
-      <div class="cat-title">3D<br>Art</div>
-      <p class="cat-subs">Characters · Environments<br>Props & Animations</p>
-      <div class="cat-tags">
-        <span class="cat-tag">Blender</span>
-        <span class="cat-tag">Godot</span>
-        <span class="cat-tag">Game-Ready</span>
-        <span class="cat-tag">Cinematic</span>
-      </div>
-      <div class="cat-arrow">View 3D Work <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
-    </a>
-
-    <!-- UX/UI -->
-    <a href="ux_index.html" class="cat-card sr">
-      <div class="cat-num">02</div>
-      <div class="cat-title">UX/UI<br>Design</div>
-      <p class="cat-subs">Cinematic · Bloopy · TeamHub<br>3 full case studies</p>
-      <div class="cat-tags">
-        <span class="cat-tag">Research</span>
-        <span class="cat-tag">Prototyping</span>
-        <span class="cat-tag">Mobile</span>
-        <span class="cat-tag">Web3</span>
-      </div>
-      <div class="cat-arrow">View Case Studies <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
-    </a>
-
-    <!-- GRAPHIC DESIGN -->
-    <a href="graphic.html" class="cat-card sr">
-      <div class="cat-num">03</div>
-      <div class="cat-title">Graphic<br>Design</div>
-      <p class="cat-subs">Branding · Editorial · Packaging<br>Posters & Photobooks</p>
-      <div class="cat-tags">
-        <span class="cat-tag">Brand Identity</span>
-        <span class="cat-tag">Editorial</span>
-        <span class="cat-tag">Packaging</span>
-        <span class="cat-tag">Typography</span>
-      </div>
-      <div class="cat-arrow">View Graphic Work <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
-    </a>
-
-    <!-- 2D ART -->
-    <a href="2d.html" class="cat-card sr">
-      <div class="cat-num">04</div>
-      <div class="cat-title">2D<br>Art</div>
-      <p class="cat-subs">Illustrations · Concept Art<br>Character Design · 25 works</p>
-      <div class="cat-tags">
-        <span class="cat-tag">Illustration</span>
-        <span class="cat-tag">Concept Art</span>
-        <span class="cat-tag">Digital</span>
-        <span class="cat-tag">Traditional</span>
-      </div>
-      <div class="cat-arrow">View 2D Art <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
-    </a>
-
-    <!-- MOTION / VISUALS — full width -->
-    <a href="visuals.html" class="cat-card wide sr">
-      <div class="cat-inner">
-        <div>
-          <div class="cat-num">05</div>
-          <div class="cat-title">Motion &<br>Visuals</div>
-          <p class="cat-subs">Motion Graphics · Animations<br>Visual Experiments · 15 pieces</p>
-          <div class="cat-tags">
-            <span class="cat-tag">After Effects</span>
-            <span class="cat-tag">Animation</span>
-            <span class="cat-tag">Motion</span>
-            <span class="cat-tag">Experimental</span>
-          </div>
-          <div class="cat-arrow">View Motion Work <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
-        </div>
-        <div class="cat-visual">
-          <span class="cat-visual-label">PLAY</span>
-        </div>
-      </div>
-    </a>
-
-  </div>
-</section>
-
-<!-- ── ABOUT TEASER ── -->
-<section class="about-t sr">
-  <div class="about-photo">
-    <div class="about-photo-inner">
-      <img src="https://i.postimg.cc/PxQcR9bn/Imagen-de-Whats-App-2025-04-05-a-las-22-00-29-24605260-copia.jpg" alt="Carla D'Aria" onerror="this.parentElement.style.background='rgba(244,12,63,.08)'">
-    </div>
-  </div>
-  <div class="about-text">
-    <div class="section-label">About</div>
-    <h2>Multimedia<br>Artist</h2>
-    <p>Shaped by the worlds I've built — digital, painted, coded, and imagined. From traditional painting and the National University of the Arts to 3D art, UX/UI, and game development. Currently working as a 3D artist at Fanny Pack Studios.</p>
-    <a href="about.html" class="about-link">Read full bio <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
-  </div>
-</section>
-
-<!-- ── CONTACT ── -->
-<section class="contact sr">
-  <h2>GET IN<br><em>TOUCH</em></h2>
-  <p>Available for freelance projects, collaborations, and creative direction.</p>
-  <div class="contact-btns">
-    <a href="https://wa.me/5491122539753" target="_blank" class="contact-btn primary">
-      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-      WhatsApp
-    </a>
-    <a href="mailto:carlamdaria@gmail.com" class="contact-btn outline">
-      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-      carlamdaria@gmail.com
-    </a>
-  </div>
-</section>
-
-<!-- ── FOOTER ── -->
-<footer class="ftr">
-  <span class="ftr-c">© 2026 Carla D'Aria · Creative Producer</span>
-  <div class="ftr-l">
-    <a href="3d.html">3D Art</a>
-    <a href="ux_index.html">UX/UI</a>
-    <a href="graphic.html">Graphic</a>
-    <a href="2d.html">2D Art</a>
-    <a href="visuals.html">Visuals</a>
-    <a href="about.html">About</a>
-  </div>
-</footer>
-
 <script>
-  // Cursor
-  const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
-  if(cur){
-    let mx=0,my=0,rx=0,ry=0;
-    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-    (function loop(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
-    document.querySelectorAll('a,button').forEach(el=>{
-      el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
-      el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
-    });
-  }
+/* ── Shader de fondo (Hurricane Season, WebGL puro) ── */
+(()=>{
+const cv=document.getElementById('bg');
+const gl=cv.getContext('webgl',{antialias:false});
+if(!gl){cv.style.background='#2a0a14';return}
+const VERT='attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
+const FRAG=`
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#define SEED 2208.0
+#else
+precision mediump float;
+#define SEED 7.0
+#endif
+uniform vec3 u_c[5];
+uniform vec4 u_s; // res.xy, time, cursor presence
+uniform vec2 u_m;
+float h21(vec2 p){
+#ifndef GL_FRAGMENT_PRECISION_HIGH
+p=mod(p,31.);
+#endif
+p=fract(p*vec2(234.34,435.345));p+=dot(p,p+34.23);return fract(p.x*p.y);}
+float gh(vec2 p){vec3 q=fract(vec3(p.xyx)*.1031);q+=dot(q,q.yzx+33.33);return fract((q.x+q.y)*q.z);}
+float nz(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);
+return mix(mix(h21(i),h21(i+vec2(1.,0.)),u.x),mix(h21(i+vec2(0.,1.)),h21(i+vec2(1.,1.)),u.x),u.y);}
+float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*nz(p);p=p*2.03+vec2(17.,9.2);a*=.5;}return v;}
+vec3 pal(float x){float f=clamp(x,0.,1.)*4.;vec3 c=u_c[0];
+for(int i=0;i<4;i++)c=mix(c,u_c[i+1],smoothstep(0.,1.,clamp(f-float(i),0.,1.)));return c;}
+vec3 shade(vec2 p,float t){
+float fd=0.;
+for(int i=0;i<7;i++){float fi=float(i);
+vec2 c=vec2(sin(t*(.19+fi*.037)+fi*2.1+SEED),cos(t*(.16+fi*.043)+fi*1.4))*.63;
+vec2 d=p-c;fd+=.0471/(dot(d,d)+.006);}
+float s=smoothstep(.72,1.1,fd);
+return pal(clamp(s+fd*.05,0.,1.));}
+void main(){
+vec2 R=u_s.xy;float t=u_s.z;float m=min(R.x,R.y);
+vec2 p=(gl_FragCoord.xy-.5*R)/m;
+if(u_s.w>.001){
+vec2 cur=.5*u_m*R/m;vec2 d=p-cur;
+float k=u_s.w*(1.-smoothstep(0.,.433,length(d)));
+float a=k*2.2;float cc=cos(a),cs=sin(a);
+p=cur+mat2(cc,-cs,cs,cc)*d;}
+p*=1.44;
+p=vec2(p.y,-p.x);
+p+=.048*vec2(sin(t*.31),cos(t*.23));
+p+=.6*(vec2(fbm(p*4.+SEED),fbm(p*4.+vec2(5.2,1.3)))-.5);
+float e=.0576;
+vec3 col=shade(p,t)*.36+(shade(p+vec2(e,0.),t)+shade(p-vec2(e,0.),t)+shade(p+vec2(0.,e),t)+shade(p-vec2(0.,e),t))*.16;
+col=(col-.5)*1.5+.5;
+float l=dot(col,vec3(.299,.587,.114));
+col=mix(vec3(l),col,2.);
+col-=.11;
+col+=(gh(gl_FragCoord.xy+vec2(SEED*17.,SEED*31.))-.5)*.21;
+gl_FragColor=vec4(clamp(col,0.,1.),1.);}`;
+const mk=(t,s)=>{const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);return x};
+const pr=gl.createProgram();
+gl.attachShader(pr,mk(gl.VERTEX_SHADER,VERT));gl.attachShader(pr,mk(gl.FRAGMENT_SHADER,FRAG));
+gl.linkProgram(pr);gl.useProgram(pr);
+gl.bindBuffer(gl.ARRAY_BUFFER,gl.createBuffer());
+gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+const loc=gl.getAttribLocation(pr,'a');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+const U=n=>gl.getUniformLocation(pr,n);
+gl.uniform3fv(U('u_c'),new Float32Array([.0196,.0196,.0235, 1,0,0, .9961,.9529,.7843, .4784,.8,0, .4078,.2431,.5333]));
+const uS=U('u_s'),uM=U('u_m');
+let tx=0,ty=0,tp=0,mx=0,my=0,cp=0,last=null,raf=0,vis=true;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+addEventListener('pointermove',e=>{tx=e.clientX/innerWidth*2-1;ty=-(e.clientY/innerHeight*2-1);tp=1;if(cp<.01){mx=tx;my=ty}},{passive:true});
+document.documentElement.addEventListener('pointerleave',()=>tp=0);
+addEventListener('blur',()=>tp=0);
+function size(){
+const d=Math.min(devicePixelRatio||1,2);
+let w=Math.max(1,Math.round(innerWidth*d)),h=Math.max(1,Math.round(innerHeight*d));
+const k=Math.min(1,Math.sqrt((innerWidth<820?9e5:2e6)/(w*h)));w=Math.round(w*k);h=Math.round(h*k);
+if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;gl.viewport(0,0,w,h)}}
+function frame(now){
+raf=0;if(!vis)return;
+const dt=last===null?0:Math.min((now-last)/1000,.1);last=now;
+const f=1-Math.exp(-12*dt);
+mx+=(tx-mx)*f;my+=(ty-my)*f;cp+=(tp-cp)*f;
+size();
+gl.uniform4f(uS,cv.width,cv.height,reduced?0:now/1000*1.088,cp);
+gl.uniform2f(uM,mx,my);
+gl.drawArrays(gl.TRIANGLES,0,3);
+if(!reduced)raf=requestAnimationFrame(frame);}
+addEventListener('resize',()=>{if(!raf)raf=requestAnimationFrame(frame)});
+document.addEventListener('visibilitychange',()=>{vis=document.visibilityState==='visible';if(vis){last=null;if(!raf)raf=requestAnimationFrame(frame)}else{cancelAnimationFrame(raf);raf=0}});
+raf=requestAnimationFrame(frame);
+})();
 
-  // Scroll progress
-  window.addEventListener('scroll',()=>{
-    document.getElementById('sp').style.width=(window.scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%';
-  });
+/* ── Wordmark halftone "CARLA" (hero) ── */
+(()=>{
+const hero=document.getElementById('hero'),cv=document.getElementById('ht'),ctx=cv.getContext('2d');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const WORD='carla',FACE='"Inter Tight","Inter Variable","Inter","Helvetica Neue",Arial,system-ui,sans-serif',WT=800,CROP=.2;
+const INK=[214,209,199],WARM=[244,12,63],INKS='rgb(214,209,199)';
+let w=0,h=0,dpr=1,dots=new Float32Array(0),n=0,px=-1e5,py=-1e5,raf=0,vis=true,awake=true,ring={x:0,y:0,t:-1},R=80,sc=1,SP=28;
 
-  // Hamburger
-  const tog=document.getElementById('navTog'),mob=document.getElementById('navMob');
-  tog.addEventListener('click',()=>{
-    const open=tog.classList.toggle('open');
-    mob.classList.toggle('open',open);
-    document.body.style.overflow=open?'hidden':'';
-  });
-  mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
-    tog.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';
-  }));
+function layout(){
+const b=hero.getBoundingClientRect();
+w=Math.max(1,Math.round(b.width));h=Math.max(1,Math.round(b.height));
+dpr=Math.min(devicePixelRatio||1,2);
+cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);
+const gap=Math.max(4,Math.round(w/150));sc=gap/6;SP=28*sc;R=Math.max(56,w*.06);
+const mk=document.createElement('canvas');mk.width=w;mk.height=h;
+const m=mk.getContext('2d',{willReadFrequently:true});
+m.font=WT+' 100px '+FACE;
+const fit=w*1.02/m.measureText(WORD).width*100;
+m.font=WT+' '+fit+'px '+FACE;
+const box=m.measureText(WORD);
+const cap=box.actualBoundingBoxAscent||fit*.72;
+m.fillStyle='#000';m.textBaseline='alphabetic';
+m.fillText(WORD,(w-box.width)/2,h+cap*CROP);
+const img=m.getImageData(0,0,w,h).data;
+const cols=Math.ceil(w/gap),rows=Math.ceil(h/gap),tmp=[];
+for(let gy=0;gy<rows;gy++)for(let gx=0;gx<cols;gx++){
+let s=0;
+for(let sy=0;sy<3;sy++)for(let sx=0;sx<3;sx++){
+const x=Math.min(w-1,Math.floor(gx*gap+(sx+.5)*gap/3)),y=Math.min(h-1,Math.floor(gy*gap+(sy+.5)*gap/3));
+s+=img[(y*w+x)*4+3];}
+const cov=s/2295;if(cov<.06)continue;
+const hx=gx*gap+gap/2,hy=gy*gap+gap/2;
+tmp.push(hx,hy,0,0,hx,hy,Math.sqrt(cov)*gap*.54);}
+dots=new Float32Array(tmp);n=tmp.length/7;awake=true;}
 
-  // Scroll reveal
-  const io=new IntersectionObserver(entries=>entries.forEach(e=>{
-    if(e.isIntersecting)e.target.classList.add('in');
-  }),{threshold:.08});
-  document.querySelectorAll('.sr').forEach((el,i)=>{
-    el.style.transitionDelay=`${i*.06}s`;
-    io.observe(el);
-  });
+function draw(now){
+ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+const r=reduced?0:R,age=ring.t<0?1e9:now-ring.t,rr=age*.9*sc;let moving=false;
+for(let i=0;i<n;i++){
+const j=i*7;let x=dots[j],y=dots[j+1],vx=dots[j+2],vy=dots[j+3];const hx=dots[j+4],hy=dots[j+5];
+if(!reduced){
+if(age<900){const dx=hx-ring.x,dy=hy-ring.y,d=Math.sqrt(dx*dx+dy*dy)+.001,band=1-Math.min(1,Math.abs(d-rr)/(26*sc));
+if(band>0){const f=band*3.2*sc*(1-age/900);vx+=dx/d*f;vy+=dy/d*f}}
+const ddx=x-px,ddy=y-py,d2=ddx*ddx+ddy*ddy;
+if(r>0&&d2<r*r){const d=Math.sqrt(d2)+.001,f=(1-d/r)*2.6*sc;vx+=ddx/d*f;vy+=ddy/d*f}
+vx=(vx+(hx-x)*.05)*.84;vy=(vy+(hy-y)*.05)*.84;x+=vx;y+=vy;
+if(Math.abs(vx)+Math.abs(vy)>.02||Math.abs(x-hx)+Math.abs(y-hy)>.05)moving=true;
+else{x=hx;y=hy;vx=vy=0}
+dots[j]=x;dots[j+1]=y;dots[j+2]=vx;dots[j+3]=vy;}
+const k=Math.min(1,Math.hypot(x-hx,y-hy)/SP);
+ctx.fillStyle=k>.02?'rgb('+Math.round(INK[0]+(WARM[0]-INK[0])*k)+','+Math.round(INK[1]+(WARM[1]-INK[1])*k)+','+Math.round(INK[2]+(WARM[2]-INK[2])*k)+')':INKS;
+ctx.beginPath();ctx.arc(x,y,dots[j+6],0,6.2832);ctx.fill();}
+awake=moving||age<900||px>-1e4;}
+
+function loop(now){raf=0;if(!vis)return;draw(now);if(awake)raf=requestAnimationFrame(loop)}
+function wake(){awake=true;if(!raf&&vis)raf=requestAnimationFrame(loop)}
+const loc=e=>{const b=cv.getBoundingClientRect();return[e.clientX-b.left,e.clientY-b.top]};
+hero.addEventListener('pointermove',e=>{const p=loc(e);px=p[0];py=p[1];wake()});
+const leave=()=>{px=py=-1e5;wake()};
+hero.addEventListener('pointerleave',leave);hero.addEventListener('pointercancel',leave);
+hero.addEventListener('pointerdown',e=>{
+if(reduced||e.target.closest('a,button'))return;
+const p=loc(e);ring={x:p[0],y:p[1],t:performance.now()};wake()});
+new ResizeObserver(()=>{layout();wake()}).observe(hero);
+new IntersectionObserver(es=>{vis=es[0]?es[0].isIntersecting:true;if(vis)wake()}).observe(hero);
+const start=()=>{layout();draw(performance.now());wake()};
+(document.fonts&&document.fonts.load?document.fonts.load('800 100px "Inter Tight"').catch(()=>{}):Promise.resolve()).then(start);
+})();
 </script>
 </body>
 </html>

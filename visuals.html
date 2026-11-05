@@ -1,733 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Visuals — Carla D'Aria</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-/* ══════════════════════════════════════════
-   CARLA D'ARIA — SHARED DESIGN SYSTEM
-   ══════════════════════════════════════════ */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion Graphics — Carla D’Aria</title>
+<meta name="description" content="Motion graphics, animations and visual experiments by Carla D’Aria.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0c0c0b;--ink:#e9e4da;--red:#f40c3f;--line:rgba(233,228,218,.18);--mu:rgba(233,228,218,.62);
+--sans:"Inter Tight","Inter Variable","Inter","Helvetica Neue",Arial,system-ui,sans-serif;--mono:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;--pad:clamp(20px,3.4vw,44px)}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
+#bg{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:-2}
+.shade{position:fixed;inset:0;z-index:-1;background:rgba(10,10,12,.62);pointer-events:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+.page{height:100vh;height:100svh;min-height:600px;display:grid;grid-template-rows:auto auto minmax(0,1fr);overflow:hidden}
+.top{display:grid;grid-template-columns:minmax(0,1.25fr) repeat(3,minmax(0,1fr));gap:24px;padding:clamp(22px,3.4vw,40px) var(--pad) 0;font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;line-height:1.75}
+.brand strong{display:block;font-weight:500}.brand span{opacity:.6}.brand a{text-decoration:none}
+.col h2{font:inherit;opacity:.55}.col ul{list-style:none}
+.lk{text-decoration:none;opacity:.85;background:linear-gradient(currentColor,currentColor) 0 100%/0% 1px no-repeat;transition:opacity .25s,background-size .35s cubic-bezier(.2,.7,.1,1)}
+.lk:hover,.lk[aria-current]{opacity:1;background-size:100% 1px}
+.short{display:none}
+.rule{display:flex;justify-content:space-between;margin:clamp(14px,2.2vw,26px) var(--pad) 0;padding-top:12px;border-top:.5px solid var(--line);font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;opacity:.6}
 
-:root{
-  --bg:    #0d0d0f;
-  --bg2:   #131315;
-  --red:   #f40c3f;
-  --rd:    rgba(244,12,63,.10);
-  --rm:    rgba(244,12,63,.18);
-  --rb:    rgba(244,12,63,.32);
-  --bd:    rgba(255,255,255,.07);
-  --b2:    rgba(255,255,255,.04);
-  --tx:    #efefef;
-  --mu:    rgba(255,255,255,.42);
-  --ms:    rgba(255,255,255,.20);
-  --fd:    'Syne', sans-serif;
-  --fm:    'Space Mono', monospace;
-  --hdr:   64px;
-  --r:     16px;
-  --ease:  cubic-bezier(.16,1.08,.38,.98);
-}
+.stage{display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1.38fr);gap:clamp(24px,4vw,64px);padding:clamp(14px,2vh,26px) var(--pad) clamp(18px,3vh,34px);min-height:0}
+.side{display:flex;flex-direction:column;gap:clamp(12px,2vh,22px);min-height:0}
+.list{display:flex;flex-direction:column;flex:1;min-height:0;list-style:none}
+.list li{flex:1 1 0;min-height:0;max-height:120px;display:flex}
+.row{flex:1;display:flex;align-items:center;gap:16px;min-width:0;border-bottom:.5px solid var(--line);opacity:.45;transition:opacity .25s,color .25s}
+.row:hover,.row.on{opacity:1}.row.on{color:var(--red)}
+.row .n{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;width:2.2em;flex:none}
+.row .t{flex:1;min-width:0;font-weight:800;letter-spacing:-.03em;line-height:1;font-size:clamp(1.3rem,4.4vh,2.6rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .c{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;flex:none}
+.desc{font-family:var(--mono);font-size:.74rem;line-height:1.8;color:var(--mu);max-width:44ch}
 
-html { scroll-behavior: smooth; }
+.sheet{display:grid;gap:8px;min-height:0;min-width:0;animation:in .3s ease}
+@keyframes in{from{opacity:0}to{opacity:1}}
+.tile{position:relative;min-width:0;min-height:0;overflow:hidden;border:.5px solid var(--line);background:rgba(12,12,11,.55)}
+.tile img,.tile video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:.88;transition:opacity .3s,transform .5s cubic-bezier(.2,.7,.1,1);-webkit-user-drag:none}
+.tile:hover img,.tile:hover video,.tile:focus-visible img,.tile:focus-visible video{opacity:1;transform:scale(1.04)}
+.tile:hover,.tile:focus-visible{border-color:var(--red)}
+.tile .lb{position:absolute;left:0;right:0;bottom:0;padding:22px 10px 8px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;line-height:1.5;background:linear-gradient(to top,rgba(10,10,12,.85),transparent);opacity:0;transition:opacity .25s}
+.tile:hover .lb,.tile:focus-visible .lb{opacity:1}
+.tile .lb i{display:block;font-style:normal;opacity:.6}
+.tile .pl{position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;padding:2px 7px;border:1px solid rgba(233,228,218,.5);border-radius:999px;background:rgba(10,10,12,.5)}
 
-body {
-  background: var(--bg);
-  color: var(--tx);
-  font-family: var(--fd);
-  overflow-x: hidden;
-  line-height: 1.6;
-}
+/* viewer */
+.vw{position:fixed;inset:0;z-index:50;background:rgba(8,8,8,.97);display:none;grid-template-rows:minmax(0,1fr) auto auto;font-family:var(--mono)}
+.vw.open{display:grid}
+.vm{position:relative;min-height:0;display:flex;align-items:center;justify-content:center;padding:clamp(56px,8vh,72px) clamp(16px,6vw,88px) 8px;touch-action:pan-y}
+.vm img,.vm video{max-width:100%;max-height:100%;object-fit:contain;-webkit-user-drag:none;user-select:none}
+.vb{position:absolute;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;padding:12px 14px;opacity:.7;transition:opacity .25s,color .25s;z-index:2}
+.vb:hover{opacity:1;color:var(--red)}
+.vb.x{top:12px;right:var(--pad)}.vb.p,.vb.nx{top:50%;transform:translateY(-50%)}.vb.p{left:6px}.vb.nx{right:6px}
+.bar{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:12px var(--pad) 10px;border-top:.5px solid var(--line)}
+.bar b{font-family:var(--sans);font-size:1.15rem;font-weight:800;letter-spacing:-.03em}
+.bar small{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;opacity:.6;white-space:nowrap}
+.th{display:flex;gap:6px;overflow-x:auto;padding:0 var(--pad) calc(16px + env(safe-area-inset-bottom,0px));scrollbar-width:thin}
+.th button{flex:none;width:64px;height:48px;border:.5px solid var(--line);position:relative;opacity:.5;overflow:hidden;font-size:10px;text-align:center;line-height:48px}
+.th button.on{opacity:1;border-color:var(--red)}
+.th img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* Noise layer */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 0; opacity: .20;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+@media(max-width:820px){
+.top{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;font-size:9.5px;letter-spacing:.12em;padding-top:20px}
+.brand{grid-column:1/-1}.full{display:none}.short{display:inline}
+.rule{margin-top:12px;font-size:9.5px}
+.stage{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:14px}
+.list{flex-direction:row;flex-wrap:wrap;gap:6px;flex:none}
+.list li{flex:0 0 calc(50% - 3px);max-height:none;height:42px}
+.row{padding:0 12px;border:.5px solid var(--line);opacity:.6;gap:10px}.row.on{border-color:var(--red)}
+.row .n{display:none}.row .t{font-size:.95rem}
+.desc{display:none}
+.vb.p,.vb.nx{top:auto;bottom:16px;transform:none}
 }
-
-/* ── Scroll progress bar ── */
-.sp {
-  position: fixed; top: 0; left: 0;
-  height: 2px; background: var(--red);
-  z-index: 9999; width: 0;
-  transition: width .06s linear;
+@media(max-width:820px){
+.page{height:auto;min-height:100svh;overflow:visible;grid-template-rows:auto auto auto}
+.stage{grid-template-rows:auto auto}
+.sheet{height:min(64svh,540px);min-height:340px}
+.col a{display:inline-block;padding:3px 0}
 }
-
-/* ── Custom cursor (hover-capable devices only) ── */
-@media (hover: hover) {
-  body { cursor: none; }
-  #cur {
-    position: fixed; width: 8px; height: 8px;
-    background: var(--red); border-radius: 50%;
-    pointer-events: none; z-index: 9998;
-    transform: translate(-50%, -50%);
-    mix-blend-mode: screen;
-  }
-  #cur-r {
-    position: fixed; width: 32px; height: 32px;
-    border: 1px solid rgba(244,12,63,.45); border-radius: 50%;
-    pointer-events: none; z-index: 9997;
-    transform: translate(-50%, -50%);
-    transition: width .18s, height .18s, opacity .18s;
-  }
-  body.hov #cur-r { width: 52px; height: 52px; opacity: .25; }
-}
-
-/* ── HEADER ── */
-.hdr {
-  position: fixed; top: 0; left: 0; right: 0;
-  height: var(--hdr); z-index: 300;
-  padding: 0 48px;
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(13,13,15,.96);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--bd);
-}
-.logo {
-  font-family: var(--fd); font-weight: 800; font-size: .95rem;
-  letter-spacing: .15em; text-transform: uppercase;
-  color: var(--tx); text-decoration: none;
-  transition: color .3s; flex-shrink: 0;
-}
-.logo:hover { color: var(--red); }
-.logo em { color: var(--red); font-style: normal; }
-
-.nav-d { display: flex; gap: 24px; align-items: center; }
-.nav-d a {
-  font-family: var(--fm); font-size: .66rem;
-  color: var(--mu); text-decoration: none;
-  letter-spacing: .1em; text-transform: uppercase;
-  transition: color .3s; position: relative; padding-bottom: 2px;
-}
-.nav-d a::after {
-  content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
-  height: 1px; background: var(--red);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .4s var(--ease);
-}
-.nav-d a:hover, .nav-d a.act { color: var(--tx); }
-.nav-d a:hover::after, .nav-d a.act::after { transform: scaleX(1); }
-
-/* Hamburger */
-.nav-tog {
-  display: none; flex-direction: column; gap: 5px;
-  background: none; border: none; cursor: pointer;
-  padding: 6px; z-index: 302; flex-shrink: 0;
-}
-.nav-tog span {
-  display: block; width: 22px; height: 2px;
-  background: var(--tx); border-radius: 2px;
-  transition: all .35s var(--ease);
-}
-.nav-tog.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-tog.open span:nth-child(2) { opacity: 0; }
-.nav-tog.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-/* Mobile nav overlay */
-.nav-mob {
-  position: fixed; inset: 0;
-  background: rgba(13,13,15,.98); backdrop-filter: blur(20px);
-  z-index: 299;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 4px;
-  opacity: 0; pointer-events: none; transition: opacity .35s;
-}
-.nav-mob.open { opacity: 1; pointer-events: all; }
-.nav-mob a {
-  font-family: var(--fd); font-size: clamp(2rem, 8vw, 3rem);
-  font-weight: 800; color: var(--mu); text-decoration: none;
-  text-transform: uppercase; letter-spacing: -.02em;
-  transition: color .22s; padding: 6px 0; position: relative;
-}
-.nav-mob a::before {
-  content: ''; position: absolute; bottom: 4px; left: 0;
-  width: 0; height: 2px; background: var(--red);
-  transition: width .4s var(--ease);
-}
-.nav-mob a:hover, .nav-mob a.act { color: var(--tx); }
-.nav-mob a:hover::before, .nav-mob a.act::before { width: 100%; }
-
-/* ── PAGE WRAPPER ── */
-.page { position: relative; z-index: 2; }
-
-/* ── HERO ── */
-.hero {
-  padding: calc(var(--hdr) + 56px) 48px 56px;
-  position: relative; overflow: hidden;
-  border-bottom: 1px solid var(--bd);
-}
-.hero::before {
-  content: ''; position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(244,12,63,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244,12,63,.025) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: gd 28s linear infinite; pointer-events: none;
-}
-@keyframes gd { to { background-position: 60px 60px; } }
-.hero-glow {
-  position: absolute; top: -10%; right: -10%;
-  width: 55vw; height: 70vh;
-  background: radial-gradient(ellipse at top right, rgba(244,12,63,.07) 0%, transparent 65%);
-  pointer-events: none;
-}
-.eyebrow {
-  font-family: var(--fm); font-size: .65rem;
-  letter-spacing: .22em; text-transform: uppercase; color: var(--red);
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 20px; position: relative; z-index: 2;
-}
-.eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--red); }
-
-.page-title {
-  font-size: clamp(4rem, 10vw, 9rem);
-  font-weight: 800; line-height: .86;
-  letter-spacing: -.04em; text-transform: uppercase;
-  position: relative; z-index: 2;
-}
-.page-title em { color: var(--red); font-style: normal; }
-.hero-desc {
-  font-family: var(--fm); font-size: .82rem;
-  color: var(--mu); line-height: 1.95; max-width: 500px;
-  margin-top: 22px; position: relative; z-index: 2;
-}
-
-/* ── SECTION ANCHOR NAV ── */
-.sec-nav {
-  position: relative; z-index: 2;
-  display: flex; gap: 0;
-  border-bottom: 1px solid var(--bd);
-  overflow-x: auto; scrollbar-width: none;
-}
-.sec-nav::-webkit-scrollbar { display: none; }
-.sec-nav a {
-  font-family: var(--fm); font-size: .63rem;
-  letter-spacing: .14em; text-transform: uppercase;
-  color: var(--mu); text-decoration: none;
-  padding: 16px 28px; border-right: 1px solid var(--bd);
-  transition: color .3s, background .3s; white-space: nowrap;
-}
-.sec-nav a:hover { color: var(--red); background: var(--rd); }
-
-/* ── SECTION BLOCK ── */
-.sec {
-  padding: 72px 48px;
-  border-bottom: 1px solid var(--bd);
-  position: relative; z-index: 2;
-}
-.sec:last-of-type { border-bottom: none; }
-.sec-lbl {
-  font-family: var(--fm); font-size: .62rem;
-  letter-spacing: .2em; text-transform: uppercase; color: var(--red);
-  display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
-}
-.sec-lbl::before { content: ''; width: 18px; height: 1px; background: var(--red); }
-.sec-title {
-  font-size: clamp(2rem, 4.5vw, 3.2rem);
-  font-weight: 800; letter-spacing: -.025em;
-  text-transform: uppercase; line-height: .9; margin-bottom: 36px;
-}
-
-/* ── LIGHTBOX ── */
-.lb {
-  display: none; position: fixed; inset: 0; z-index: 900;
-  align-items: center; justify-content: center;
-}
-.lb.open { display: flex; background: rgba(0,0,0,.96); }
-.lb-inner {
-  position: relative; width: min(1300px, 92vw); max-height: 90vh;
-  display: flex; align-items: center; justify-content: center;
-  animation: lbin .3s var(--ease);
-}
-@keyframes lbin { from { opacity:0; transform:scale(.96) } to { opacity:1; transform:scale(1) } }
-.lb-inner img, .lb-inner video {
-  max-width: 100%; max-height: 84vh;
-  border-radius: 12px;
-  box-shadow: 0 16px 80px rgba(244,12,63,.18);
-  object-fit: contain;
-}
-.lb-inner video { background: #000; }
-.lb-close {
-  position: fixed; top: 20px; right: 22px;
-  width: 42px; height: 42px; border-radius: 50%;
-  background: rgba(244,12,63,.1); border: 1px solid rgba(244,12,63,.28);
-  color: #fff; font-size: 20px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .3s; z-index: 901; font-family: sans-serif;
-}
-.lb-close:hover { background: rgba(244,12,63,.28); transform: rotate(90deg); }
-.lb-prev, .lb-next {
-  position: fixed; top: 50%; transform: translateY(-50%);
-  width: 48px; height: 48px; border-radius: 50%;
-  background: rgba(244,12,63,.1); border: 1px solid rgba(244,12,63,.28);
-  color: #fff; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .25s; z-index: 901;
-}
-.lb-prev { left: 16px; } .lb-next { right: 16px; }
-.lb-prev:hover, .lb-next:hover { background: rgba(244,12,63,.28); }
-.lb-prev svg, .lb-next svg { width: 16px; height: 16px; stroke: #fff; stroke-width: 2; }
-.lb-counter {
-  position: fixed; top: 26px; left: 50%; transform: translateX(-50%);
-  font-family: var(--fm); font-size: .66rem; letter-spacing: .1em;
-  color: var(--mu); z-index: 901;
-  background: rgba(13,13,15,.65); padding: 5px 14px;
-  border-radius: 999px; backdrop-filter: blur(8px);
-}
-.lb-thumbs {
-  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 6px; z-index: 901;
-  background: rgba(13,13,15,.65); padding: 6px;
-  border-radius: 12px; backdrop-filter: blur(8px);
-  max-width: 88vw; overflow-x: auto; scrollbar-width: none;
-}
-.lb-thumbs::-webkit-scrollbar { display: none; }
-.lb-th {
-  width: 46px; height: 46px; border-radius: 7px; overflow: hidden;
-  border: 2px solid transparent; cursor: pointer; flex-shrink: 0;
-  transition: border-color .22s, transform .22s;
-  background: rgba(255,255,255,.06);
-}
-.lb-th img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.lb-th.on { border-color: var(--red); transform: scale(1.1); }
-
-/* ── FOOTER ── */
-.ftr {
-  position: relative; z-index: 2;
-  border-top: 1px solid var(--bd);
-  padding: 22px 48px;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 12px;
-}
-.ftr-c { font-family: var(--fm); font-size: .65rem; color: var(--mu); letter-spacing: .08em; }
-.ftr-l { display: flex; gap: 18px; flex-wrap: wrap; }
-.ftr-l a {
-  font-family: var(--fm); font-size: .65rem; color: var(--mu);
-  text-decoration: none; letter-spacing: .1em; text-transform: uppercase;
-  transition: color .3s;
-}
-.ftr-l a:hover { color: var(--red); }
-
-/* ── SCROLL REVEAL ── */
-.sr {
-  opacity: 0; transform: translateY(22px);
-  transition: opacity .75s ease, transform .75s var(--ease);
-}
-.sr.in { opacity: 1; transform: none; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  .hdr { padding: 0 20px; }
-  .nav-d { display: none; }
-  .nav-tog { display: flex; }
-  .hero { padding: calc(var(--hdr) + 32px) 20px 48px; }
-  .sec { padding: 48px 20px; }
-  .ftr { padding: 18px 20px; }
-  .lb-thumbs { display: none; }
-  .sec-nav a { padding: 14px 20px; font-size: .6rem; }
-}
-@media (max-width: 480px) {
-  .page-title { font-size: 3.8rem; }
-}
-
-
-    /* ── BENTO GRID ── */
-    .grid-wrap { padding: 40px 48px 80px; position: relative; z-index: 2; }
-
-    .bento {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: 260px;
-      gap: 10px;
-    }
-
-    /* Span rules for visual rhythm */
-    .bento .v-item:nth-child(1){grid-column:span 2;grid-row:span 2;}
-    .bento .v-item:nth-child(4){grid-column:span 1;grid-row:span 2;}
-    .bento .v-item:nth-child(8){grid-column:span 2;grid-row:span 2;}
-    .bento .v-item:nth-child(12){grid-column:span 1;grid-row:span 2;}
-
-    /* ── VIDEO CARD ── */
-    .v-item {
-      position: relative; border-radius: 14px; overflow: hidden;
-      border: 1px solid var(--bd); background: var(--b2);
-      cursor: pointer;
-      transition: border-color .4s, transform .45s var(--ease), box-shadow .45s;
-    }
-    .v-item:hover {
-      border-color: var(--rb);
-      transform: scale(1.012);
-      box-shadow: 0 20px 60px rgba(244,12,63,.18);
-      z-index: 2;
-    }
-    .v-item::before {
-      content: ''; position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--red), transparent);
-      transform: scaleX(0); transform-origin: left;
-      transition: transform .55s var(--ease); z-index: 4;
-    }
-    .v-item:hover::before { transform: scaleX(1); }
-
-    .v-item video {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-      filter: brightness(.7) saturate(.55);
-      transition: filter .5s, transform .55s var(--ease);
-    }
-    .v-item:hover video { filter: brightness(1) saturate(1); transform: scale(1.04); }
-
-    /* play button */
-    .v-play {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%,-50%) scale(.85);
-      width: 54px; height: 54px; border-radius: 50%;
-      background: rgba(244,12,63,.85);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 3; opacity: .65;
-      box-shadow: 0 8px 28px rgba(244,12,63,.35);
-      transition: transform .35s var(--ease), opacity .35s, box-shadow .35s;
-    }
-    .v-play svg { width: 18px; height: 18px; fill: #fff; margin-left: 3px; }
-    .v-item:hover .v-play { transform: translate(-50%,-50%) scale(1); opacity: 1; box-shadow: 0 12px 40px rgba(244,12,63,.55); }
-
-    /* info overlay */
-    .v-info {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 32px 16px 16px;
-      background: linear-gradient(to top, rgba(13,13,15,.9) 0%, transparent 100%);
-      transform: translateY(10px); opacity: 0;
-      transition: all .38s var(--ease); z-index: 3;
-    }
-    .v-item:hover .v-info { transform: translateY(0); opacity: 1; }
-    .v-title { font-size: .9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px; }
-    .v-sub { font-family: var(--fm); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--red); }
-
-    /* ── VIDEO MODAL ── */
-    .vmodal {
-      display: none; position: fixed; inset: 0; z-index: 900;
-      align-items: center; justify-content: center;
-    }
-    .vmodal.open { display: flex; background: rgba(0,0,0,.96); }
-    .vmodal-inner {
-      position: relative; width: min(1300px, 92vw);
-      animation: vmin .3s var(--ease);
-    }
-    @keyframes vmin { from { opacity:0; transform:scale(.96) translateY(12px) } to { opacity:1; transform:scale(1) translateY(0) } }
-    .vmodal-inner video {
-      width: 100%; border-radius: 14px; display: block;
-      background: #000; box-shadow: 0 20px 80px rgba(244,12,63,.22);
-      max-height: 86vh; object-fit: contain;
-    }
-    .vmodal-title {
-      font-family: var(--fm); font-size: .7rem;
-      letter-spacing: .14em; text-transform: uppercase;
-      color: var(--mu); margin-top: 12px; text-align: center;
-    }
-    .vmodal-close {
-      position: fixed; top: 20px; right: 22px;
-      width: 42px; height: 42px; border-radius: 50%;
-      background: rgba(244,12,63,.1); border: 1px solid rgba(244,12,63,.28);
-      color: #fff; font-size: 20px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all .3s; z-index: 901; font-family: sans-serif;
-    }
-    .vmodal-close:hover { background: rgba(244,12,63,.28); transform: rotate(90deg); }
-    .vmodal-prev, .vmodal-next {
-      position: fixed; top: 50%; transform: translateY(-50%);
-      width: 48px; height: 48px; border-radius: 50%;
-      background: rgba(244,12,63,.1); border: 1px solid rgba(244,12,63,.28);
-      color: #fff; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all .25s; z-index: 901;
-    }
-    .vmodal-prev { left: 16px; } .vmodal-next { right: 16px; }
-    .vmodal-prev:hover, .vmodal-next:hover { background: rgba(244,12,63,.28); }
-    .vmodal-prev svg, .vmodal-next svg { width: 16px; height: 16px; stroke: #fff; stroke-width: 2; }
-    .vmodal-counter {
-      position: fixed; top: 26px; left: 50%; transform: translateX(-50%);
-      font-family: var(--fm); font-size: .66rem; letter-spacing: .1em;
-      color: var(--mu); z-index: 901;
-      background: rgba(13,13,15,.65); padding: 5px 14px;
-      border-radius: 999px; backdrop-filter: blur(8px);
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 1024px) {
-      .bento { grid-template-columns: repeat(2,1fr); grid-auto-rows: 230px; }
-      .bento .v-item:nth-child(n){grid-column:span 1;grid-row:span 1;}
-      .bento .v-item:nth-child(1){grid-column:span 2;grid-row:span 2;}
-    }
-    @media (max-width: 900px) {
-      .grid-wrap { padding: 28px 16px 60px; }
-      .bento { grid-auto-rows: 200px; gap: 8px; }
-    }
-    @media (max-width: 560px) {
-      .bento { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
-      .bento .v-item:nth-child(n){grid-column:span 1;grid-row:span 1;}
-      .bento .v-item:nth-child(1){grid-column:span 2;grid-row:span 1;}
-      .v-play { width: 44px; height: 44px; }
-    }
-
-    /* ── MOTION GRAPHICS SECTION ── */
-    .mg-wrap{padding:0 48px 80px;position:relative;z-index:2;}
-    .mg-hd{padding:52px 0 32px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;border-bottom:1px solid var(--bd);margin-bottom:32px;}
-    .mg-title{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;letter-spacing:-.025em;text-transform:uppercase;line-height:.9;}
-    .mg-desc{font-family:var(--fm);font-size:.75rem;color:var(--mu);line-height:1.85;max-width:380px;text-align:right;}
-    .mg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-    .mg-grid .v-item{aspect-ratio:16/9;}
-
-    @media(max-width:1024px){.mg-grid{grid-template-columns:repeat(2,1fr);}}
-    @media(max-width:900px){
-      .mg-wrap{padding:0 16px 60px;}
-      .mg-hd{padding:36px 0 24px;}
-      .mg-desc{text-align:left;max-width:100%;}
-    }
-    @media(max-width:560px){.mg-grid{grid-template-columns:1fr 1fr;}}
-  </style>
+@media(prefers-reduced-motion:reduce){.lk,.row,.tile img,.tile video,.tile .lb,.vb{transition:none}.sheet{animation:none}}
+</style>
 </head>
 <body>
-<div id="cur"></div><div id="cur-r"></div>
-<div class="sp" id="sp"></div>
-
-<!-- VIDEO MODAL -->
-<div class="vmodal" id="vmodal">
-  <button class="vmodal-close" id="vmc">×</button>
-  <button class="vmodal-prev" id="vmp"><svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5"/></svg></button>
-  <div class="vmodal-inner">
-    <video id="vmv" controls playsinline></video>
-    <div class="vmodal-title" id="vmt"></div>
-  </div>
-  <button class="vmodal-next" id="vmn"><svg viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5"/></svg></button>
-  <div class="vmodal-counter" id="vmco"></div>
-</div>
-
-<!-- HEADER -->
-<header class="hdr">
-  <a href="index.html" class="logo">Carla <em>D'</em>Aria</a>
-  <nav class="nav-d">
-    <a href="3d.html">3D Art</a>
-    <a href="ux_index.html">UX/UI</a>
-    <a href="graphic.html">Graphic</a>
-    <a href="2d.html">2D Art</a>
-    <a href="visuals.html" class="act">Visuals</a>
-    <a href="about.html">About</a>
-  </nav>
-  <button class="nav-tog" id="navTog"><span></span><span></span><span></span></button>
-</header>
-<div class="nav-mob" id="navMob">
-  <a href="3d.html">3D Art</a><a href="ux_index.html">UX/UI</a>
-  <a href="graphic.html">Graphic</a><a href="2d.html">2D Art</a>
-  <a href="visuals.html" class="act">Visuals</a><a href="about.html">About</a>
-</div>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="shade"></div>
 
 <div class="page">
-  <section class="hero">
-    <div class="hero-glow"></div>
-    <div class="eyebrow">Portfolio · Motion & Visuals</div>
-    <h1 class="page-title">Visual<br><em>Works</em></h1>
-    <p class="hero-desc">Motion graphics, visual experiments, and short-form pieces exploring movement, texture, and the unexpected. 15 pieces.</p>
-  </section>
+  <header class="top">
+    <div class="brand"><strong><a href="index.html">Carla D’Aria</a></strong><span>Motion Graphics</span></div>
+    <nav class="col" aria-label="Work">
+      <h2>Work</h2>
+      <ul>
+        <li><a class="lk" href="3d.html">3D Art</a></li>
+        <li><a class="lk" href="graphic.html">Graphic Design</a></li>
+        <li><a class="lk" href="ux_index.html">UX/UI</a></li>
+        <li><a class="lk" href="visuals.html" aria-current="page">Motion Graphics</a></li>
+      </ul>
+    </nav>
+    <nav class="col" aria-label="About">
+      <h2>About</h2>
+      <ul><li><a class="lk" href="about.html">About me</a></li></ul>
+    </nav>
+    <nav class="col" aria-label="Contact">
+      <h2>Contact</h2>
+      <ul>
+        <li><a class="lk" href="mailto:carlamdaria@gmail.com"><span class="full">carlamdaria@gmail.com</span><span class="short">Email</span></a></li>
+        <li><a class="lk" href="https://wa.me/5491122539753" target="_blank" rel="noopener">WhatsApp</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="rule"><span>Motion Graphics</span><span id="count"></span></div>
 
-  <!-- SECTION NAV -->
-  <nav class="sec-nav">
-    <a href="#experiments">01 — Visual Experiments</a>
-    <a href="#motion-graphics">02 — Motion Graphics</a>
-  </nav>
-
-  <div class="grid-wrap" id="experiments">
-    <div style="padding:40px 0 28px;position:relative;z-index:2;"><div class="sec-lbl">01 — Visual Experiments</div></div>
-    <div class="bento" id="bento">
-      <div class="v-item sr" data-src="images/xxxcorpion.mp4" data-title="XXX Scorpion">
-        <video muted loop playsinline preload="metadata"><source src="images/xxxcorpion.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">XXX Scorpion</div><div class="v-sub">Motion</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/2- Jaulas.mp4" data-title="Jaulas">
-        <video muted loop playsinline preload="metadata"><source src="images/2- Jaulas.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Jaulas</div><div class="v-sub">Visual Experiment</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/2-Arañas caminando.mp4" data-title="Arañas Caminando">
-        <video muted loop playsinline preload="metadata"><source src="images/2-Arañas caminando.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Arañas Caminando</div><div class="v-sub">Animation</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/Comp_1.mp4" data-title="Composition 1">
-        <video muted loop playsinline preload="metadata"><source src="images/Comp_1.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Composition 1</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/hands final 3.mp4" data-title="Hands">
-        <video muted loop playsinline preload="metadata"><source src="images/hands final 3.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Hands</div><div class="v-sub">Animation</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/heladera.mp4" data-title="Heladera">
-        <video muted loop playsinline preload="metadata"><source src="images/heladera.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Heladera</div><div class="v-sub">Visual Experiment</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/hongo nuevo final final.mp4" data-title="Hongo">
-        <video muted loop playsinline preload="metadata"><source src="images/hongo nuevo final final.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Hongo</div><div class="v-sub">Organic Forms</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/ninfa.mp4" data-title="Ninfa">
-        <video muted loop playsinline preload="metadata"><source src="images/ninfa.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Ninfa</div><div class="v-sub">Character Animation</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/ouija.mp4" data-title="Ouija">
-        <video muted loop playsinline preload="metadata"><source src="images/ouija.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Ouija</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/radar.mp4" data-title="Radar">
-        <video muted loop playsinline preload="metadata"><source src="images/radar.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Radar</div><div class="v-sub">Visual Experiment</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/scorpiones bailando.mp4" data-title="Scorpiones Bailando">
-        <video muted loop playsinline preload="metadata"><source src="images/scorpiones bailando.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Scorpiones Bailando</div><div class="v-sub">Animation</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/Sign.mp4" data-title="Sign">
-        <video muted loop playsinline preload="metadata"><source src="images/Sign.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Sign</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/Tarot sun Sound.mp4" data-title="Tarot Sun">
-        <video muted loop playsinline preload="metadata"><source src="images/Tarot sun Sound.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Tarot Sun</div><div class="v-sub">Motion + Sound</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/tes2.mp4" data-title="Test 2">
-        <video muted loop playsinline preload="metadata"><source src="images/tes2.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Test 2</div><div class="v-sub">Visual Experiment</div></div>
-      </div>
-      <div class="v-item sr" data-src="images/Test.mp4" data-title="Test">
-        <video muted loop playsinline preload="metadata"><source src="images/Test.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Test</div><div class="v-sub">Visual Experiment</div></div>
-      </div>
+  <main class="stage">
+    <h1 class="sr">Motion Graphics</h1>
+    <div class="side">
+      <ul class="list" id="list"></ul>
+      <p class="desc">Type animation, visual identity, character animation and experiments with movement, texture and the unexpected.</p>
     </div>
+    <div class="sheet" id="sheet" aria-live="polite"></div>
+  </main>
+</div>
+
+<div class="vw" id="vw" role="dialog" aria-modal="true" aria-label="Project viewer">
+  <div class="vm" id="vm">
+    <button class="vb x" id="vx" aria-label="Close">Close ×</button>
+    <button class="vb p" id="vp" aria-label="Previous">←</button>
+    <div id="vc" style="display:contents"></div>
+    <button class="vb nx" id="vn" aria-label="Next">→</button>
   </div>
-
-  <!-- MOTION GRAPHICS -->
-  <section class="mg-wrap" id="motion-graphics">
-    <div class="mg-hd">
-      <div>
-        <div class="sec-lbl">02 — Motion Graphics</div>
-        <h2 class="mg-title">Motion<br>Graphics</h2>
-      </div>
-      <p class="mg-desc">A series of motion graphics pieces — type animation, visual identity, and experimental motion. 11 pieces.</p>
-    </div>
-    <div class="mg-grid">
-      <div class="v-item sr" data-src="Asset website/visuales/motion graphics/Carla Daria motion graphics 1.mp4" data-title="Motion Graphics 01">
-        <video muted loop playsinline preload="metadata"><source src="Asset website/visuales/motion graphics/Carla Daria motion graphics 1.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Motion Graphics 01</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-      <div class="v-item sr" data-src="Asset website/visuales/motion graphics/Carla Daria motion graphics 2.mp4" data-title="Motion Graphics 02">
-        <video muted loop playsinline preload="metadata"><source src="Asset website/visuales/motion graphics/Carla Daria motion graphics 2.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Motion Graphics 02</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-      <div class="v-item sr" data-src="Asset website/visuales/motion graphics/Carla Daria motion graphics 3.mp4" data-title="Motion Graphics 03">
-        <video muted loop playsinline preload="metadata"><source src="Asset website/visuales/motion graphics/Carla Daria motion graphics 3.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Motion Graphics 03</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-      <div class="v-item sr" data-src="Asset website/visuales/motion graphics/Carla Daria motion graphics 4.mp4" data-title="Motion Graphics 04">
-        <video muted loop playsinline preload="metadata"><source src="Asset website/visuales/motion graphics/Carla Daria motion graphics 4.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Motion Graphics 04</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-      <div class="v-item sr" data-src="Asset website/visuales/motion graphics/Carla Daria motion graphics 5.mp4" data-title="Motion Graphics 05">
-        <video muted loop playsinline preload="metadata"><source src="Asset website/visuales/motion graphics/Carla Daria motion graphics 5.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Motion Graphics 05</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-      <div class="v-item sr" data-src="Asset website/visuales/motion graphics/Carla Daria motion graphics 6.mp4" data-title="Motion Graphics 06">
-        <video muted loop playsinline preload="metadata"><source src="Asset website/visuales/motion graphics/Carla Daria motion graphics 6.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Motion Graphics 06</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-      <div class="v-item sr" data-src="Asset website/visuales/motion graphics/Carla Daria motion graphics 7.mp4" data-title="Motion Graphics 07">
-        <video muted loop playsinline preload="metadata"><source src="Asset website/visuales/motion graphics/Carla Daria motion graphics 7.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Motion Graphics 07</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-      <div class="v-item sr" data-src="Asset website/visuales/motion graphics/Carla Daria motion graphics 8.mp4" data-title="Motion Graphics 08">
-        <video muted loop playsinline preload="metadata"><source src="Asset website/visuales/motion graphics/Carla Daria motion graphics 8.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Motion Graphics 08</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-      <div class="v-item sr" data-src="Asset website/visuales/motion graphics/Carla Daria motion graphics 9.mp4" data-title="Motion Graphics 09">
-        <video muted loop playsinline preload="metadata"><source src="Asset website/visuales/motion graphics/Carla Daria motion graphics 9.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Motion Graphics 09</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-      <div class="v-item sr" data-src="Asset website/visuales/motion graphics/Carla Daria motion graphics 10.mp4" data-title="Motion Graphics 10">
-        <video muted loop playsinline preload="metadata"><source src="Asset website/visuales/motion graphics/Carla Daria motion graphics 10.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Motion Graphics 10</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-      <div class="v-item sr" data-src="Asset website/visuales/motion graphics/Carla Daria motion graphics 11.mp4" data-title="Motion Graphics 11">
-        <video muted loop playsinline preload="metadata"><source src="Asset website/visuales/motion graphics/Carla Daria motion graphics 11.mp4#t=0.1" type="video/mp4"></video>
-        <div class="v-play"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg></div>
-        <div class="v-info"><div class="v-title">Motion Graphics 11</div><div class="v-sub">Motion Graphics</div></div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="ftr">
-    <span class="ftr-c">© 2026 Carla D'Aria · Creative Producer</span>
-    <div class="ftr-l">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="https://wa.me/5491122539753" target="_blank">WhatsApp</a>
-    </div>
-  </footer>
+  <div class="bar"><b id="vt"></b><small id="vk"></small></div>
+  <div class="th" id="th"></div>
 </div>
 
 <script>
-  const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
-  if(cur){let mx=0,my=0,rx=0,ry=0;document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});(function l(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(l);})();}
-  window.addEventListener('scroll',()=>document.getElementById('sp').style.width=(scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%');
-  const tog=document.getElementById('navTog'),mob=document.getElementById('navMob');
-  tog.addEventListener('click',()=>{const o=tog.classList.toggle('open');mob.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';});
-  mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{tog.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}));
+/* ── Shader de fondo (Hurricane Season, WebGL puro) ── */
+(()=>{
+const cv=document.getElementById('bg');
+const gl=cv.getContext('webgl',{antialias:false});
+if(!gl){cv.style.background='#2a0a14';return}
+const VERT='attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
+const FRAG=`
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#define SEED 2208.0
+#else
+precision mediump float;
+#define SEED 7.0
+#endif
+uniform vec3 u_c[5];
+uniform vec4 u_s; // res.xy, time, cursor presence
+uniform vec2 u_m;
+float h21(vec2 p){
+#ifndef GL_FRAGMENT_PRECISION_HIGH
+p=mod(p,31.);
+#endif
+p=fract(p*vec2(234.34,435.345));p+=dot(p,p+34.23);return fract(p.x*p.y);}
+float gh(vec2 p){vec3 q=fract(vec3(p.xyx)*.1031);q+=dot(q,q.yzx+33.33);return fract((q.x+q.y)*q.z);}
+float nz(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);
+return mix(mix(h21(i),h21(i+vec2(1.,0.)),u.x),mix(h21(i+vec2(0.,1.)),h21(i+vec2(1.,1.)),u.x),u.y);}
+float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*nz(p);p=p*2.03+vec2(17.,9.2);a*=.5;}return v;}
+vec3 pal(float x){float f=clamp(x,0.,1.)*4.;vec3 c=u_c[0];
+for(int i=0;i<4;i++)c=mix(c,u_c[i+1],smoothstep(0.,1.,clamp(f-float(i),0.,1.)));return c;}
+vec3 shade(vec2 p,float t){
+float fd=0.;
+for(int i=0;i<7;i++){float fi=float(i);
+vec2 c=vec2(sin(t*(.19+fi*.037)+fi*2.1+SEED),cos(t*(.16+fi*.043)+fi*1.4))*.63;
+vec2 d=p-c;fd+=.0471/(dot(d,d)+.006);}
+float s=smoothstep(.72,1.1,fd);
+return pal(clamp(s+fd*.05,0.,1.));}
+void main(){
+vec2 R=u_s.xy;float t=u_s.z;float m=min(R.x,R.y);
+vec2 p=(gl_FragCoord.xy-.5*R)/m;
+if(u_s.w>.001){
+vec2 cur=.5*u_m*R/m;vec2 d=p-cur;
+float k=u_s.w*(1.-smoothstep(0.,.433,length(d)));
+float a=k*2.2;float cc=cos(a),cs=sin(a);
+p=cur+mat2(cc,-cs,cs,cc)*d;}
+p*=1.44;
+p=vec2(p.y,-p.x);
+p+=.048*vec2(sin(t*.31),cos(t*.23));
+p+=.6*(vec2(fbm(p*4.+SEED),fbm(p*4.+vec2(5.2,1.3)))-.5);
+float e=.0576;
+vec3 col=shade(p,t)*.36+(shade(p+vec2(e,0.),t)+shade(p-vec2(e,0.),t)+shade(p+vec2(0.,e),t)+shade(p-vec2(0.,e),t))*.16;
+col=(col-.5)*1.5+.5;
+float l=dot(col,vec3(.299,.587,.114));
+col=mix(vec3(l),col,2.);
+col-=.11;
+col+=(gh(gl_FragCoord.xy+vec2(SEED*17.,SEED*31.))-.5)*.21;
+gl_FragColor=vec4(clamp(col,0.,1.),1.);}`;
+const mk=(t,s)=>{const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);return x};
+const pr=gl.createProgram();
+gl.attachShader(pr,mk(gl.VERTEX_SHADER,VERT));gl.attachShader(pr,mk(gl.FRAGMENT_SHADER,FRAG));
+gl.linkProgram(pr);gl.useProgram(pr);
+gl.bindBuffer(gl.ARRAY_BUFFER,gl.createBuffer());
+gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+const loc=gl.getAttribLocation(pr,'a');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+const U=n=>gl.getUniformLocation(pr,n);
+gl.uniform3fv(U('u_c'),new Float32Array([.0196,.0196,.0235, 1,0,0, .9961,.9529,.7843, .4784,.8,0, .4078,.2431,.5333]));
+const uS=U('u_s'),uM=U('u_m');
+let tx=0,ty=0,tp=0,mx=0,my=0,cp=0,last=null,raf=0,vis=true;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+addEventListener('pointermove',e=>{tx=e.clientX/innerWidth*2-1;ty=-(e.clientY/innerHeight*2-1);tp=1;if(cp<.01){mx=tx;my=ty}},{passive:true});
+document.documentElement.addEventListener('pointerleave',()=>tp=0);
+addEventListener('blur',()=>tp=0);
+function size(){
+const d=Math.min(devicePixelRatio||1,2);
+let w=Math.max(1,Math.round(innerWidth*d)),h=Math.max(1,Math.round(innerHeight*d));
+const k=Math.min(1,Math.sqrt((innerWidth<820?9e5:2e6)/(w*h)));w=Math.round(w*k);h=Math.round(h*k);
+if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;gl.viewport(0,0,w,h)}}
+function frame(now){
+raf=0;if(!vis)return;
+const dt=last===null?0:Math.min((now-last)/1000,.1);last=now;
+const f=1-Math.exp(-12*dt);
+mx+=(tx-mx)*f;my+=(ty-my)*f;cp+=(tp-cp)*f;
+size();
+gl.uniform4f(uS,cv.width,cv.height,reduced?0:now/1000*1.088,cp);
+gl.uniform2f(uM,mx,my);
+gl.drawArrays(gl.TRIANGLES,0,3);
+if(!reduced)raf=requestAnimationFrame(frame);}
+addEventListener('resize',()=>{if(!raf)raf=requestAnimationFrame(frame)});
+document.addEventListener('visibilitychange',()=>{vis=document.visibilityState==='visible';if(vis){last=null;if(!raf)raf=requestAnimationFrame(frame)}else{cancelAnimationFrame(raf);raf=0}});
+raf=requestAnimationFrame(frame);
+})();
 
-  const vItems=[...document.querySelectorAll('.v-item')];
-  vItems.forEach(el=>{el.addEventListener('mouseenter',()=>{document.body.classList.add('hov');el.querySelector('video')?.play().catch(()=>{});});el.addEventListener('mouseleave',()=>{document.body.classList.remove('hov');const v=el.querySelector('video');if(v){v.pause();v.currentTime=0;}});});
+const CATS=[{k:'mg',t:'Motion Graphics'},{k:'anim',t:'Animations'},{k:'exp',t:'Experiments'}];
+const DATA={"mg": [{"t": "Motion Graphics 01", "s": "Motion Graphics", "vid": "Asset website/visuales/motion graphics/Carla Daria motion graphics 1.mp4", "m": [{"t": "v", "s": "Asset website/visuales/motion graphics/Carla Daria motion graphics 1.mp4"}], "th": ""}, {"t": "Motion Graphics 02", "s": "Motion Graphics", "vid": "Asset website/visuales/motion graphics/Carla Daria motion graphics 2.mp4", "m": [{"t": "v", "s": "Asset website/visuales/motion graphics/Carla Daria motion graphics 2.mp4"}], "th": ""}, {"t": "Motion Graphics 03", "s": "Motion Graphics", "vid": "Asset website/visuales/motion graphics/Carla Daria motion graphics 3.mp4", "m": [{"t": "v", "s": "Asset website/visuales/motion graphics/Carla Daria motion graphics 3.mp4"}], "th": ""}, {"t": "Motion Graphics 04", "s": "Motion Graphics", "vid": "Asset website/visuales/motion graphics/Carla Daria motion graphics 4.mp4", "m": [{"t": "v", "s": "Asset website/visuales/motion graphics/Carla Daria motion graphics 4.mp4"}], "th": ""}, {"t": "Motion Graphics 05", "s": "Motion Graphics", "vid": "Asset website/visuales/motion graphics/Carla Daria motion graphics 5.mp4", "m": [{"t": "v", "s": "Asset website/visuales/motion graphics/Carla Daria motion graphics 5.mp4"}], "th": ""}, {"t": "Motion Graphics 06", "s": "Motion Graphics", "vid": "Asset website/visuales/motion graphics/Carla Daria motion graphics 6.mp4", "m": [{"t": "v", "s": "Asset website/visuales/motion graphics/Carla Daria motion graphics 6.mp4"}], "th": ""}, {"t": "Motion Graphics 07", "s": "Motion Graphics", "vid": "Asset website/visuales/motion graphics/Carla Daria motion graphics 7.mp4", "m": [{"t": "v", "s": "Asset website/visuales/motion graphics/Carla Daria motion graphics 7.mp4"}], "th": ""}, {"t": "Motion Graphics 08", "s": "Motion Graphics", "vid": "Asset website/visuales/motion graphics/Carla Daria motion graphics 8.mp4", "m": [{"t": "v", "s": "Asset website/visuales/motion graphics/Carla Daria motion graphics 8.mp4"}], "th": ""}, {"t": "Motion Graphics 09", "s": "Motion Graphics", "vid": "Asset website/visuales/motion graphics/Carla Daria motion graphics 9.mp4", "m": [{"t": "v", "s": "Asset website/visuales/motion graphics/Carla Daria motion graphics 9.mp4"}], "th": ""}, {"t": "Motion Graphics 10", "s": "Motion Graphics", "vid": "Asset website/visuales/motion graphics/Carla Daria motion graphics 10.mp4", "m": [{"t": "v", "s": "Asset website/visuales/motion graphics/Carla Daria motion graphics 10.mp4"}], "th": ""}, {"t": "Motion Graphics 11", "s": "Motion Graphics", "vid": "Asset website/visuales/motion graphics/Carla Daria motion graphics 11.mp4", "m": [{"t": "v", "s": "Asset website/visuales/motion graphics/Carla Daria motion graphics 11.mp4"}], "th": ""}], "anim": [{"t": "XXX Scorpion", "s": "Motion", "vid": "images/xxxcorpion.mp4", "m": [{"t": "v", "s": "images/xxxcorpion.mp4"}], "th": ""}, {"t": "Composition 1", "s": "Motion Graphics", "vid": "images/Comp_1.mp4", "m": [{"t": "v", "s": "images/Comp_1.mp4"}], "th": ""}, {"t": "Hands", "s": "Animation", "vid": "images/hands final 3.mp4", "m": [{"t": "v", "s": "images/hands final 3.mp4"}], "th": ""}, {"t": "Hongo", "s": "Organic Forms", "vid": "images/hongo nuevo final final.mp4", "m": [{"t": "v", "s": "images/hongo nuevo final final.mp4"}], "th": ""}, {"t": "Ninfa", "s": "Character Animation", "vid": "images/ninfa.mp4", "m": [{"t": "v", "s": "images/ninfa.mp4"}], "th": ""}, {"t": "Ouija", "s": "Motion Graphics", "vid": "images/ouija.mp4", "m": [{"t": "v", "s": "images/ouija.mp4"}], "th": ""}, {"t": "Scorpiones Bailando", "s": "Animation", "vid": "images/scorpiones bailando.mp4", "m": [{"t": "v", "s": "images/scorpiones bailando.mp4"}], "th": ""}, {"t": "Tarot Sun", "s": "Motion + Sound", "vid": "images/Tarot sun Sound.mp4", "m": [{"t": "v", "s": "images/Tarot sun Sound.mp4"}], "th": ""}, {"t": "Test 2", "s": "Visual Experiment", "vid": "images/tes2.mp4", "m": [{"t": "v", "s": "images/tes2.mp4"}], "th": ""}, {"t": "Test", "s": "Visual Experiment", "vid": "images/Test.mp4", "m": [{"t": "v", "s": "images/Test.mp4"}], "th": ""}], "exp": [{"t": "Jaulas", "s": "Visual Experiment", "vid": "images/2- Jaulas.mp4", "m": [{"t": "v", "s": "images/2- Jaulas.mp4"}], "th": ""}, {"t": "Arañas Caminando", "s": "Animation", "vid": "images/2-Arañas caminando.mp4", "m": [{"t": "v", "s": "images/2-Arañas caminando.mp4"}], "th": ""}, {"t": "Heladera", "s": "Visual Experiment", "vid": "images/heladera.mp4", "m": [{"t": "v", "s": "images/heladera.mp4"}], "th": ""}, {"t": "Radar", "s": "Visual Experiment", "vid": "images/radar.mp4", "m": [{"t": "v", "s": "images/radar.mp4"}], "th": ""}, {"t": "Sign", "s": "Motion Graphics", "vid": "images/Sign.mp4", "m": [{"t": "v", "s": "images/Sign.mp4"}], "th": ""}]};
 
-  // Modal
-  const modal=document.getElementById('vmodal'),mv=document.getElementById('vmv'),mt=document.getElementById('vmt'),mco=document.getElementById('vmco');
-  let curIdx=0;
-  function openModal(i){curIdx=i;const it=vItems[i];mv.src=it.dataset.src;mt.textContent=it.dataset.title||'';mco.textContent=`${i+1} / ${vItems.length}`;modal.classList.add('open');document.body.style.overflow='hidden';mv.play().catch(()=>{});}
-  function closeModal(){modal.classList.remove('open');mv.pause();mv.src='';document.body.style.overflow='';}
-  function goModal(d){mv.pause();curIdx=(curIdx+d+vItems.length)%vItems.length;const it=vItems[curIdx];mv.src=it.dataset.src;mt.textContent=it.dataset.title||'';mco.textContent=`${curIdx+1} / ${vItems.length}`;mv.play().catch(()=>{});}
-  vItems.forEach((it,i)=>it.addEventListener('click',()=>openModal(i)));
-  document.getElementById('vmc').addEventListener('click',closeModal);
-  document.getElementById('vmp').addEventListener('click',()=>goModal(-1));
-  document.getElementById('vmn').addEventListener('click',()=>goModal(1));
-  modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
-  document.addEventListener('keydown',e=>{if(!modal.classList.contains('open'))return;if(e.key==='Escape')closeModal();if(e.key==='ArrowLeft')goModal(-1);if(e.key==='ArrowRight')goModal(1);});
+(()=>{
+const $=id=>document.getElementById(id),pad=n=>String(n).padStart(2,'0');
+const list=$('list'),vw=$('vw'),vc=$('vc'),thb=$('th');
+let cat=-1,items=[],opener=null,vItem=null,vIdx=0,x0=null;
 
-  // Scroll reveal
-  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.06});
-  vItems.forEach((el,i)=>{el.style.transitionDelay=`${i*.04}s`;io.observe(el);});
+CATS.forEach((c,i)=>{
+  const li=document.createElement('li'),b=document.createElement('button');
+  b.className='row';b.type='button';
+  b.innerHTML='<span class="n"></span><span class="t"></span><span class="c"></span>';
+  b.children[0].textContent=pad(i+1);b.children[1].textContent=c.t;b.children[2].textContent=DATA[c.k].length;
+  b.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')setCat(i)});
+  b.addEventListener('focus',()=>setCat(i));
+  b.addEventListener('click',()=>setCat(i));
+  li.appendChild(b);list.appendChild(li);
+});
+
+function setCat(i){
+  if(i===cat)return;cat=i;items=DATA[CATS[i].k];
+  list.querySelectorAll('.row').forEach((r,k)=>r.classList.toggle('on',k===i));
+  $('count').textContent=items.length+' pieces';
+  const f=document.createDocumentFragment();
+  items.forEach((it,k)=>{
+    const b=document.createElement('button');b.type='button';b.className='tile';b.setAttribute('aria-label',it.t);
+    if(it.th){const im=new Image();im.src=it.th;im.alt='';im.draggable=false;im.loading='lazy';b.appendChild(im)}
+    else{const v=document.createElement('video');v.muted=true;v.loop=true;v.playsInline=true;v.preload='metadata';v.src=it.vid+'#t=0.1';b.appendChild(v);
+      b.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')v.play().catch(()=>{})});
+      b.addEventListener('pointerleave',()=>{v.pause();v.currentTime=0.1})}
+    if(it.m.some(x=>x.t==='v')){const p=document.createElement('span');p.className='pl';p.textContent='▶';b.appendChild(p)}
+    const l=document.createElement('span');l.className='lb';l.textContent=it.t;const s=document.createElement('i');s.textContent=it.s;l.appendChild(s);b.appendChild(l);
+    b.addEventListener('click',()=>openV(k,b));
+    f.appendChild(b);
+  });
+  const ns=$('sheet');ns.textContent='';ns.style.animation='none';void ns.offsetWidth;ns.style.animation='';ns.appendChild(f);fit();
+}
+
+/* Reparte las miniaturas para que ocupen todo el alto disponible, sin scroll */
+function fit(){
+  const s=$('sheet'),n=items.length;if(!s||!n)return;
+  const W=s.clientWidth,H=s.clientHeight,g=8;let best=1,score=1e9;
+  for(let c=1;c<=n;c++){
+    const r=Math.ceil(n/c),tw=(W-g*(c-1))/c,th=(H-g*(r-1))/r;
+    if(tw<=0||th<=0)continue;
+    const sc=Math.abs(Math.log(tw/th/1.2));if(sc<score){score=sc;best=c}
+  }
+  const r=Math.ceil(n/best),tw=(W-g*(best-1))/best,th=(H-g*(r-1))/r;
+  s.style.gridTemplateColumns='repeat('+best+',minmax(0,1fr))';
+  if(Math.min(tw,th)<72){s.style.gridAutoRows='84px';s.style.gridTemplateRows='';s.style.overflowY='auto';s.style.alignContent='start'}
+  else{s.style.gridTemplateRows='repeat('+r+',minmax(0,1fr))';s.style.gridAutoRows='';s.style.overflowY='';s.style.alignContent=''}
+}
+new ResizeObserver(fit).observe(document.querySelector('.stage'));
+addEventListener('keydown',e=>{
+  if(vw.classList.contains('open')||!['ArrowUp','ArrowDown'].includes(e.key))return;
+  e.preventDefault();setCat(Math.max(0,Math.min(CATS.length-1,cat+(e.key==='ArrowDown'?1:-1))));
+  list.querySelectorAll('.row')[cat].focus({preventScroll:true});
+});
+
+/* ── Visor (imágenes y video) ── */
+function openV(k,from){
+  vItem={t:CATS[cat].t,s:'',m:items.map(x=>({t:'v',s:x.vid,th:'',title:x.t,sub:x.s}))};vIdx=k;opener=from;vw.classList.add('open');document.body.style.overflow='hidden';
+  thb.textContent='';thb.style.display=vItem.m.length>1?'flex':'none';
+  vItem.m.forEach((m,j)=>{
+    const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Item '+(j+1));
+    const th=m.th||(m.t==='i'?m.s:'');
+    if(th){const im=new Image();im.src=th;im.alt='';im.draggable=false;b.appendChild(im)}else b.textContent=pad(j+1);
+    b.addEventListener('click',()=>{vIdx=j;draw()});thb.appendChild(b);
+  });
+  draw();$('vx').focus();
+}
+function closeV(){vc.querySelectorAll('video').forEach(v=>v.pause());vc.textContent='';vw.classList.remove('open');document.body.style.overflow='';if(opener)opener.focus({preventScroll:true})}
+function draw(){
+  const m=vItem.m[vIdx];vc.querySelectorAll('video').forEach(v=>v.pause());vc.textContent='';
+  if(m.t==='v'){
+    const v=document.createElement('video');v.src=m.s;v.controls=true;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;
+    v.setAttribute('controlslist','nodownload noremoteplayback');v.disablePictureInPicture=true;v.oncontextmenu=()=>false;vc.appendChild(v);
+  }else{const im=new Image();im.src=m.s;im.alt=vItem.t+' — '+(vIdx+1);im.draggable=false;vc.appendChild(im)}
+  $('vt').textContent=m.title||vItem.t;$('vk').textContent=(m.sub?m.sub+' · ':'')+pad(vIdx+1)+' / '+pad(vItem.m.length);
+  const multi=vItem.m.length>1;$('vp').hidden=!multi;$('vn').hidden=!multi;
+  [...thb.children].forEach((b,j)=>{b.classList.toggle('on',j===vIdx);if(j===vIdx)b.scrollIntoView({inline:'center',block:'nearest'})});
+}
+const step=d=>{vIdx=(vIdx+d+vItem.m.length)%vItem.m.length;draw()};
+$('vx').onclick=closeV;$('vp').onclick=()=>step(-1);$('vn').onclick=()=>step(1);
+$('vm').addEventListener('click',e=>{if(e.target===$('vm'))closeV()});
+$('vm').addEventListener('pointerdown',e=>{x0=e.target.tagName==='VIDEO'?null:e.clientX});
+$('vm').addEventListener('pointerup',e=>{if(x0!==null&&Math.abs(e.clientX-x0)>50&&vItem.m.length>1)step(e.clientX<x0?1:-1);x0=null});
+addEventListener('keydown',e=>{
+  if(!vw.classList.contains('open'))return;
+  if(e.key==='Escape')closeV();
+  else if(e.key==='ArrowRight'&&vItem.m.length>1)step(1);
+  else if(e.key==='ArrowLeft'&&vItem.m.length>1)step(-1);
+});
+document.addEventListener('contextmenu',e=>{if(e.target.tagName==='IMG'||e.target.tagName==='VIDEO')e.preventDefault()});
+document.addEventListener('dragstart',e=>{if(e.target.tagName==='IMG')e.preventDefault()});
+setCat(0);
+})();
 </script>
 </body>
 </html>
